@@ -145,32 +145,38 @@ Technische Universität Graz\\
       %R_1
       \draw (10,5) 
       to[short] (9,5)
-      to[R, l=$R_1$, v=$U_{R_1}$]  (6.5,5)
+      to[R, l=$R_1$, v=$U_{R_1}$]  (6,5)
       to[short, i=$I_{R_1}$, color=red] (5,5);
       %R_2
       \draw (5,10)
       to[short] (5,9)
-      to[R, l=$R_2$, v=$U_{R_2}$]  (5,6.5)
+      to[R, l=$R_2$, v=$U_{R_2}$]  (5,6)
       to[short, i=$I_{R2}$, color=red] (5,5);
       %R_3
       \draw (5,5)
       to[short] (5,4)
-      to[R, l=$R_3$, v=$U_{R_3}$]   (5,1.5)
+      to[R, l=$R_3$, v=$U_{R_3}$]   (5,1)
       to[short, i=$I_{R3}$, color=red] (5,0);
       %R_4
       \draw (0,5)
       to[short] (0,6)
-      to[R, l=$R_4$, v=$U_{R_4}$]  (0,8.5)
+      to[R, l=$R_4$, v=$U_{R_4}$]  (0,9)
       to[short, i=$I_{R4}$, color=red] (0,10);
       %Is_1
       \draw (0,0)
       to[short] (0,1)
-      to[I, color=red]  (0,3.5)
+      to[I, v^=$U_{S1}$] (0,4)
       to[short, i=$I_{S1}$, color=red] (0,5);
       %Us_2
-      \draw (0,5) to[V, v=$U_{s2}$, color=blue]         (5,5);
+      \draw (0,5) 
+      to[short] (1,5) 
+      to[V, v=$U_{s2}$]  (4,5)
+      to[short, i=$I_{S2}$, color=red] (5,5);
       %Controlled Us_3
-      \draw (10,10) to[cvsource, v=$U_{s3}$, color=blue]  (10,5);
+      \draw (10,10)
+      to[short, i_<=$I_{S3}$, color=red] (10, 9)
+      to[cvsource, v=$U_{S3}$]  (10,6)
+      to[short] (10,5);
       %n_1
       \draw (0,10) to[short]                             (10,10);
       %ref 
@@ -178,13 +184,13 @@ Technische Universität Graz\\
       %grnd
       \draw (0,0) to (0,0) node[ground]{};
       %nodes
-      \draw[color=blue] (5,10) ellipse (150pt and 12pt);
+      \draw[color=blue] (5,10) ellipse (150pt and 15pt);
       \node[above, color=blue]  (n_1) at (5,10) {$n_1$};
-      \draw[color=blue] (0,5) ellipse (15pt and 15pt);
+      \draw[color=blue] (0,5) ellipse (25pt and 25pt);
       \node[below, xshift=2mm, color=blue]   (n_2) at (0,5) {$n_2$};
-      \draw[color=blue] (5,5) ellipse (15pt and 15pt);
+      \draw[color=blue] (5,5) ellipse (25pt and 25pt);
       \node[below, xshift=-2mm, color=blue]  (n_3) at (5,5) {$n_3$};
-      \draw[color=blue] (10,5) ellipse (15pt and 15pt);
+      \draw[color=blue] (10,5) ellipse (25pt and 25pt);
       \node[below, color=blue] (n_4) at (10,5) {$n_4$};
       \draw (2.5,0) ellipse (75pt and 12pt);
       \node[below] (ref) at (2.5,0) {ref};
