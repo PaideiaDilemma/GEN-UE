@@ -3,7 +3,7 @@
 *.fls
 *.log
 *.pdf
-*.synctex.gz
+*.gz
 *.odg
 *.lof
 *.toc
