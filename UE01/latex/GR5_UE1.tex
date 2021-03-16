@@ -9,7 +9,23 @@
 %%      Gruppe 5, Team F                                        %%
 %%      Authors: Severin Wolf, Maximilian Seidler.              %%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
+% Note für Severin:
+% mathe in latex glieder ich so:
+%
+% \[ <one line equation> /]
+%
+% \begin{equation}
+%       numbered one line equation
+% \end{equation}
+%
+% \begin{align*}
+%       multi line equations (use \\ for linebreak and & to align)
+% \end{align*}
+%
+% \begin{align}
+%       numbered multi line equations
+% \end{align}
+%
 \documentclass[a4paper]{article}
 \usepackage{amsmath}
 \usepackage[utf8]{inputenc}
@@ -270,9 +286,9 @@ the currents $I_{S2}^?$ and $I_{S3}^?$ yet, so we leave them for now.
    \end{pmatrix}
    \label{eqn:currents}
 \end{equation}
-We substitute the vector $\vec{I}$ from Equation \ref{eqn:nodes} with the matricies from above. 
+We substitute the vector $\vec{I}$ from equation (\ref{eqn:nodes}) with the matricies from above. 
 
-\begin{equation*}
+\[
    \begin{pmatrix}
       0 & 1 & 0 & -1 & 0 & -1 \\
       0 & 0 & 0 & 1 & -1 & 0  \\
@@ -296,8 +312,7 @@ We substitute the vector $\vec{I}$ from Equation \ref{eqn:nodes} with the matric
    \begin{pmatrix}
       0 \\ I_{S1} \\ 0 \\ 0  
    \end{pmatrix}
-\end{equation*}
-
+\]
 \hspace{2cm}\begin{tikzpicture} 
    \draw[decoration={brace,mirror},decorate,thick]
       (0,0) -- (9,0);
@@ -321,12 +336,12 @@ We substitute the vector $\vec{I}$ from Equation \ref{eqn:nodes} with the matric
 \label{eqn:nodes_currents}
 \end{equation}
 
-Now we have our node voltage equations in Form of $A \vec{x} = \vec{b}$, but we have 6 unknown
-variables and only 4 equations to solve them. Thats why we need two secondary conditions, to
+Just like that, we have our node voltage equations \,(\ref{eqn:nodes_currents}) in Form of $A \vec{x} = \vec{b}$, but we have 6 unknown
+variables and only 4 equations to solve them. That's why we need two secondary conditions, to
 compensate for the voltage sources $S_2$ and $S_3$.
 
 \begin{align*}
-   S_2: \quad &U_{n2} = U_{S2}, \\ 
+   S_2: \quad &U_{n2} = U_{S2} \\ 
    S_3: \quad &U_{n1} - U_{n4} = U_{S3}
 \end{align*}
 
@@ -360,7 +375,8 @@ I_{R3}$ and $I_{R3} = U_{n3}G_3$, we rearrange the equation $U_{n1} - U_{n4} = U
 \[
    U_{n1} - U_{n4} - \alpha (U_{n3} G_3) = 0
 .\]
-We plug that into our matrix $A$ and get a solveable system of linear independent equations.
+We plug that into our matrix $A$ and get a solveable system of linear independent equations, $A
+\vec{x} = \vec{b}$.
 \begin{equation}
 \begin{pmatrix}
    G_2 + G_4 & -G_4 & -G_2 & 0 & 0 & -1 \\
