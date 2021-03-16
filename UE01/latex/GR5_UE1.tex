@@ -1,5 +1,16 @@
-\documentclass[a4paper]{article}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%          mmm  mmmmmm mm   m        m    m mmmmmm mmm         %%
+%%        m"   " #      #"m  #        #    # #        #         %%
+%%        #   mm #mmmmm # #m #        #    # #mmmmm   #         %%
+%%        #    # #      #  # #  """   #    # #        #         %%
+%%         "mmm" #mmmmm #   ##        "mmmm" #mmmmm mm#mm       %%
+%%                                                              %%
+%%      Grundlagen der Elektrischen Netzwerke, UE               %%
+%%      Gruppe 5, Team F                                        %%
+%%      Authors: Severin Wolf, Maximilian Seidler.              %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+\documentclass[a4paper]{article}
 \usepackage{amsmath}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
@@ -30,7 +41,6 @@
 
 \begin{document}
 \pagestyle{empty} \enlargethispage*{25cm}\samepage{
-
 \vspace*{-3cm}
 \begin{center}
 \begin{minipage}[!h]{16cm}
@@ -52,7 +62,7 @@ Technische Universität Graz\\
 		\vspace*{0.5cm}
 		\large
 	        Team F: \quad Severin Wolf, \quad Maximilian Seidler \\
-		11 March 2021
+		14-17 March 2021
 \end{center}
 
 \tableofcontents
@@ -95,13 +105,6 @@ Technische Universität Graz\\
 	\subsection*{values:}
 	$R_1 = 2\Omega$ \qquad $R_2 = 4\Omega$ \qquad $R_3 = 8\Omega$ \qquad $R_4 = 3\Omega$  \\
 	$I_{s1} = 0.6A$ \qquad $U_{s2} = 4V$  \qquad $U_{s3} = \alpha \cdot I_{R_3}$ \qquad  $\alpha = 5$ 
-	
-%\begin{figure}[h!]
-%	\centering
-%	\includegraphics[scale=0.60]{./Figures/homework01_circuit.eps}
-%	\caption{Given circuit for assignment 1}
-%	\label{fig:circuit_assignment1}
-%\end{figure}
 
 \begin{figure}[h!] \centering    
 \begin{circuitikz}%[scale = 0.5, transform shape]
@@ -207,7 +210,8 @@ Technische Universität Graz\\
 \caption{Network with currents and (node-) voltages}
 \label{fig:circuit_labeled}
 \end{figure}
-Solving the given network with the modified node-voltage method. We are starting by setting up 
+Solving the given network with the modified node-voltage method. Therefore, we need an
+additional node $n4$ between the current-source $S3$. We are starting by setting up 
 $n-1$ node equations using Kirchhoff's current law.
 \begin{align*}
    n_1: \quad&I_{R2}-I_{R4}-I_{S3}^? &= 0 \\
@@ -217,7 +221,7 @@ $n-1$ node equations using Kirchhoff's current law.
 \end{align*}
 
 With the known source current $I_{S1}$ brought to the other side, we can set up a matrix, for those
-equations. $\vec{n}\vec{I} = \vec{b}$, where $\vec{n}$ represents current position and directions,
+equations. $\vec{n}\vec{I} = \vec{b}$, where $\vec{n}$ represents current positions and directions,
 $\vec{I}$ contains all network currents and  $\vec{s}$ contains already known source-currents.
 \begin{equation}
    \begin{pmatrix}
@@ -326,7 +330,7 @@ compensate for the voltage sources $S_2$ and $S_3$.
    S_3: \quad &U_{n1} - U_{n4} = U_{S3}
 \end{align*}
 
-So we add those as aditional rows to our admittance matrix $A$. Note, that the matrix is not
+So we add those as aditional rows to our admittance matrix $A$. Note, that the matrix $A$ is not
 symetrical anymore, because we determined the source currents in the opposite direction of the
 voltage arrows. 
 
