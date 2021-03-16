@@ -136,7 +136,7 @@ Technische Universität Graz\\
 \label{fig:circuit_assignment1}
 \end{figure}
 \blfootnote{Deadline: 18.03.2021- 9:00 \qquad presentation: group No. 1}
-\clearpage
+\newpage
 \section{Solution}
 \subsection{Analytical calculations}
 
@@ -146,7 +146,7 @@ Technische Universität Graz\\
       \draw (10,5) 
       to[short] (9,5)
       to[R, l=$R_1$, v=$U_{R_1}$]  (6,5)
-      to[short, i=$I_{R_1}$, color=red] (5,5);
+      to[short, i=$I_{R1}$, color=red] (5,5);
       %R_2
       \draw (5,10)
       to[short] (5,9)
@@ -169,22 +169,22 @@ Technische Universität Graz\\
       to[short, i=$I_{S1}$, color=red] (0,5);
       %Us_2
       \draw (0,5) 
-      to[short] (1,5) 
+      to[short, i<=$I_{S2}^?$, color=red] (1,5) 
       to[V, v=$U_{s2}$]  (4,5)
-      to[short, i=$I_{S2}$, color=red] (5,5);
+      to[short] (5,5);
       %Controlled Us_3
       \draw (10,10)
-      to[short, i_<=$I_{S3}$, color=red] (10, 9)
+      to[short, i<=$I_{S3}^?$, color=red] (10, 9)
       to[cvsource, v=$U_{S3}$]  (10,6)
       to[short] (10,5);
       %n_1
       \draw (0,10) to[short]                             (10,10);
       %ref 
-      \draw (0,0) to[short, *-*]                             (5,0);
+      \draw (0,0) to[short]                             (5,0);
       %grnd
       \draw (0,0) to (0,0) node[ground]{};
       %nodes
-      \draw[color=blue] (5,10) ellipse (150pt and 15pt);
+      \draw[color=blue] (5,10) ellipse (150pt and 12pt);
       \node[above, color=blue]  (n_1) at (5,10) {$n_1$};
       \draw[color=blue] (0,5) ellipse (25pt and 25pt);
       \node[below, xshift=2mm, color=blue]   (n_2) at (0,5) {$n_2$};
@@ -197,21 +197,186 @@ Technische Universität Graz\\
       %node voltage arrows
       \draw[-{Latex[length=2mm]}, color=blue] (2, 9.5) -- (2, 0.5)
       node[pos=0.65, right] {$U_{n1}$};
-      \draw[-{Latex[length=2mm]}, color=blue] (0.4, 4.5) -- (1.5, 0.5)
+      \draw[-{Latex[length=2mm]}, color=blue] (0.5, 4.2) -- (1.5, 0.5)
       node[pos=0.2, right] {$U_{n2}$};
-      \draw[-{Latex[length=2mm]}, color=blue] (4.6, 4.5) -- (2.5, 0.5)
+      \draw[-{Latex[length=2mm]}, color=blue] (4.5, 4.2) -- (2.5, 0.5)
       node[pos=0.2, left] {$U_{n3}$}; 
-      \draw[-{Latex[length=2mm]}, color=blue] (9.6, 4.5) -- (4, 0.5)
+      \draw[-{Latex[length=2mm]}, color=blue] (9.5, 4.2) -- (4, 0.5)
       node[pos=0.2, xshift=-2mm, left] {$U_{n4}$};
 \end{circuitikz}
 \caption{Network with currents and (node-) voltages}
 \label{fig:circuit_labeled}
 \end{figure}
-Solving the given network with the modified node-voltage method. We are setting up $n-1$ node
-equations using Kirchhoff's current law.
+Solving the given network with the modified node-voltage method. We are starting by setting up 
+$n-1$ node equations using Kirchhoff's current law.
 \begin{align*}
-   n_1: 
+   n_1: \quad&I_{R2}-I_{R4}-I_{S3}^? &= 0 \\
+   n_2: \quad&-I_{S1} - I_{S2}^? + I_{R4} &= 0 \\
+   n_3: \quad&I_{S2}^? - I_{R1} - I_{R2} + I_{R3} &= 0 \\
+   n_4: \quad&I_{S3}^? + I_{R1} &= 0
 \end{align*}
+
+With the known source current $I_{S1}$ brought to the other side, we can set up a matrix, for those
+equations. $\vec{n}\vec{I} = \vec{b}$, where $\vec{n}$ represents current position and directions,
+$\vec{I}$ contains all network currents and  $\vec{s}$ contains already known source-currents.
+\begin{equation}
+   \begin{pmatrix}
+      0 & 1 & 0 & -1 & 0 & -1 \\
+      0 & 0 & 0 & 1 & -1 & 0  \\
+      -1 & -1 & 1 & 0 & 1 & 0 \\
+      1 & 0 & 0 & 0 & 0 & 1  
+   \end{pmatrix}
+   \cdot
+   \begin{pmatrix}
+       I_{R1} \\ I_{R2} \\ I_{R3} \\ I_{R4} \\ I_{S2}^? \\ I_{S3}^? 
+   \end{pmatrix}
+   =
+   \begin{pmatrix}
+      0 \\ I_{S1} \\ 0 \\ 0  
+   \end{pmatrix}
+   \label{eqn:nodes}
+\end{equation}
+Now we express those unknown resistor currents as node-voltages divided by resistance.
+\[
+   I_{R1} = \frac{U_{n4} - U_{n3}}{R_1}, \quad I_{R_2} = \frac{U_{n1} - U_{n3}}{R_2}, \quad
+   I_{R3} = \frac{U_{n3}}{R_3}, \quad I_{R4} = \frac{U_{n2} - U_{n1}}{R_4}
+.\]
+
+\newpage
+
+Instead of using resistances $\frac{1}{R_i}$,  we substitute them for conductances
+$G_{i}$. For future ease of calculations, we once again form a matrix equation. Note, that we do not know
+the currents $I_{S2}^?$ and $I_{S3}^?$ yet, so we leave them for now.
+\begin{equation}
+   \begin{pmatrix}
+      0 & 0 & -G_1 & G_1 & 0 & 0 \\
+      G_2 & 0 & -G_2 & 0 & 0 & 0 \\
+      0 & 0 & G_3 & 0 & 0 & 0 \\
+      -G_4 & G_4 & 0 & 0 & 0 & 0\\
+      0 & 0 & 0 & 0 & 1 & 0 \\
+      0 & 0 & 0 & 0 & 0 & 1 
+   \end{pmatrix}
+   \cdot
+   \begin{pmatrix}
+      U_{n1} \\ U_{n2} \\ U_{n3} \\ U_{n4} \\ I_{S2}^? \\ I_{S3}^?
+   \end{pmatrix}
+   =
+   \begin{pmatrix}
+       I_{R1} \\ I_{R2} \\ I_{R3} \\ I_{R4} \\ I_{S2}^? \\ I_{S3}^? 
+   \end{pmatrix}
+   \label{eqn:currents}
+\end{equation}
+We substitute the vector $\vec{I}$ from Equation \ref{eqn:nodes} with the matricies from above. 
+
+\begin{equation*}
+   \begin{pmatrix}
+      0 & 1 & 0 & -1 & 0 & -1 \\
+      0 & 0 & 0 & 1 & -1 & 0  \\
+      -1 & -1 & 1 & 0 & 1 & 0 \\
+      1 & 0 & 0 & 0 & 0 & 1  
+   \end{pmatrix}
+   \cdot
+   \begin{pmatrix}
+      0 & 0 & -G_1 & G_1 & 0 & 0 \\
+      G_2 & 0 & -G_2 & 0 & 0 & 0 \\
+      0 & 0 & G_3 & 0 & 0 & 0 \\
+      -G_4 & G_4 & 0 & 0 & 0 & 0\\
+      0 & 0 & 0 & 0 & 1 & 0 \\
+      0 & 0 & 0 & 0 & 0 & 1 
+   \end{pmatrix}
+   \cdot
+   \begin{pmatrix}
+      U_{n1} \\ U_{n2} \\ U_{n3} \\ U_{n4} \\ I_{S2}^? \\ I_{S3}^?
+   \end{pmatrix}
+   =
+   \begin{pmatrix}
+      0 \\ I_{S1} \\ 0 \\ 0  
+   \end{pmatrix}
+\end{equation*}
+
+\hspace{2cm}\begin{tikzpicture} 
+   \draw[decoration={brace,mirror},decorate,thick]
+      (0,0) -- (9,0);
+\end{tikzpicture}
+
+\begin{equation}
+\begin{pmatrix}
+   G_2 + G_4 & -G_4 & -G_2 & 0 & 0 & -1 \\
+   -G_4 & G_4 & 0 & 0 & -1 & 0 \\
+   -G_2 & 0 & G_1+G_2+G_3 & -G_1 & 1 & 0 \\
+   0 & 0 & -G_1 & G_1 & 0 & 1 
+\end{pmatrix}
+\cdot
+\begin{pmatrix}
+   U_{n1} \\ U_{n2} \\ U_{n3} \\ U_{n4} \\ I_{S2}^? \\ I_{S3}^?
+\end{pmatrix}
+=
+\begin{pmatrix}
+   0 \\ I_{S1} \\ 0 \\ 0  
+\end{pmatrix}
+\label{eqn:nodes_currents}
+\end{equation}
+
+Now we have our node voltage equations in Form of $A \vec{x} = \vec{b}$, but we have 6 unknown
+variables and only 4 equations to solve them. Thats why we need two secondary conditions, to
+compensate for the voltage sources $S_2$ and $S_3$.
+
+\begin{align*}
+   S_2: \quad &U_{n2} = U_{S2}, \\ 
+   S_3: \quad &U_{n1} - U_{n4} = U_{S3}
+\end{align*}
+
+So we add those as aditional rows to our admittance matrix $A$. Note, that the matrix is not
+symetrical anymore, because we determined the source currents in the opposite direction of the
+voltage arrows. 
+
+\begin{equation}
+\begin{pmatrix}
+   G_2 + G_4 & -G_4 & -G_2 & 0 & 0 & -1 \\
+   -G_4 & G_4 & 0 & 0 & -1 & 0 \\
+   -G_2 & 0 & G_1+G_2+G_3 & -G_1 & 1 & 0 \\
+   0 & 0 & -G_1 & G_1 & 0 & 1 \\ 
+   0 & 0 & 1 & -1 & 0 & 0 \\
+   1 & 0 & 0 & -1 & 0 & 0 
+\end{pmatrix}
+\cdot
+\begin{pmatrix}
+   U_{n1} \\ U_{n2} \\ U_{n3} \\ U_{n4} \\ I_{S2}^? \\ I_{S3}^?
+\end{pmatrix}
+=
+\begin{pmatrix}
+   0 \\ I_{S1} \\ 0 \\ 0 \\ U_{S2} \\ U_{S3} 
+\end{pmatrix}
+\label{eqn:nodes_currents_src}
+\end{equation}
+
+So far so good, but there is still one unknown variable, which is $U_{S3}$. This voltage is
+proportional to the current $I_{R3}$. The Faktor between them is $\alpha$. With $U_{S3} = \alpha
+I_{R3}$ and $I_{R3} = U_{n3}G_3$, we rearrange the equation $U_{n1} - U_{n4} = U_{S3}$ to
+\[
+   U_{n1} - U_{n4} - \alpha (U_{n3} G_3) = 0
+.\]
+We plug that into our matrix $A$ and get a solveable system of linear independent equations.
+\begin{equation}
+\begin{pmatrix}
+   G_2 + G_4 & -G_4 & -G_2 & 0 & 0 & -1 \\
+   -G_4 & G_4 & 0 & 0 & -1 & 0 \\
+   -G_2 & 0 & G_1+G_2+G_3 & -G_1 & 1 & 0 \\
+   0 & 0 & -G_1 & G_1 & 0 & 1 \\ 
+   0 & 0 & 1 & -1 & 0 & 0 \\
+   1 & 0 & -\alpha G_3 & -1 & 0 & 0 
+\end{pmatrix}
+\cdot
+\begin{pmatrix}
+   U_{n1} \\ U_{n2} \\ U_{n3} \\ U_{n4} \\ I_{S2}^? \\ I_{S3}^?
+\end{pmatrix}
+=
+\begin{pmatrix}
+   0 \\ I_{S1} \\ 0 \\ 0 \\ U_{S2} \\ 0
+\end{pmatrix}
+\label{eqn:final_matrix}
+\end{equation}
+
 \subsection{Matlab}
 \subsubsection{Sourcecode}
 \subsubsection{Console output}
