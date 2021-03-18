@@ -37,6 +37,18 @@
 \geometry{a4paper,left=3cm,right=2cm, top=2cm, bottom=2cm} 
 \usepackage[EFvoltages, european, straightvoltages]{circuitikz}
 
+%matlab
+\usepackage{lmodern}
+\usepackage{color}
+\usepackage{hyperref}
+\usepackage{amsfonts}
+\usepackage{epstopdf}
+\usepackage{matlab}
+
+\sloppy
+\epstopdfsetup{outdir=./}
+\graphicspath{ {./Assignment1_images/} }
+
 %tikz
 \ctikzset{resistor = european}
 \usetikzlibrary{decorations.pathreplacing}
@@ -341,7 +353,7 @@ variables and only 4 equations to solve them. That's why we need two secondary c
 compensate for the voltage sources $S_2$ and $S_3$.
 
 \begin{align*}
-   S_2: \quad &U_{n2} = U_{S2} \\ 
+   S_2: \quad &U_{n2} - U_{n3}= U_{S2} \\ 
    S_3: \quad &U_{n1} - U_{n4} = U_{S3}
 \end{align*}
 
@@ -355,7 +367,7 @@ voltage arrows.
    -G_4 & G_4 & 0 & 0 & -1 & 0 \\
    -G_2 & 0 & G_1+G_2+G_3 & -G_1 & 1 & 0 \\
    0 & 0 & -G_1 & G_1 & 0 & 1 \\ 
-   0 & 0 & 1 & -1 & 0 & 0 \\
+   0 & 1 & -1 & 0 & 0 & 0 \\
    1 & 0 & 0 & -1 & 0 & 0 
 \end{pmatrix}
 \cdot
@@ -383,7 +395,7 @@ We plug that into our matrix $A$ and get a solveable system of linear independen
    -G_4 & G_4 & 0 & 0 & -1 & 0 \\
    -G_2 & 0 & G_1+G_2+G_3 & -G_1 & 1 & 0 \\
    0 & 0 & -G_1 & G_1 & 0 & 1 \\ 
-   0 & 0 & 1 & -1 & 0 & 0 \\
+   0 & 1 & -1 & 0 & 0 & 0 \\
    1 & 0 & -\alpha G_3 & -1 & 0 & 0 
 \end{pmatrix}
 \cdot
@@ -399,10 +411,169 @@ We plug that into our matrix $A$ and get a solveable system of linear independen
 
 \subsection{Matlab}
 \subsubsection{Sourcecode}
+\begin{matlabcode}
+%define given values
+R_1 = 2; R_2 = 4; R_3 = 8; R_4 = 3;
+I_s1 = 0.6; U_s2 = 4; alpha = 5;
+
+G_1 = 1/R_1; G_2 = 1/R_2; G_3 = 1/R_3; G_4 = 1/R_4;
+
+%define matrices
+A = [G_2 + G_4, -G_4, -G_2, 0, 0, -1;
+    -G_4, G_4, 0, 0, -1, 0;
+    -G_2, 0, G_1 + G_2 + G_3, -G_1, 1, 0;
+    0, 0, -G_1, G_1, 0, 1;
+    0, 1, -1, 0, 0, 0;
+    1, 0, -alpha*G_3, -1, 0, 0];
+
+b = [0; I_s1; 0; 0; U_s2; 0];
+
+%calculate the node voltages
+x = A\b;
+
+%name the node voltages
+U_n1 = x(1);
+U_n2 = x(2);
+U_n3 = x(3);
+U_n4 = x(4);
+
+%calculate the voltages
+U_R1 = U_n4 - U_n3;
+U_R2 = U_n1 - U_n3;
+U_R3 = U_n3;
+U_R4 = U_n2 - U_n1;
+
+%calculate the currents
+I_R1 = U_R1/R_1;
+I_R2 = U_R2/R_2;
+I_R3 = U_R3/R_3;
+I_R4 = U_R4/R_4;
+I_s2 = x(5);
+I_s3 = x(6);
+
+%controlled voltage source
+U_s3 = alpha * I_R3;
+\end{matlabcode}
+\begin{matlabcode}
+   %results
+   disp('node voltages:');
+   disp(['U_n1 = ', num2str(U_n1), 'V']);
+   disp(['U_n2 = ', num2str(U_n2), 'V']);
+   disp(['U_n3 = ', num2str(U_n3), 'V']);
+   disp(['U_n4 = ', num2str(U_n4), 'V']);
+\end{matlabcode}
+
+\begin{matlabcode}
+   disp('voltages:');
+   disp(['U_R1 = ', num2str(U_R1), 'V']);
+   disp(['U_R2 = ', num2str(U_R2), 'V']);
+   disp(['U_R3 = ', num2str(U_R3), 'V']);
+   disp(['U_R4 = ', num2str(U_R4), 'V']);
+   disp(['U_s3 = ', num2str(U_s3), 'V']);
+\end{matlabcode}
+
+\begin{matlabcode}
+   disp('currents:');
+   disp(['I_R1 = ', num2str(I_R1), 'A']);
+   disp(['I_R2 = ', num2str(I_R2), 'A']);
+   disp(['I_R3 = ', num2str(I_R3), 'A']);
+   disp(['I_R4 = ', num2str(I_R4), 'A']);
+   disp(['I_s2 = ', num2str(I_s2), 'A']);
+   disp(['I_s3 = ', num2str(I_s3), 'A']);
+\end{matlabcode}
+   
 \subsubsection{Console output}
+\begin{matlaboutput}
+node voltages:
+U_n1 = 7.4154V
+U_n2 = 8.8V
+U_n3 = 4.8V
+U_n4 = 4.4154V
+
+voltages:
+U_R1 = -0.38462V
+U_R2 = 2.6154V
+U_R3 = 4.8V
+U_R4 = 1.3846V
+U_s3 = 3V
+
+currents:
+I_R1 = -0.19231A
+I_R2 = 0.65385A
+I_R3 = 0.6A
+I_R4 = 0.46154A
+I_s2 = -0.13846A
+I_s3 = 0.19231A
+\end{matlaboutput}
+
 \subsection{Numerical Results}
 \subsubsection{Node Voltages}
+\begin{equation*}
+   U_n = 
+   \begin{pmatrix}
+      7.4154\\ 8.8\\ 4.8\\ 4.4154
+   \end{pmatrix}
+   V
+\end{equation*}
+
 \subsubsection{Unknown source currents/voltages}
+\begin{align*}
+   I_{s2} &= -0.1385A &
+   I_{s3} &= 0.1923A &
+   U_{s3} &= 3V
+\end{align*}   
+
+\subsubsection{Resistor currents/voltages}
+\begin{equation*}
+   U_R =
+   \begin{pmatrix}
+      -0.3846\\ 2.6154\\ 4.8\\ 1.3846
+   \end{pmatrix}
+   V
+\end{equation*}
+\begin{equation*}
+   I_R =
+   \begin{pmatrix}
+      -0.1923\\ 0.6538\\ 0.6\\ 0.4615
+   \end{pmatrix}
+   A
+\end{equation*}
+
+\subsection{Powers}
+\begin{equation*}
+   P = U \cdot I
+\end{equation*}
+Used powers at the resistors:
+\begin{equation*}
+   P_R = 
+   \begin{pmatrix}
+      -0.3846\\ 2.6154\\ 4.8\\ 1.3846
+   \end{pmatrix}
+   V \cdot
+   \begin{pmatrix}
+      -0.1923\\ 0.6538\\ 0.6\\ 0.4615
+   \end{pmatrix}
+   A =
+   \begin{pmatrix}
+      0.07396\\ 1.70994\\ 2.88\\ 0.63899
+   \end{pmatrix}
+   W
+\end{equation*}
+Powers supplied by the sources:\\
+With a mesh, $U_{s1}$ can be calculated
+\begin{align*}
+   U_{s1} &= U_{s2} + U_{R3} &= 4V + 4.8V &= 8.8V\\
+   P_{s1} &= U_{s1} \cdot I_{s1} &= 8.8V \cdot 0.6A &= 5.28W\\
+   P_{s2} &= U_{s2} \cdot I_{s2} &= 4V \cdot -0.1385A &= -0.554W\\
+   P_{s3} &= U_{s3} \cdot I_{s3} &= 3V \cdot 0.1923A &= 0.5769W\\
+\end{align*}
+\begin{align*}
+   \sum P_R &= 5.3029W&
+   \sum P_s &= 5.3029W&
+\end{align*}
+If we add up $P_R$ and $P_s$ and count $P_s$ with a negative sign (because they are sources) it equals zero.
+
 \subsection{LTSpice Simulation}
+\includegraphics{./Figures/LTSpice.PNG}
 
 \end{document}
