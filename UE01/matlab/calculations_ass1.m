@@ -9,7 +9,7 @@ g3 = 1/8;
 g4 = 1/3;
 
 % modified admittanzmatrix
-A = [  g2+g4,  -g4,    -g2,        0,      0, -1;
+A = [  g2+g4,  -g4,    -g2,         0,      0, -1;
         -g4,    g4,     0,          0,      -1, 0;
         -g2,    0,      g1+g2+g3,   -g1,    1, 0;
         0,      0,      -g1,        g1,     0, 1;
@@ -51,6 +51,7 @@ U_s3 = alpha * I_R3;
     disp(['U_n2 = ', num2str(U_n2), 'V']);
     disp(['U_n3 = ', num2str(U_n3), 'V']);
     disp(['U_n4 = ', num2str(U_n4), 'V']);
+    disp('');
  
     disp('voltages:');
     disp(['U_R1 = ', num2str(U_R1), 'V']);
@@ -58,6 +59,7 @@ U_s3 = alpha * I_R3;
     disp(['U_R3 = ', num2str(U_R3), 'V']);
     disp(['U_R4 = ', num2str(U_R4), 'V']);
     disp(['U_s3 = ', num2str(U_s3), 'V']);
+    disp('');
     
     disp('currents:');
     disp(['I_R1 = ', num2str(I_R1), 'A']);
