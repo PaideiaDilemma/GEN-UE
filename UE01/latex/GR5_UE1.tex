@@ -12,7 +12,7 @@
 % Note für Severin:
 % mathe in latex glieder ich so:
 %
-% \[ <one line equation> /]
+% \[ <one line equation> /
 %
 % \begin{equation}
 %       numbered one line equation
@@ -34,6 +34,7 @@
 \usepackage{geometry}
 \usepackage{graphicx}
 \usepackage{tikz}
+\usepackage{listings}
 \geometry{a4paper,left=3cm,right=2cm, top=2cm, bottom=2cm} 
 \usepackage[EFvoltages, european, straightvoltages]{circuitikz}
 
@@ -404,10 +405,12 @@ We plug that into our matrix $A$ and get a solveable system of linear independen
 \newpage
 
 \subsection{Matlab}
-\newpage
-
-\subsection{Numerical Results}
-\subsubsection{Node Voltages}
+\subsubsection{Source code}
+\lstinputlisting[language=matlab]{./../matlab/calculations_ass1.m}  
+\subsubsection{Console output}
+\lstinputlisting[language=matlab]{./../matlab/console_output.txt}  
+\subsection{Numerical results}
+\subsubsection{Node voltages}
 \begin{equation*}
    U_n = 
    \begin{pmatrix}
@@ -474,7 +477,10 @@ With a mesh, $U_{s1}$ can be calculated
 If we add up $P_R$ and $P_s$ and count $P_s$ with a negative sign (because they are sources) it equals zero.
 
 \newpage
-\subsection{LTSpice Simulation}
-\includegraphics{./Figures/LTSpice.PNG}
-
+\subsection{Ltspice simulation}
+\begin{figure}[h!]
+   \includegraphics[scale=0.8]{./Figures/LTSpice.PNG} 
+\caption{Ltspice simulation}
+\label{fig:ltspice}
+\end{figure}
 \end{document}

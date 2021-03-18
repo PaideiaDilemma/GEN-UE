@@ -1,0 +1,18 @@
+node voltages:
+U_n1 = 7.4154V
+U_n2 = 8.8V
+U_n3 = 4.8V
+U_n4 = 4.4154V
+voltages:
+U_R1 = -0.38462V
+U_R2 = 2.6154V
+U_R3 = 4.8V
+U_R4 = 1.3846V
+U_s3 = 3V
+currents:
+I_R1 = -0.19231A
+I_R2 = 0.65385A
+I_R3 = 0.6A
+I_R4 = 0.46154A
+I_s2 = -0.13846A
+I_s3 = 0.19231A
