@@ -1,0 +1,124 @@
+% This LaTeX was auto-generated from MATLAB code.
+% To make changes, update the MATLAB code and export to LaTeX again.
+
+\documentclass{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{graphicx}
+\usepackage{color}
+\usepackage{hyperref}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{epstopdf}
+\usepackage[table]{xcolor}
+\usepackage{matlab}
+\usepackage{geometry}
+\geometry{a4paper,left=3cm,right=2cm, top=2cm, bottom=2cm} 
+
+\sloppy
+\epstopdfsetup{outdir=./}
+\graphicspath{ {./Assignment1_images/} }
+
+\begin{document}
+\section{x}
+\section{y}
+\subsection{z}
+\newpage
+
+\subsection{Matlab}
+With the help of Matlab, $\vec{x}$ can be calculated:
+\subsubsection{Sourcecode}
+\begin{matlabcode}
+%define given values
+R_1 = 2; R_2 = 4; R_3 = 8; R_4 = 3;
+I_s1 = 0.6; U_s2 = 4; alpha = 5;
+
+G_1 = 1/R_1; G_2 = 1/R_2; G_3 = 1/R_3; G_4 = 1/R_4;
+
+%define matrices
+A = [G_2 + G_4, -G_4, -G_2, 0, 0, -1;
+    -G_4, G_4, 0, 0, -1, 0;
+    -G_2, 0, G_1 + G_2 + G_3, -G_1, 1, 0;
+    0, 0, -G_1, G_1, 0, 1;
+    0, 1, -1, 0, 0, 0;
+    1, 0, -alpha*G_3, -1, 0, 0];
+
+b = [0; I_s1; 0; 0; U_s2; 0];
+
+%calculate the node voltages
+x = A\b;
+
+%name the node voltages
+U_n1 = x(1);
+U_n2 = x(2);
+U_n3 = x(3);
+U_n4 = x(4);
+
+%calculate the voltages
+U_R1 = U_n4 - U_n3;
+U_R2 = U_n1 - U_n3;
+U_R3 = U_n3;
+U_R4 = U_n2 - U_n1;
+
+%calculate the currents
+I_R1 = U_R1/R_1;
+I_R2 = U_R2/R_2;
+I_R3 = U_R3/R_3;
+I_R4 = U_R4/R_4;
+I_s2 = x(5);
+I_s3 = x(6);
+
+%controlled voltage source
+U_s3 = alpha * I_R3;
+
+
+    %results
+    disp('node voltages:');
+    disp(['U_n1 = ', num2str(U_n1), 'V']);
+    disp(['U_n2 = ', num2str(U_n2), 'V']);
+    disp(['U_n3 = ', num2str(U_n3), 'V']);
+    disp(['U_n4 = ', num2str(U_n4), 'V']);
+ 
+    disp('voltages:');
+    disp(['U_R1 = ', num2str(U_R1), 'V']);
+    disp(['U_R2 = ', num2str(U_R2), 'V']);
+    disp(['U_R3 = ', num2str(U_R3), 'V']);
+    disp(['U_R4 = ', num2str(U_R4), 'V']);
+    disp(['U_s3 = ', num2str(U_s3), 'V']);
+ 
+    disp('currents:');
+    disp(['I_R1 = ', num2str(I_R1), 'A']);
+    disp(['I_R2 = ', num2str(I_R2), 'A']);
+    disp(['I_R3 = ', num2str(I_R3), 'A']);
+    disp(['I_R4 = ', num2str(I_R4), 'A']);
+    disp(['I_s2 = ', num2str(I_s2), 'A']);
+    disp(['I_s3 = ', num2str(I_s3), 'A']);
+ \end{matlabcode}
+ 
+ \subsubsection{Console output}
+ \begin{matlaboutput}
+ node voltages:
+ U_n1 = 7.4154V
+ U_n2 = 8.8V
+ U_n3 = 4.8V
+ U_n4 = 4.4154V
+ 
+ voltages:
+ U_R1 = -0.38462V
+ U_R2 = 2.6154V
+ U_R3 = 4.8V
+ U_R4 = 1.3846V
+ U_s3 = 3V
+ 
+ currents:
+ I_R1 = -0.19231A
+ I_R2 = 0.65385A
+ I_R3 = 0.6A
+ I_R4 = 0.46154A
+ I_s2 = -0.13846A
+ I_s3 = 0.19231A
+ \end{matlaboutput}
+
+\end{document}
