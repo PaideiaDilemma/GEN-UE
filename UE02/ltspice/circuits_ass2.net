@@ -1,0 +1,11 @@
+* C:\users\max\My Documents\TU\GEN\UE02\ltspice\circuits_ass2.asc
+R_th N001 N002 1.212121
+V§U_th N001 0 -3.3838
+R7 N002 0 20
+I1 0 N002 0.8
+* a
+* a_th
+* b_th
+.op
+.backanno
+.end

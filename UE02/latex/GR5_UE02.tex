@@ -137,10 +137,15 @@ Graz University of Technology\\
 \label{fig:circuit_assignment2}
 \end{figure}
 
+
+\tableofcontents
+\listoffigures
+\clearpage
+
 \section{Solution}
 \subsection{Network}
 \begin{figure}[h!] \centering    
-\begin{circuitikz}[scale=0.75]
+\begin{circuitikz}
       %controlled Us_1
       \draw (0,0) 
       to[short](0,1)
@@ -152,7 +157,7 @@ Graz University of Technology\\
       to[V, v=$U_{s_2}$, color=blue]         (6,5)
       to[short](5,5);
       %Is_3
-      \draw (18,5) to[I, i=$I_{s_3}$, color =red]        (18,10);
+      %\draw (18,5) to[I, i=$I_{s_3}$, color =red]        (18,10);
       %R_1
       \draw                                     (5,0)
       to[short, *-]                             (6,0)
@@ -181,17 +186,17 @@ Graz University of Technology\\
       to[short, i=$I_{R_5}$, color=red]          (10,10)
       to[short, -*]                             (10,10);
       %R_6
-      \draw                                     (15,5)
-      to[short, *-]                             (15,6) 
-      to[R, l=$R_6$, v=$U_{R_6}$]               (15,9)
-      to[short, i=$I_{R_6}$, color=red]          (15,10)
-      to[short, -*]                             (15,10);
+      %\draw                                     (15,5)
+      %to[short, *-]                             (15,6) 
+      %to[R, l=$R_6$, v=$U_{R_6}$]               (15,9)
+      %to[short, i=$I_{R_6}$, color=red]          (15,10)
+      %to[short, -*]                             (15,10);
       %connections
       \draw (0,5) to[short] (0,10) to[short]    (12.5,10);
       \draw (10,0) to[short] (10,5) to[short]   (12.5,5);
       %clamps + connections
-      \draw (12.5,10) to[short, o-] (18,10);
-      \draw (12.5,5) to[short, o-] (18,5);
+      \draw (12.5,10) to[short, o-] (12.5,10);%(18,10);
+      \draw (12.5,5) to[short, o-] (12.5,5);%(18,5);
       %ref node
       \draw (5,0) to[short]                             (0,0);
       %grnd
@@ -203,19 +208,19 @@ Graz University of Technology\\
       \node[below, color=blue]              (ref) at (5,0) {ref};
       \node[above]              (a) at (12.5,10) {a};
       \node[above]              (b) at (12.5,5) {b};
-      \draw[color=blue](5,10) ellipse (150pt and 12pt);
+      \draw[color=blue](5,10) ellipse (150pt and 15pt);
       \draw[color=blue](5,5) ellipse (25pt and 25pt);
       \draw[color=blue](10,5) ellipse (25pt and 25pt);
-      \draw[color=blue](2.5,0) ellipse (80pt and 12pt);
+      \draw[color=blue](2.5,0) ellipse (80pt and 15pt);
       \draw[color=blue](0,7.5) ellipse (12pt and 80pt);
-      \draw[-{Latex[length=2mm]}, color=blue] (3.75, 9.5) -- (3.75, 0.5)
+      \draw[-{Latex[length=2mm]}, color=blue] (-1, 7.5) -- (-1, 0.5)
       node[pos=0.25, left] {$U_{n_1}$};
-      \draw[-{Latex[length=2mm]}, color=blue] (4.25, 4.25) -- (2.5, 0.5)
+      \draw[-{Latex[length=2mm]}, color=blue] (4.25, 4.25) -- (2.5, 0.6)
       node[pos=0.45, left] {$U_{n_2}$};
       \draw[-{Latex[length=2mm]}, color=blue] (9.25, 4.25) -- (5.25, 0.25)
       node[pos=0.5, right] {$U_{n_3}$};
 \end{circuitikz}
-\caption{Network with curents and (node-) voltages}
+\caption{Network with currents and (node-) voltages}
 \label{fig:circuit_labeled}
 \end{figure}
 
@@ -297,13 +302,56 @@ as it depands on $I_{R_3}$.
             0\\0\\0\\U_{s_2}\\0
       \end{pmatrix}
 \end{equation}
-Now we have five unknowns and five equations, so the eqation system can be solved.
-
+Now we have five unknowns and five equations, that we are going to solve with matlab.
+\clearpage
 \subsection{Matlab}
+\subsubsection{Source code}
+\lstinputlisting[language=matlab]{./../matlab/calculations_ass2.m}  
+\subsubsection{Console output}
+\lstinputlisting[language=matlab]{./../matlab/console_output.txt}  
 \subsection{Numerical results}
-\newpage
+\subsubsection{Node Voltages}
+\begin{equation*}
+   U_n = 
+   \begin{pmatrix}
+      -0.80808 \\ -2.4242 \\ 2.5758
+   \end{pmatrix}
+   V
+\end{equation*}
+\subsubsection{Unknown source currents/voltages}
+\begin{align*}
+   U_{s1} &= -0.80808 V &
+   I_{s1} &= -0.22727 A &
+   I_{s2} &= -0.82155 A
+\end{align*}   
+\subsubsection{Resistor currents/voltages}
+\begin{equation*}
+   U_R =
+   \begin{pmatrix}
+      2.5758\\ -2.4242\\ -1.6162\\ 1.6162 \\ 3.3838
+   \end{pmatrix}
+   V\,, \quad
+   I_R =
+   \begin{pmatrix}
+      0.25758\\ -0.48485\\ 0.2020\\ 0.13468 \\ 0.56397
+   \end{pmatrix}
+   A
+\end{equation*}
+\subsubsection{Open-circuit voltage $U_{oc}$ beteen terminals $a$ and $b$}
+\begin{equation*}
+   U_{oc}=U_{n1} - U_{n3} = -3.3838 V
+\end{equation*}
+\subsection{Ltspice simulation}
+In order to confirm our results, we simulated the circuit in ltspice.
+\begin{figure}[h!] \centering
+   \includegraphics[scale=0.5]{./Figures/ltspice.png} 
+\caption{Ltspice simulation 1} 
+\label{fig:ltspice_1}
+\end{figure}
+\clearpage
 \subsection{Analytical determination of the Thévenin equivalent}
-Now that we have calculated our inner Network we need to detrmine its resistance $R_{th}$.
+Now that we have calculated $U_{oc} = U_{th}$ we need to determine the equivalent resistance
+$R_{th}$.
 Therefore we replace the independent source with its ideal inner resistance and apply a test
 volatge $U_T$ at the terminals $a$ and $b$.\\
 \begin{figure}[h!] \centering    
@@ -367,23 +415,22 @@ volatge $U_T$ at the terminals $a$ and $b$.\\
       \node[below, color=blue]              (ref) at (5,0) {ref};
       \node[above]              (a) at (12.5,10) {a};
       \node[above]              (b) at (12.5,5) {b};
-      \draw[color=blue](5,10) ellipse (150pt and 12pt);
+      \draw[color=blue](5,10) ellipse (150pt and 15pt);
       \draw[color=blue](5,5) ellipse (25pt and 25pt);
       \draw[color=blue](10,5) ellipse (25pt and 25pt);
-      \draw[color=blue](2.5,0) ellipse (80pt and 12pt);
+      \draw[color=blue](2.5,0) ellipse (80pt and 15pt);
       \draw[color=blue](0,7.5) ellipse (12pt and 80pt);
-      \draw[-{Latex[length=2mm]}, color=blue] (3.75, 9.5) -- (3.75, 0.5)
+      \draw[-{Latex[length=2mm]}, color=blue] (-1, 7.5) -- (-1, 0.5)
       node[pos=0.25, left] {$U_{n_1}$};
-      \draw[-{Latex[length=2mm]}, color=blue] (4.25, 4.25) -- (2.5, 0.5)
+      \draw[-{Latex[length=2mm]}, color=blue] (4.25, 4.25) -- (2.5, 0.6)
       node[pos=0.45, left] {$U_{n_2}$};
       \draw[-{Latex[length=2mm]}, color=blue] (9.25, 4.25) -- (5.25, 0.25)
       node[pos=0.5, right] {$U_{n_3}$};
 \end{circuitikz}
-\caption{Applied testvoltage to the network}
+\caption{Network with testvoltage}
 \label{fig:Testvoltage}
 \end{figure}
-\\
-We simply add $U_T$ to our Matrix and set $U_{S_2}$ to zero, as it is deactivated.
+\\ We simply add $U_T$ to our Matrix and set $U_{S_2}$ to zero, as it is deactivated.
 \begin{equation}
       \begin{pmatrix}
             G_3 + G_4 + G_5 & -G_3 - G_4 & -G_5 & 0 & -1 &1\\
@@ -402,6 +449,45 @@ We simply add $U_T$ to our Matrix and set $U_{S_2}$ to zero, as it is deactivate
             0\\0\\0\\0\\0\\U_T
       \end{pmatrix}
 \end{equation}
+After we have calculated the current $I_{T}$, we can calculate the equivalent resistance $R_{th}$
+using ohm's law. 
 \subsection{Matlab}
+\subsubsection{Source code}
+\lstinputlisting[language=matlab]{./../matlab/calculations_ass2_2.m}  
+\subsubsection{Console output}
+\lstinputlisting[language=matlab]{./../matlab/console_output_2.txt}  
+
 \subsection{Numerical results of the Thévenin equivalent}
+The open-circuit current $U_{oc}$ resembles our thévenin voltage $U_{th} = -3.3838 V$.
+In order to calculate the equivalent resistance, we apply a test voltage $U_{T} = 1V$, which yielded
+\[
+I_{T} = -0.825A
+.\] 
+and under consideration of the passive sign convention, we get
+\[
+R_{th} = \frac{U_{Rnet}}{I_{R}} = \frac{-U_{T}}{I_{T}}= 1.2121\Omega
+.\]
+\clearpage
+\subsection{Ltspice simulation}
+To show that our calculations are correct, we first confirm the test-voltage-method. 
+\begin{figure}[h!]\centering
+   \includegraphics[scale=0.5]{./Figures/ltspice_testvoltage.png} 
+\caption{Ltspice simulation 2}
+\label{fig:ltspice_2}
+\end{figure}
+\\Here is the behaviour of the whole circuit as shown in Figure \ref{fig:circuit_assignment2},
+\begin{figure}[h!]\centering
+   \includegraphics[scale=0.5]{./Figures/ltspice_all.png} 
+\caption{Ltspice simulation 3}
+\label{fig:ltspice_3}
+\end{figure}
+\clearpage
+And here is the behaviour of its thévenin equivalent. They have the same voltages and currents after
+the clamps.
+($U_{n1} -U_{n3}$ to get the voltage between $a$ and $b$) 
+\begin{figure}[h!]\centering
+   \includegraphics[scale=0.5]{./Figures/ltspice_equivalent.png} 
+\caption{Ltspice simulation 4}
+\label{fig:ltspice_4}
+\end{figure}
 \end{document}
