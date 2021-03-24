@@ -490,4 +490,67 @@ the clamps.
 \caption{Ltspice simulation 4}
 \label{fig:ltspice_4}
 \end{figure}
+\newpage
+\subsection{Bonus}
+\subsubsection{Network}
+\begin{figure}[h!] \centering    
+      \begin{circuitikz}[scale=0.75]
+            %controlled Us_1
+            \draw (0,0) 
+            to[short](0,1)
+            to[V, v=$U_{TH}$, color=blue]  (0,4)
+            to[short, i=$I_{TH}$, color=red](0,5);
+            %Is_3
+            \draw (10,0) to[I, i=$I_{s_3}$, color =red]        (10,5);
+            %R_TH
+            \draw                                     (0,5)
+            to[short]                             (1,5)
+            to[R, l=$R_{TH}$, v=$U_{R_{TH}}$]               (4,5)
+            to[short]          (5,5);
+            %R_6
+            \draw                                     (7,0)
+            to[short, *-]                             (7,1) 
+            to[R, l=$R_6$, v=$U_{R_6}$]               (7,4)
+            to[short, i=$I_{R_6}$, color=red]          (7,5)
+            to[short, -*]                             (7,5);
+            %clamps + connections
+            \draw (5,5) to[short, o-] (10,5);
+            \draw (5,0) to[short, o-] (10,0 );
+            %ref node
+            \draw (5,0) to[short]                             (0,0);
+            %grnd
+            \draw (0,0) to (0,0) node[ground]{};
+            %nodes
+            \node[above]              (a) at (5,5) {a};
+            \node[above]              (b) at (5,0) {b};
+      \end{circuitikz}
+      \caption{Thevenin Network}
+      \label{fig:Thevenin_nw}
+      \end{figure}
+
+      \subsection{Analytical results}
+      As we have a linear circuit we need to calculate two relations between $I_{s_3}$ and $U_{R_6}$.
+      Then we can set up a linear function in order to determine the right value for $I_{s_{3_{new}}}$.\\
+      First we coose 0mA for $I_{s_3}$, so its basicly deactivated:
+      \begin{equation}
+            U_{R_{6_0}} = U_{TH} + U_{R_{TH}}
+      \end{equation}\label{eqn:0mA}
+      Then we coose 5mA for $I_{s_3}$. Now there are two sources, so we make use of the principle of
+      superposition. We already know the result, if $I_{s_3}$ is deactivated from above, so we 
+      just have to deactivate $U_{TH}$.
+      \begin{equation*}
+            I_{R_{6_5}} = I_{s_3} \cdot \frac{R_{TH}}{R_{TH} + R_6}
+      \end{equation*}
+      \begin{equation}
+            U_{R_{6_{5u}}} = I_{R_{6_5}} \cdot R_6
+      \end{equation}\label{eqn:5mA}
+      Now we can superpose the result of \ref{eqn:0mA} and \ref{eqn:5mA}:
+      \begin{equation}
+            U_{R_{6_5}} = U_{R_{6_{5u}}} + U_{R_{6_0}}
+      \end{equation}
+      With these results we can set up the following function:
+      \begin{equation}\label{eqn:function}
+            U_{R_{6}} = k \cdot I_{s_{3}} + d
+      \end{equation}
+      With the function \ref{eqn:function} we can calculate $I_{s_{3_{new}}}$.
 \end{document}
