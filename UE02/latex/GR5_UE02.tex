@@ -306,7 +306,83 @@ Now we have five unknowns and five equations, so the eqation system can be solve
 Now that we have calculated our inner Network we need to detrmine its resistance $R_{th}$.
 Therefore we replace the independent source with its ideal inner resistance and apply a test
 volatge $U_T$ at the terminals $a$ and $b$.\\
-%Hier zeichne ich noch das veränderte NW mit U_T
+\begin{figure}[h!] \centering    
+\begin{circuitikz}[scale=0.75]
+      %controlled Us_1
+      \draw (0,0) 
+      to[short](0,1)
+      to[cvsource, v_=$U_{S_1}$, color=blue]  (0,4)
+      to[short, i=$I_{S_1}^?$, color=red](0,5);
+      %Us_2
+      \draw (10,5) 
+      to[short, i=$I_{s_2}^?$, color=red](9,5)
+      to[short](5,5);
+      %R_1
+      \draw                                     (5,0)
+      to[short, *-]                             (6,0)
+      to[R, l=$R_1$, v<=$U_{R_1}$]              (9,0)
+      to[short, i<=$I_{R_1}$, color=red]         (10,0);
+      %R_2
+      \draw                                     (5,0) 
+      to[short]                                 (5,1)
+      to[R, l=$R_2$, v<=$U_{R_2}$]              (5,4)
+      to[short, i<=$I_{R_2}$, color=red]         (5,5);
+      %R_3
+      \draw                                     (5,5)
+      to[short, *-]                             (5,6)
+      to[R, l=$R_3$, v=$U_{R_3}$]              (5,9)
+      to[short, i=$I_{R_3}$, color=red]          (5,10)
+      to[short, -*]                             (5,10);
+      %R_4
+      \draw                                     (0,5)
+      to[short, *-]                             (1,5)
+      to[R, l=$R_4$, v=$U_{R_4}$]               (4,5)
+      to[short, i=$I_{R_4}$, color=red]          (5,5);
+      %R_5
+      \draw                                     (10,5)
+      to[short, *-]                             (10,6)
+      to[R, l=$R_5$, v=$U_{R_5}$]               (10,9)
+      to[short, i=$I_{R_5}$, color=red]          (10,10)
+      to[short, -*]                             (10,10);
+      %U_T
+      \draw                                     (15,5)
+      to[short, *-]                             (15,6) 
+      to[V, v<=$U_T$, color=blue]               (15,9)
+      to[short, i<=$I_T$, color=red]          (15,10)
+      to[short, -*]                             (15,10);
+      %connections
+      \draw (0,5) to[short] (0,10) to[short]    (12.5,10);
+      \draw (10,0) to[short] (10,5) to[short]   (12.5,5);
+      %clamps + connections
+      \draw (12.5,10) to[short, o-] (15,10);
+      \draw (12.5,5) to[short, o-] (15,5);
+      %ref node
+      \draw (5,0) to[short]                             (0,0);
+      %grnd
+      \draw (0,0) to (0,0) node[ground]{};
+      %nodes
+      \node[above, color=blue]              (n_1) at (5,10) {$n_1$};
+      \node[above, xshift=3mm, color=blue]  (n_3) at (5,5) {$n_2$};
+      \node[above, xshift=3mm, color=blue]  (n_4) at (10,5) {$n_3$};
+      \node[below, color=blue]              (ref) at (5,0) {ref};
+      \node[above]              (a) at (12.5,10) {a};
+      \node[above]              (b) at (12.5,5) {b};
+      \draw[color=blue](5,10) ellipse (150pt and 12pt);
+      \draw[color=blue](5,5) ellipse (25pt and 25pt);
+      \draw[color=blue](10,5) ellipse (25pt and 25pt);
+      \draw[color=blue](2.5,0) ellipse (80pt and 12pt);
+      \draw[color=blue](0,7.5) ellipse (12pt and 80pt);
+      \draw[-{Latex[length=2mm]}, color=blue] (3.75, 9.5) -- (3.75, 0.5)
+      node[pos=0.25, left] {$U_{n_1}$};
+      \draw[-{Latex[length=2mm]}, color=blue] (4.25, 4.25) -- (2.5, 0.5)
+      node[pos=0.45, left] {$U_{n_2}$};
+      \draw[-{Latex[length=2mm]}, color=blue] (9.25, 4.25) -- (5.25, 0.25)
+      node[pos=0.5, right] {$U_{n_3}$};
+\end{circuitikz}
+\caption{Applied testvoltage to the network}
+\label{fig:Testvoltage}
+\end{figure}
+\\
 We simply add $U_T$ to our Matrix and set $U_{S_2}$ to zero, as it is deactivated.
 \begin{equation}
       \begin{pmatrix}
