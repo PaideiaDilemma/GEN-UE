@@ -70,7 +70,7 @@ Graz University of Technology\\
 	
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-	\section*{Assignment 1}
+	\section{Assignment 1}
 	Consider the following circuit. The voltage source $U_{S1}$ is a \textbf{current-controlled voltage source}.\\
 	The Th$\acute{\text{e}}$venin equivalent should be determined for the circuit on the left hand side with respect to the terminals \textbf{(a,b)} by using the \textbf{\textcolor[rgb]{1,0,0}{modified} node voltage method}.
 	\begin{enumerate}
@@ -137,50 +137,54 @@ Graz University of Technology\\
 \label{fig:circuit_assignment2}
 \end{figure}
 
+\section{Solution}
+\subsection{Network}
 \begin{figure}[h!] \centering    
 \begin{circuitikz}[scale=0.75]
-%%
-%%      Wenn du  Stromrichtungen ändern willst, dann musst du
-%%      bei den to[short] nach dem i ein < oder > machen ;)
-%%
       %controlled Us_1
-      \draw (0,0) to[cvsource, v_=$U_{S1}$, color=blue]  (0,5);
+      \draw (0,0) 
+      to[short](0,1)
+      to[cvsource, v_=$U_{S_1}$, color=blue]  (0,4)
+      to[short, i=$I_{S_1}^?$, color=red](0,5);
       %Us_2
-      \draw (10,5) to[V, v=$U_{s2}$, color=blue]         (5,5);
+      \draw (10,5) 
+      to[short, i=$I_{s_2}^?$, color=red](9,5)
+      to[V, v=$U_{s_2}$, color=blue]         (6,5)
+      to[short](5,5);
       %Is_3
-      \draw (18,5) to[I, i=$I_{s3}$, color =red]        (18,10);
+      \draw (18,5) to[I, i=$I_{s_3}$, color =red]        (18,10);
       %R_1
       \draw                                     (5,0)
       to[short, *-]                             (6,0)
-      to[R, l=$R_1$]                            (9,0)
-      to[short, i<=$I_{R1}$, color=red]         (10,0);
+      to[R, l=$R_1$, v<=$U_{R_1}$]              (9,0)
+      to[short, i<=$I_{R_1}$, color=red]         (10,0);
       %R_2
       \draw                                     (5,0) 
       to[short]                                 (5,1)
-      to[R, l=$R_2$]                            (5,4)
-      to[short, i<=$I_{R2}$, color=red]         (5,5);
+      to[R, l=$R_2$, v<=$U_{R_2}$]              (5,4)
+      to[short, i<=$I_{R_2}$, color=red]         (5,5);
       %R_3
       \draw                                     (5,5)
       to[short, *-]                             (5,6)
-      to[R, l=$R_3$]                            (5,9)
-      to[short, i=$I_{R3}$, color=red]          (5,10)
+      to[R, l=$R_3$, v=$U_{R_3}$]              (5,9)
+      to[short, i=$I_{R_3}$, color=red]          (5,10)
       to[short, -*]                             (5,10);
       %R_4
       \draw                                     (0,5)
       to[short, *-]                             (1,5)
-      to[R, l=$R_4$]                            (4,5)
-      to[short, i=$I_{R4}$, color=red]          (5,5);
+      to[R, l=$R_4$, v=$U_{R_4}$]               (4,5)
+      to[short, i=$I_{R_4}$, color=red]          (5,5);
       %R_5
       \draw                                     (10,5)
       to[short, *-]                             (10,6)
-      to[R, l=$R_5$]                            (10,9)
-      to[short, i=$I_{R5}$, color=red]          (10,10)
+      to[R, l=$R_5$, v=$U_{R_5}$]               (10,9)
+      to[short, i=$I_{R_5}$, color=red]          (10,10)
       to[short, -*]                             (10,10);
       %R_6
       \draw                                     (15,5)
       to[short, *-]                             (15,6) 
-      to[R, l=$R_6$]                            (15,9)
-      to[short, i=$I_{R6}$, color=red]          (15,10)
+      to[R, l=$R_6$, v=$U_{R_6}$]               (15,9)
+      to[short, i=$I_{R_6}$, color=red]          (15,10)
       to[short, -*]                             (15,10);
       %connections
       \draw (0,5) to[short] (0,10) to[short]    (12.5,10);
@@ -189,19 +193,139 @@ Graz University of Technology\\
       \draw (12.5,10) to[short, o-] (18,10);
       \draw (12.5,5) to[short, o-] (18,5);
       %ref node
-      \draw (0,0) to[short]                             (5,0);
+      \draw (5,0) to[short]                             (0,0);
       %grnd
       \draw (0,0) to (0,0) node[ground]{};
       %nodes
-      \node[above]              (n_1) at (5,10) {$n_1$};
-      \node[above, xshift=3mm]  (n_3) at (5,5) {$n_2$};
-      \node[above, xshift=3mm]  (n_4) at (10,5) {$n_3$};
-      \node[below]              (ref) at (5,0) {ref};
+      \node[above, color=blue]              (n_1) at (5,10) {$n_1$};
+      \node[above, xshift=3mm, color=blue]  (n_3) at (5,5) {$n_2$};
+      \node[above, xshift=3mm, color=blue]  (n_4) at (10,5) {$n_3$};
+      \node[below, color=blue]              (ref) at (5,0) {ref};
       \node[above]              (a) at (12.5,10) {a};
       \node[above]              (b) at (12.5,5) {b};
+      \draw[color=blue](5,10) ellipse (150pt and 12pt);
+      \draw[color=blue](5,5) ellipse (25pt and 25pt);
+      \draw[color=blue](10,5) ellipse (25pt and 25pt);
+      \draw[color=blue](2.5,0) ellipse (80pt and 12pt);
+      \draw[color=blue](0,7.5) ellipse (12pt and 80pt);
+      \draw[-{Latex[length=2mm]}, color=blue] (3.75, 9.5) -- (3.75, 0.5)
+      node[pos=0.25, left] {$U_{n_1}$};
+      \draw[-{Latex[length=2mm]}, color=blue] (4.25, 4.25) -- (2.5, 0.5)
+      node[pos=0.45, left] {$U_{n_2}$};
+      \draw[-{Latex[length=2mm]}, color=blue] (9.25, 4.25) -- (5.25, 0.25)
+      node[pos=0.5, right] {$U_{n_3}$};
 \end{circuitikz}
 \caption{Network with curents and (node-) voltages}
 \label{fig:circuit_labeled}
 \end{figure}
 
+\newpage
+\subsection{Analytical calculations}
+First the standard admittance matrix $A$ is determined by inspection, like in normal node-voltage-method.
+The diagonal Elements of $A$ are the sum of the conductances of the resistors connected to the
+node. The secondary diagonal elements are the negative conductances of the resistors, who connect
+the node(described by the diagonal element in the same line) with the other nodes.
+\begin{equation}
+      A=
+      \begin{pmatrix}
+            G_3 + G_4 + G_5 & -G_3 - G_4 & -G_5\\
+            -G_3 -G_4 & G_2 + G_3 + G_4 & 0\\
+            -G_5 & 0 & G_1 + G_5\\
+      \end{pmatrix}
+\end{equation}
+The vector $\vec{x}$ contains the unknown values.
+\begin{equation}
+      \vec{x}=
+      \begin{pmatrix}
+            U_{n_1}\\U_{n_2}\\U_{n_3}\\I_{s_2}^?\\I_{s_1}^?
+      \end{pmatrix}
+\end{equation}
+The vector $\vec{b}$ contains the known values, but since we do not have any known currents,
+it is a null vector.\\
+Now we can set up the equation $A\vec{x} = \vec{b}$:
+\begin{equation}
+      \begin{pmatrix}
+            G_3 + G_4 + G_5 & -G_3 - G_4 & -G_5\\
+            -G_3 -G_4 & G_2 + G_3 + G_4 & 0\\
+            -G_5 & 0 & G_1 + G_5\\
+      \end{pmatrix}
+      \cdot
+      \begin{pmatrix}
+            U_{n_1}\\U_{n_2}\\U_{n_3}\\I_{s_2}^?\\I_{s_1}^?
+      \end{pmatrix}
+      =
+      \begin{pmatrix}
+            0\\0\\0\\
+      \end{pmatrix}
+\end{equation}
+As there are five unknowns but only three equations, we can´t solve our Matrix yet.
+Sow we add the independent voltage Source $U_{s_2}$ to this equation System. It will be expressed
+with the node voltages as well.
+\begin{equation}
+      \begin{pmatrix}
+            G_3 + G_4 + G_5 & -G_3 - G_4 & -G_5 & 0\\
+            -G_3 -G_4 & G_2 + G_3 + G_4 & 0 & -1\\
+            -G_5 & 0 & G_1 + G_5 & 1\\
+            0 & -1 & 1 & 0\\
+      \end{pmatrix}
+      \cdot
+      \begin{pmatrix}
+            U_{n_1}\\U_{n_2}\\U_{n_3}\\I_{s_2}^?\\I_{s_1}^?
+      \end{pmatrix}
+      =
+      \begin{pmatrix}
+            0\\0\\0\\U_{s_2}
+      \end{pmatrix}
+\end{equation}
+We still can´t solve our Matrx, so we add the current controlled volatge source $U_{S_1}$.
+This also is expressed with the node voltages, but with a certain factor,
+as it depands on $I_{R_3}$.
+\begin{equation}
+      \begin{pmatrix}
+            G_3 + G_4 + G_5 & -G_3 - G_4 & -G_5 & 0 & -1\\
+            -G_3 -G_4 & G_2 + G_3 + G_4 & 0 & -1 & 0\\
+            -G_5 & 0 & G_1 + G_5 & 1 & 0\\
+            0 & -1 & 1 & 0 & 0\\
+            -\alpha G_3-1 & \alpha G_3 & 0 & 0 & 0\\
+      \end{pmatrix}
+      \cdot
+      \begin{pmatrix}
+            U_{n_1}\\U_{n_2}\\U_{n_3}\\I_{s_2}^?\\I_{s_1}^?
+      \end{pmatrix}
+      =
+      \begin{pmatrix}
+            0\\0\\0\\U_{s_2}\\0
+      \end{pmatrix}
+\end{equation}
+Now we have five unknowns and five equations, so the eqation system can be solved.
+
+\subsection{Matlab}
+\subsection{Numerical results}
+\newpage
+\subsection{Analytical determination of the Thévenin equivalent}
+Now that we have calculated our inner Network we need to detrmine its resistance $R_{th}$.
+Therefore we replace the independent source with its ideal inner resistance and apply a test
+volatge $U_T$ at the terminals $a$ and $b$.\\
+%Hier zeichne ich noch das veränderte NW mit U_T
+We simply add $U_T$ to our Matrix and set $U_{S_2}$ to zero, as it is deactivated.
+\begin{equation}
+      \begin{pmatrix}
+            G_3 + G_4 + G_5 & -G_3 - G_4 & -G_5 & 0 & -1 &1\\
+            -G_3 -G_4 & G_2 + G_3 + G_4 & 0 & -1 & 0 &0\\
+            -G_5 & 0 & G_1 + G_5 & 1 & 0 &-1\\
+            0 & -1 & 1 & 0 & 0 &0\\
+            -\alpha G_3-1 & \alpha G_3 & 0 & 0 & 0 &0\\
+            1 & 0 & -1 & 0 & 0 & 0\\
+      \end{pmatrix}
+      \cdot
+      \begin{pmatrix}
+            U_{n_1}\\U_{n_2}\\U_{n_3}\\I_{s_2}^?\\I_{s_1}^?\\I_T
+      \end{pmatrix}
+      =
+      \begin{pmatrix}
+            0\\0\\0\\0\\0\\U_T
+      \end{pmatrix}
+\end{equation}
+\subsection{Matlab}
+\subsection{Numerical results of the Thévenin equivalent}
 \end{document}
