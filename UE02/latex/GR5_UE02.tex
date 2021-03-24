@@ -95,9 +95,113 @@ Graz University of Technology\\
 \blfootnote{Deadline: 25.03.2021 - 9:00; \qquad presentation: group no. 2}
 
 \newpage	
-\begin{figure}
-		\centering
-		\includegraphics[scale=1]{./Figures/homework2_circuit.eps}
-		\caption{Given circuit for assignment 2}
+\begin{figure}[h!] \centering    
+\begin{circuitikz}
+      %controlled Us_1
+      \draw (0,0) to[cvsource, v_=$U_{S1}$, color=blue]  (0,3);
+      %Us_2
+      \draw (6,3) to[V, v=$U_{s2}$, color=blue]         (3,3);
+      %Is_3
+      \draw (11,3) to[I, i=$I_{s3}$, color =red]        (11,6);
+      %R_1
+      \draw (3,0) to[R, *-, l=$R_1$]                    (6,0);
+      %R_2
+      \draw (3,0) to[R, -*, l=$R_2$]                    (3,3);
+      %R_3
+      \draw (3,3) to[R, -*, l=$R_3$, i=$I_{R3}$]        (3,6);
+      %R_4
+      \draw (0,3) to[R, *-, l=$R_4$]                    (3,3);
+      %R_5
+      \draw (6,3) to[R, *-*, l=$R_5$]                    (6,6);
+      %R_6
+      \draw (9,3) to[R, *-*, l=$R_6$]                    (9,6);
+      %connections
+      \draw (0,3) to[short] (0,6) to[short] (7.5,6);
+      \draw (6,0) to[short] (6,3) to[short] (7.5,3);
+      %clamps + connections
+      \draw (7.5,6) to[short, o-] (11,6);
+      \draw (7.5,3) to[short, o-] (11,3);
+      %ref node
+      \draw (0,0) to[short]                             (3,0);
+      %grnd
+      \draw (0,0) to (0,0) node[ground]{};
+      %nodes
+      \node[above]              (n_1) at (3,6) {$n_1$};
+      \node[above, xshift=3mm]  (n_3) at (3,3) {$n_2$};
+      \node[above, xshift=3mm]  (n_4) at (6,3) {$n_3$};
+      \node[below]              (ref) at (3,0) {ref};
+      \node[above]              (a) at (7.5,6) {a};
+      \node[above]              (b) at (7.5,3) {b};
+\end{circuitikz}
+\caption{Given circuit for assignment 2}
+\label{fig:circuit_assignment2}
 \end{figure}
+
+\begin{figure}[h!] \centering    
+\begin{circuitikz}[scale=0.75]
+%%
+%%      Wenn du  Stromrichtungen ändern willst, dann musst du
+%%      bei den to[short] nach dem i ein < oder > machen ;)
+%%
+      %controlled Us_1
+      \draw (0,0) to[cvsource, v_=$U_{S1}$, color=blue]  (0,5);
+      %Us_2
+      \draw (10,5) to[V, v=$U_{s2}$, color=blue]         (5,5);
+      %Is_3
+      \draw (18,5) to[I, i=$I_{s3}$, color =red]        (18,10);
+      %R_1
+      \draw                                     (5,0)
+      to[short, *-]                             (6,0)
+      to[R, l=$R_1$]                            (9,0)
+      to[short, i<=$I_{R1}$, color=red]         (10,0);
+      %R_2
+      \draw                                     (5,0) 
+      to[short]                                 (5,1)
+      to[R, l=$R_2$]                            (5,4)
+      to[short, i<=$I_{R2}$, color=red]         (5,5);
+      %R_3
+      \draw                                     (5,5)
+      to[short, *-]                             (5,6)
+      to[R, l=$R_3$]                            (5,9)
+      to[short, i=$I_{R3}$, color=red]          (5,10)
+      to[short, -*]                             (5,10);
+      %R_4
+      \draw                                     (0,5)
+      to[short, *-]                             (1,5)
+      to[R, l=$R_4$]                            (4,5)
+      to[short, i=$I_{R4}$, color=red]          (5,5);
+      %R_5
+      \draw                                     (10,5)
+      to[short, *-]                             (10,6)
+      to[R, l=$R_5$]                            (10,9)
+      to[short, i=$I_{R5}$, color=red]          (10,10)
+      to[short, -*]                             (10,10);
+      %R_6
+      \draw                                     (15,5)
+      to[short, *-]                             (15,6) 
+      to[R, l=$R_6$]                            (15,9)
+      to[short, i=$I_{R6}$, color=red]          (15,10)
+      to[short, -*]                             (15,10);
+      %connections
+      \draw (0,5) to[short] (0,10) to[short]    (12.5,10);
+      \draw (10,0) to[short] (10,5) to[short]   (12.5,5);
+      %clamps + connections
+      \draw (12.5,10) to[short, o-] (18,10);
+      \draw (12.5,5) to[short, o-] (18,5);
+      %ref node
+      \draw (0,0) to[short]                             (5,0);
+      %grnd
+      \draw (0,0) to (0,0) node[ground]{};
+      %nodes
+      \node[above]              (n_1) at (5,10) {$n_1$};
+      \node[above, xshift=3mm]  (n_3) at (5,5) {$n_2$};
+      \node[above, xshift=3mm]  (n_4) at (10,5) {$n_3$};
+      \node[below]              (ref) at (5,0) {ref};
+      \node[above]              (a) at (12.5,10) {a};
+      \node[above]              (b) at (12.5,5) {b};
+\end{circuitikz}
+\caption{Network with curents and (node-) voltages}
+\label{fig:circuit_labeled}
+\end{figure}
+
 \end{document}
