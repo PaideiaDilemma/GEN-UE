@@ -95,8 +95,9 @@ Graz University of Technology\\
 \blfootnote{Deadline: 25.03.2021 - 9:00; \qquad presentation: group no. 2}
 
 \newpage	
+
 \begin{figure}[h!] \centering    
-\begin{circuitikz}
+   \begin{circuitikz}[scale=0.75, transform shape]
       %controlled Us_1
       \draw (0,0) to[cvsource, v_=$U_{S1}$, color=blue]  (0,3);
       %Us_2
@@ -309,6 +310,7 @@ Now we have five unknowns and five equations, that we are going to solve with ma
 \lstinputlisting[language=matlab]{./../matlab/calculations_ass2.m}  
 \subsubsection{Console output}
 \lstinputlisting[language=matlab]{./../matlab/console_output.txt}  
+\vspace{2mm}
 \subsection{Numerical results}
 \subsubsection{Node Voltages}
 \begin{equation*}
@@ -456,7 +458,7 @@ using ohm's law.
 \lstinputlisting[language=matlab]{./../matlab/calculations_ass2_2.m}  
 \subsubsection{Console output}
 \lstinputlisting[language=matlab]{./../matlab/console_output_2.txt}  
-
+\vspace{2mm}
 \subsection{Numerical results of the Thévenin equivalent}
 The open-circuit current $U_{oc}$ resembles our thévenin voltage $U_{th} = -3.3838 V$.
 In order to calculate the equivalent resistance at $a$ and $b$, we apply a test voltage $U_{T} = 1V$, which yielded
@@ -493,7 +495,7 @@ that droppes across them and the currentsource $I2$ and $I1$ is also equivalent.
 \label{fig:ltspice_4}
 \end{figure}
 \newpage
-\section{Bonus}
+\section{Solution bonus}
 \subsection{Network}
 \begin{figure}[h!] \centering    
    \begin{circuitikz}[scale=0.75]
@@ -560,6 +562,7 @@ With the equation \ref{eqn:function} we can calculate $I_{s_{3_{new}}}$.
 \lstinputlisting[language=matlab]{./../matlab/calculations_ass2_bonus.m}  
 \subsubsection{Console output}
 \lstinputlisting[language=matlab]{./../matlab/console_output_3.txt}  
+\vspace{2mm}
 \subsection{Numerical result}
 The calculated current for $I_{s3}$, so that $U_{R6} = 20V$, is $I_{s3} = 20.2916 A$.
 \subsection{Ltspice simulation}
