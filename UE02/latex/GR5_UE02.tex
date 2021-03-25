@@ -459,7 +459,7 @@ using ohm's law.
 
 \subsection{Numerical results of the Thévenin equivalent}
 The open-circuit current $U_{oc}$ resembles our thévenin voltage $U_{th} = -3.3838 V$.
-In order to calculate the equivalent resistance, we apply a test voltage $U_{T} = 1V$, which yielded
+In order to calculate the equivalent resistance at $a$ and $b$, we apply a test voltage $U_{T} = 1V$, which yielded
 \[
 I_{T} = -0.825A
 .\] 
@@ -469,88 +469,105 @@ R_{th} = \frac{U_{Rnet}}{I_{R}} = \frac{-U_{T}}{I_{T}}= 1.2121\Omega
 .\]
 \clearpage
 \subsection{Ltspice simulation}
-To show that our calculations are correct, we first confirm the test-voltage-method. 
+To show that our calculations are correct, we first confirm the calculated value for $I_{T}$. 
 \begin{figure}[h!]\centering
    \includegraphics[scale=0.5]{./Figures/ltspice_testvoltage.png} 
 \caption{Ltspice simulation 2}
 \label{fig:ltspice_2}
 \end{figure}
-\\Here is the behaviour of the whole circuit as shown in Figure \ref{fig:circuit_assignment2},
+\\Below, in Figure \ref{fig:ltspice_3}, the behaviour of the whole circuit as shown in
+Figure \ref{fig:circuit_assignment2} is simulated.\\ 
+($V{n1} -V{n3}$ to get the voltage between $a$ and $b$) 
 \begin{figure}[h!]\centering
    \includegraphics[scale=0.5]{./Figures/ltspice_all.png} 
 \caption{Ltspice simulation 3}
 \label{fig:ltspice_3}
 \end{figure}
 \clearpage
-And here is the behaviour of its thévenin equivalent. They have the same voltages and currents after
-the clamps.
-($U_{n1} -U_{n3}$ to get the voltage between $a$ and $b$) 
+In Figure \ref{fig:ltspice_4} the behaviour of its thévenin equivalent is illustrated. They show the same current across
+the resistor $R6$ in Figure \ref{fig:ltspice_3} and $R7$ in Figure \ref{fig:ltspice_4}. The voltage,
+that droppes across them and the currentsource $I2$ and $I1$ is also equivalent.
 \begin{figure}[h!]\centering
    \includegraphics[scale=0.5]{./Figures/ltspice_equivalent.png} 
 \caption{Ltspice simulation 4}
 \label{fig:ltspice_4}
 \end{figure}
 \newpage
-\subsection{Bonus}
-\subsubsection{Network}
+\section{Bonus}
+\subsection{Network}
 \begin{figure}[h!] \centering    
-      \begin{circuitikz}[scale=0.75]
-            %controlled Us_1
-            \draw (0,0) 
-            to[short](0,1)
-            to[V, v=$U_{TH}$, color=blue]  (0,4)
-            to[short, i=$I_{TH}$, color=red](0,5);
-            %Is_3
-            \draw (10,0) to[I, i=$I_{s_3}$, color =red]        (10,5);
-            %R_TH
-            \draw                                     (0,5)
-            to[short]                             (1,5)
-            to[R, l=$R_{TH}$, v=$U_{R_{TH}}$]               (4,5)
-            to[short]          (5,5);
-            %R_6
-            \draw                                     (7,0)
-            to[short, *-]                             (7,1) 
-            to[R, l=$R_6$, v=$U_{R_6}$]               (7,4)
-            to[short, i=$I_{R_6}$, color=red]          (7,5)
-            to[short, -*]                             (7,5);
-            %clamps + connections
-            \draw (5,5) to[short, o-] (10,5);
-            \draw (5,0) to[short, o-] (10,0 );
-            %ref node
-            \draw (5,0) to[short]                             (0,0);
-            %grnd
-            \draw (0,0) to (0,0) node[ground]{};
-            %nodes
-            \node[above]              (a) at (5,5) {a};
-            \node[above]              (b) at (5,0) {b};
-      \end{circuitikz}
-      \caption{Thevenin Network}
-      \label{fig:Thevenin_nw}
-      \end{figure}
+   \begin{circuitikz}[scale=0.75]
+         %controlled Us_1
+         \draw (0,0) 
+         to[short](0,1)
+         to[V, v=$U_{TH}$, color=blue]  (0,4)
+         to[short, i=$I_{TH}$, color=red](0,5);
+         %Is_3
+         \draw (10,0) to[I, i=$I_{s_3}$, color =red]        (10,5);
+         %R_TH
+         \draw                                     (0,5)
+         to[short]                             (1,5)
+         to[R, l=$R_{TH}$, v=$U_{R_{TH}}$]               (4,5)
+         to[short]          (5,5);
+         %R_6
+         \draw                                     (7,5)
+         to[short, *-]                             (7,4) 
+         to[R, l=$R_6$, v=$U_{R_6}$]               (7,1)
+         to[short, i=$I_{R_6}$, color=red]          (7,0)
+         to[short, -*]                             (7,0);
+         %clamps + connections
+         \draw (5,5) to[short, o-] (10,5);
+         \draw (5,0) to[short, o-] (10,0 );
+         %ref node
+         \draw (5,0) to[short]                             (0,0);
+         %grnd
+         \draw (0,0) to (0,0) node[ground]{};
+         %nodes
+         \node[above]              (a) at (5,5) {a};
+         \node[above]              (b) at (5,0) {b};
+   \end{circuitikz}
+   \caption{Thevenin Network}
+   \label{fig:Thevenin_nw}
+   \end{figure}
 
-      \subsection{Analytical results}
-      As we have a linear circuit we need to calculate two relations between $I_{s_3}$ and $U_{R_6}$.
-      Then we can set up a linear function in order to determine the right value for $I_{s_{3_{new}}}$.\\
-      First we coose 0mA for $I_{s_3}$, so its basicly deactivated:
-      \begin{equation}
-            U_{R_{6_0}} = U_{TH} + U_{R_{TH}}
-      \end{equation}\label{eqn:0mA}
-      Then we coose 5mA for $I_{s_3}$. Now there are two sources, so we make use of the principle of
-      superposition. We already know the result, if $I_{s_3}$ is deactivated from above, so we 
-      just have to deactivate $U_{TH}$.
-      \begin{equation*}
-            I_{R_{6_5}} = I_{s_3} \cdot \frac{R_{TH}}{R_{TH} + R_6}
-      \end{equation*}
-      \begin{equation}
-            U_{R_{6_{5u}}} = I_{R_{6_5}} \cdot R_6
-      \end{equation}\label{eqn:5mA}
-      Now we can superpose the result of \ref{eqn:0mA} and \ref{eqn:5mA}:
-      \begin{equation}
-            U_{R_{6_5}} = U_{R_{6_{5u}}} + U_{R_{6_0}}
-      \end{equation}
-      With these results we can set up the following function:
-      \begin{equation}\label{eqn:function}
-            U_{R_{6}} = k \cdot I_{s_{3}} + d
-      \end{equation}
-      With the function \ref{eqn:function} we can calculate $I_{s_{3_{new}}}$.
+\subsection{Analytical results}
+As we have a linear circuit we need to calculate two relations between $I_{s_3}$ and $U_{R_6}$.
+Then we can set up a linear function in order to determine the right value for $I_{s_{3_{new}}}$.\\
+First we coose 0mA for $I_{s_3}$, so its basicly deactivated:
+\begin{equation}
+      U_{R_{6_0}} = -(U_{TH} + U_{R_{TH}})
+\end{equation}\label{eqn:0mA}
+Then we coose 5mA for $I_{s_3}$. Now there are two sources, so we make use of the principle of
+superposition. We already know the result, if $I_{s_3}$ is deactivated from above, so we 
+just have to deactivate $U_{TH}$.
+\begin{equation*}
+      I_{R_{6_5}} = I_{s_3} \cdot \frac{R_{TH}}{R_{TH} + R_6}
+\end{equation*}
+\begin{equation}
+      U_{R_{6_{5u}}} = I_{R_{6_5}} \cdot R_6
+\end{equation}\label{eqn:5mA}
+Now we can superpose the result of \ref{eqn:0mA} and \ref{eqn:5mA}:
+\begin{equation}
+      U_{R_{6_5}} = U_{R_{6_{5u}}} + U_{R_{6_0}}
+\end{equation}
+With these results we can set up the following function:
+\begin{equation}\label{eqn:function}
+      U_{R_{6}} = k \cdot I_{s_{3}} + d
+\end{equation}
+With the equation \ref{eqn:function} we can calculate $I_{s_{3_{new}}}$.
+\subsection{Matlab}
+\subsubsection{Source code}
+\lstinputlisting[language=matlab]{./../matlab/calculations_ass2_bonus.m}  
+\subsubsection{Console output}
+\lstinputlisting[language=matlab]{./../matlab/console_output_3.txt}  
+\subsection{Numerical result}
+The calculated current for $I_{s3}$, so that $U_{R6} = 20V$, is $I_{s3} = 20.2916 A$.
+\subsection{Ltspice simulation}
+And to prove that, here is the simulated result.
+\begin{figure}[h!]\centering
+   \includegraphics[scale=0.5]{./Figures/ltspice_bonus.png} 
+\caption{Ltspice simulation 2}
+\label{fig:ltspice_5}
+\end{figure}
+
 \end{document}

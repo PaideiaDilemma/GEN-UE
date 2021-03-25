@@ -2,10 +2,10 @@
 R_th N001 N002 1.212121
 V§U_th N001 0 -3.3838
 R7 N002 0 20
-I1 0 N002 0.8
+I1 0 N002 20.2916
 * a
 * a_th
 * b_th
-.op
+.op 1
 .backanno
 .end
