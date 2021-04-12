@@ -144,6 +144,8 @@ Graz University of Technology\\
       %\draw (7.5,6) to[short, o-] (11,6);
       %\draw (7.5,3) to[short, o-] (11,3);
       %nodes
+      \node[above]               (a) at (SW.out 1) {$(a)$};
+      \node[above]               (b) at (SW.out 2) {$(b)$};
       %\node[above]              (n_1) at (3,6) {$n_1$};
       %\node[above, xshift=3mm]  (n_3) at (3,3) {$n_2$};
       %\node[above, xshift=3mm]  (n_4) at (6,3) {$n_3$};
@@ -161,16 +163,43 @@ Graz University of Technology\\
 \clearpage
 
 \section{Solution}
-\subsection{Network}
+\subsection{Analytical calculations}
+\subsubsection{Initial value $x_{0}$}
+When the switch in figure (\ref{fig:circuit_hw3}) is set to be at $(a)$ for a long time, we can
+simplyfy the circuit to be to following. \\
 \begin{figure}[h!] \centering    
 \begin{circuitikz}
-\end{circuitikz}
-\caption{Network with currents and (node-) voltages}
+      %Us_1
+      \draw (0,0) to[V, v_=$U_{S1}$, color=blue]        (0,2.5);
+      %Is_2
+      \draw (0,5) to[I, i=$I_{s3}$, color =red]         (5,5);
+      %R_1
+      \draw (0,0) to[R, l=$R_1$]                        (5,0);
+      %R_2
+      \draw (0,2.5) to[R, l=$R_2$]                      (0,5);
+      %R_3
+      \draw (0,2.5) to[R, *-*, l=$R_3$]                 (5,2.5);
+      %R_4
+      \draw (5,2.5) to[R, l=$R_4$, i=$i_{l}$]           (5,0);
+      %connections
+      \draw (5,5)   to[short]                           (5,2.5);
+\end{circuitikz} 
+\caption{circuit state at $t = 0$}
 \label{fig:circuit_labeled}
 \end{figure}
+\\ The Inductor $L$ has become a short. Our disired current value for $x_{0}$, which is $i_{L}$ at
+$t_{0}=0$ will be calculated using the principle of superposition. 
+\subsubsection*{$U_{S1}$ is active, $I_{S3}$ is off.} 
+The powersupply $I_{S3}$ acts as a open circuit, so there is also no current flowing throught
+$R_2$. The current $i_{L}$ is now the same across every resistor in the circuit. We will calculate
+its value with $i_{L}'(t_0) = \frac{U_{S1}}{R_{ges}}$.
+ \[
+    R_{ges} = R_1 + R_3 + R_4, \quad i_{L}'(t_0) = \frac{U_{S1}}{R_1+R_3+R_4}
+.\] 
+\subsubsection*{$U_{S1}$ is off, $I_{S3}$ is on.} 
+Replacing $U_{S1}$ with a short, we can calculate $i_{L}''(t_{0})$ with a current divider.
 
 \newpage
-\subsection{Analytical calculations}
 \clearpage
 \subsection{Matlab}
 \subsubsection{Source code}
