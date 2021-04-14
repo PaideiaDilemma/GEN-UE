@@ -117,9 +117,9 @@ Graz University of Technology\\
       %Us_1
       \draw (0,0) to[V, v_=$U_{S1}$, color=blue]        (0,6);
       %Us_2
-      \draw (10,6) to[V, v=$U_{s2}$, color=blue]        (10,0);
+      \draw (10,6) to[V, v=$U_{S2}$, color=blue]        (10,0);
       %Is_2
-      \draw (0,8) to[I, i=$I_{s3}$, color =red]         (-5,8);
+      \draw (0,8) to[I, i=$I_{S3}$, color =red]         (-5,8);
       %R_1
       \draw (0,0) to[R, -*, l=$R_1$]                    (5,0);
       %R_2
@@ -166,13 +166,13 @@ Graz University of Technology\\
 \subsection{Analytical calculations}
 \subsubsection{Initial value $x_{0}$}
 When the switch in figure (\ref{fig:circuit_hw3}) is set to be at $(a)$ for a long time, we can
-simplyfy the circuit to be to following. \\
+simplify the circuit to be to following. \\
 \begin{figure}[h!] \centering    
 \begin{circuitikz}
       %Us_1
       \draw (0,0) to[V, v_=$U_{S1}$, color=blue]        (0,2.5);
       %Is_2
-      \draw (0,5) to[I, i=$I_{s3}$, color =red]         (5,5);
+      \draw (0,5) to[I, i=$I_{S3}$, color =red]         (5,5);
       %R_1
       \draw (0,0) to[R, l=$R_1$]                        (5,0);
       %R_2
@@ -184,20 +184,54 @@ simplyfy the circuit to be to following. \\
       %connections
       \draw (5,5)   to[short]                           (5,2.5);
 \end{circuitikz} 
-\caption{circuit state at $t = 0$}
-\label{fig:circuit_labeled}
+\caption{circuit state at $T_0$}
+\label{fig:circuit_a}
 \end{figure}
-\\ The Inductor $L$ has become a short. Our disired current value for $x_{0}$, which is $i_{L}$ at
-$t_{0}=0$ will be calculated using the principle of superposition. 
+\\ In an ideal world the Inductor $L$ has become a short. In reality, the equivalent series
+resistance is very small $<<1\Omega$. Our disired current value for $x_{0}$, which is $i_{L}$ at
+$T_{0}=1ms$ will be calculated using the principle of superposition. 
 \subsubsection*{$U_{S1}$ is active, $I_{S3}$ is off.} 
 The powersupply $I_{S3}$ acts as a open circuit, so there is also no current flowing throught
 $R_2$. The current $i_{L}$ is now the same across every resistor in the circuit. We will calculate
-its value with $i_{L}'(t_0) = \frac{U_{S1}}{R_{ges}}$.
+its value with $i_{L}(T_0)' = \frac{U_{S1}}{R_{ges}}$.
  \[
-    R_{ges} = R_1 + R_3 + R_4, \quad i_{L}'(t_0) = \frac{U_{S1}}{R_1+R_3+R_4}
+   R_{ges} = R_1 + R_3 + R_4, \quad i_{L}(t_0)' = \frac{U_{S1}}{R_1+R_3+R_4}
 .\] 
 \subsubsection*{$U_{S1}$ is off, $I_{S3}$ is on.} 
-Replacing $U_{S1}$ with a short, we can calculate $i_{L}''(t_{0})$ with a current divider.
+Replacing $U_{S1}$ with a short, we can calculate $i_{L}(T_{0})''$ with a current divider.
+\[
+  i_{L}(T_0)'' = I_{S3} \frac{R_3}{R_1+R_3+R_4}
+.\] 
+Our disired current $i_{L}(T_0)$ is equal to $i_{L}(T_0)' + i_{L}(T_0)''$
+\[
+  i_{L}(T_0) = \frac{U_{S1}}{R_1+R_3+R_4} + I_{S3}\frac{R_3}{R_1+R_3+R_4} =
+  \frac{U_{S1}+I_{S3}R_3}{R_1+R_3+R_4} 
+.\] 
+
+\clearpage
+\subsubsection{Response, after switching to $(b)$}
+When the switch is at $(b)$, the circuit effectively looks like drawn in \ref{fig:circuit_b}  
+
+\begin{figure}[h!] \centering    
+\begin{circuitikz}
+      %Us_2
+      \draw (5,5) to[V, v=$U_{S2}$, color=blue]        (5,0);
+      %R_4
+      \draw (0,5) to[R, l=$R_4$, i=$i_{l}$]           (0,2.5);
+      %R_5
+      \draw (0,5) to[R, -*, l=$R_5$]               (3,5);
+      %R_6
+      \draw (3,5) to[R, *-*, l=$R_6$]                   (3,0);
+      %L
+      \draw (0,2.5) to[L, l=$L$, v=$u_{L}$]             (0,0);
+      %connections
+      \draw (0,0) to[short] (5,0);
+      \draw (3,5) to[short] (5,5);
+\end{circuitikz} 
+\caption{circuit state after $T_0$}
+\label{fig:circuit_b}
+\end{figure}
+To simplify things, we substitute the timevalue $t$ with  $t' = t - T_0$. 
 
 \newpage
 \clearpage
