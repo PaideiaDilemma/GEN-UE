@@ -56,7 +56,7 @@
 	\ifx\diffarg(%
 		\let\DiffSpace\relax
 	\else
-		\ifx\diffarg\[%
+		\ifx\diffarg\{%
 			\let\DiffSpace\relax
 		\else
 			\ifx\diffarg\{%
@@ -203,7 +203,9 @@ simplify the circuit to be to following. \\
       %R_3
       \draw (0,2.5) to[R, *-*, l=$R_3$]                 (5,2.5);
       %R_4
-      \draw (5,2.5) to[R, l=$R_4$, i=$i_{l}$]           (5,0);
+      \draw (5,2.5) to[short]                           (5,2)
+      to[R, l=$R_4$]                                    (5,0.5)
+      to[short, i=$i_{l}$, color=red]                   (5,0);
       %connections
       \draw (5,5)   to[short]                           (5,2.5);
 \end{circuitikz} 
@@ -239,13 +241,15 @@ When the switch is at $(b)$, the circuit effectively looks like drawn in figure 
       %Us_2
       \draw (5,5) to[V, v=$U_{S3}$, color=blue]        (5,0);
       %R_4
-      \draw (0,5) to[R, l=$R_4$, i=$i_{l}$, v=$u_{R_4}$](0,2.5);
+      \draw (0,5) to[short]                            (0,4.5)
+      to[R, l=$R_4$, v=$u_{R_4}$]                      (0,3)
+      to[short, i=$i_{l}$, color=red]                 (0,2.5);
       %R_5
-      \draw (0,5) to[R, -*, l=$R_5$, v<=$u_{R5}$]        (3,5);
+      \draw (0,5) to[R, -*, l=$R_5$, v<=$u_{R5}$]      (3,5);
       %R_6
-      \draw (3,5) to[R, *-*, l=$R_6$]                   (3,0);
+      \draw (3,5) to[R, *-*, l=$R_6$]                  (3,0);
       %L
-      \draw (0,2.5) to[L, l=$L$, v=$u_{L}$]             (0,0);
+      \draw (0,2.5) to[L, l=$L$, v=$u_{L}$]            (0,0);
       %connections
       \draw (0,0) to[short] (5,0);
       \draw (3,5) to[short] (5,5);
@@ -328,14 +332,19 @@ via the $x_f$, that gets added to the transient part.
 
 
 
-
-%\clearpage
+\clearpage
 \subsection{Matlab}
 \subsubsection{Source code}
-%\lstinputlisting[language=matlab]{./../matlab/calculations_ass2.m}  
+\lstinputlisting[language=matlab]{./../matlab/Assignment3.m}
 \subsubsection{Console output}
-%\lstinputlisting[language=matlab]{./../matlab/console_output.txt}  
+\lstinputlisting[language=matlab]{./../matlab/output.txt}  
 \vspace{2mm}
+
 \subsection{Numerical results}
+The solution of the differential equation is:
+\begin{equation*}
+   i_L(t) = 0.5 * e^(-t + 1) + 0.2
+\end{equation*}
+It expresses the current through the inductance $L$ in relation to time.
 \subsection{Ltspice simulation}
 \end{document}
