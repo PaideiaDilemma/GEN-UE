@@ -255,9 +255,9 @@ When the switch is at $(b)$, the circuit effectively looks like drawn in figure 
 \caption{circuit state after $T_0$}
 \label{fig:circuit_b}
 \end{figure}
-Note, that the component $R_6$ does not influence our citrcuit at all. To simplify things, we substitute the timevalue $t$ with  $(t-T_0) = t - T_0$. 
+Note, that the component $R_6$ does not influence our citrcuit at all. 
 
-\subsubsection*{Derive DGL with a mesh equation (KVL)}
+\subsubsection*{Derive DGL with a mesh equation (using KVL)}
 Mesh equation for the circuit with switch at $(b)$:
 \[
    u_{R4}(t) + u_{R5}(t) + u_{L}(t) = U_{S3}
@@ -266,7 +266,7 @@ Use componet specific law's, to rewrite those voltages as currents.
 \[
    (R_4+R_5)i_{L} + L \frac{\diff i_{L}}{\diff t} = U_{S3}
 .\] 
-dividing by L and define $R_4+R_5$ as $R_{45}$, we get
+dividing by L and defining $R_4+R_5$ as $R_{45}$, we get
 \[
    \frac{\diff i_{L}}{\diff t} + \frac{R_{45}}{L} i_{L} = \frac{U_{S3}}{L}
 .\] 
@@ -283,8 +283,8 @@ i_{L,h}}{\diff t}$ into the homogeneous version of the DGL.
    \left( -\lambda + \frac{R_{45}}{L} \right) = 0
 .\] 
 Knowing, that the exponential function can not be 0, we can calculate $\lambda$ with the
-characteristic polynom of our DGL, which is $-\lambda + \frac{R_{45}}{L} \overset{!}{=} 0$.
-$\lambda$ is equal to  $\frac{R_{45}}{L}$ and the time constant $\tau$ is equal to the inverse of
+characteristic polynom of our DGL $-\lambda + \frac{R_{45}}{L}$, which has to be $0$. That yields us
+$\lambda = \frac{R_{45}}{L}$ and the time constant $\tau$, equal to the inverse of
 $\lambda$, which is $\frac{L}{R_{45}}$. Our homogeneous solution
 \[
    i_{L,h}(t) = Ke^{-\frac{R_{45}}{L}(t-T_0)}
@@ -299,7 +299,7 @@ to calculate the particular solution of our DGL.
 \[
    \frac{R_{45}}{L} B + 0 = \frac{U_{S3}}{L} \, \rightarrow \, B = i_{L,p} = \frac{U_{S3}}{R_{45}}
 .\] 
-This yields us the general Solution of our differential equation.
+This gives us the general solution of our differential equation.
 \[
    i_{L}(t) = i_{L,h}(t) + i_{L,p}(t) = Ke^{-\frac{R_{45}}{L} (t-T_0)} + \frac{U_{S3}}{R_{45}}
 .\]
