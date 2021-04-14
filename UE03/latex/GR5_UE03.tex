@@ -41,6 +41,28 @@
 	\endgroup
 }
 
+% upright differenzial symbol with good spacing included!!!
+\makeatletter
+\providecommand*{\diff}%
+	{\@ifnextchar^{\DIfF}{\DIfF^{}}}
+\def\DIfF^#1{%
+	\mathop{\mathrm{\mathstrut d}}%
+		\nolimits^{#1}\gobblespace
+}
+\def\gobblespace{%
+	\futurelet\diffarg\opspace}
+\def\opspace{%
+	\let\DiffSpace\!%
+	\ifx\diffarg(%
+		\let\DiffSpace\relax
+	\else
+		\ifx\diffarg\[%
+			\let\DiffSpace\relax
+		\else
+			\ifx\diffarg\{%
+				\let\DiffSpace\relax
+			\fi\fi\fi\DiffSpace}
+
 \begin{document}
 \pagestyle{empty} \enlargethispage*{25cm}\samepage{
 \vspace*{-3cm}
@@ -76,7 +98,8 @@ Graz University of Technology\\
 
 	\begin{enumerate}
 		
-		\item The expression for the continuous quantity x(t) as a function of time at the inductance L for $t \geq T_0$ \textbf{after} the switch changed it's position from a to b should be determined. 
+		\item The expression for the continuous quantity x(t) as a function of time at the
+                   inductance L for $t \geq T_0$ \textbf{after} the switch changed its position from a to b should be determined. 
 		
 		\begin{itemize}
 			\item Determine the initial value $x_0$ for the contiuous quantity at the inductance $L$ \textbf{before} the switch changed from position a to b. There are different approaches. Either apply Kirchhoff's laws and explicitly depict the value of interest, the node voltage method (write down equations \textbf{or} determine the matrix by ovserving the circuit and solve it with MatLab) or use the principle of superposition (calculate the effect of every source individually on the value of interest and sum the effects up with respect to the correct sign). 
@@ -117,9 +140,9 @@ Graz University of Technology\\
       %Us_1
       \draw (0,0) to[V, v_=$U_{S1}$, color=blue]        (0,6);
       %Us_2
-      \draw (10,6) to[V, v=$U_{S2}$, color=blue]        (10,0);
+      \draw (10,6) to[V, v=$U_{S3}$, color=blue]        (10,0);
       %Is_2
-      \draw (0,8) to[I, i=$I_{S3}$, color =red]         (-5,8);
+      \draw (0,8) to[I, i=$I_{S2}$, color =red]         (-5,8);
       %R_1
       \draw (0,0) to[R, -*, l=$R_1$]                    (5,0);
       %R_2
@@ -172,7 +195,7 @@ simplify the circuit to be to following. \\
       %Us_1
       \draw (0,0) to[V, v_=$U_{S1}$, color=blue]        (0,2.5);
       %Is_2
-      \draw (0,5) to[I, i=$I_{S3}$, color =red]         (5,5);
+      \draw (0,5) to[I, i=$I_{S2}$, color =red]         (5,5);
       %R_1
       \draw (0,0) to[R, l=$R_1$]                        (5,0);
       %R_2
@@ -190,36 +213,35 @@ simplify the circuit to be to following. \\
 \\ In an ideal world the Inductor $L$ has become a short. In reality, the equivalent series
 resistance is very small $<<1\Omega$. Our disired current value for $x_{0}$, which is $i_{L}$ at
 $T_{0}=1ms$ will be calculated using the principle of superposition. 
-\subsubsection*{$U_{S1}$ is active, $I_{S3}$ is off.} 
-The powersupply $I_{S3}$ acts as a open circuit, so there is also no current flowing throught
+\subsubsection*{$U_{S1}$ is active, $I_{S2}$ is off.} 
+The powersupply $I_{S2}$ acts as a open circuit, so there is also no current flowing throught
 $R_2$. The current $i_{L}$ is now the same across every resistor in the circuit. We will calculate
 its value with $i_{L}(T_0)' = \frac{U_{S1}}{R_{ges}}$.
  \[
    R_{ges} = R_1 + R_3 + R_4, \quad i_{L}(t_0)' = \frac{U_{S1}}{R_1+R_3+R_4}
 .\] 
-\subsubsection*{$U_{S1}$ is off, $I_{S3}$ is on.} 
+\subsubsection*{$U_{S1}$ is off, $I_{S2}$ is on.} 
 Replacing $U_{S1}$ with a short, we can calculate $i_{L}(T_{0})''$ with a current divider.
 \[
-  i_{L}(T_0)'' = I_{S3} \frac{R_3}{R_1+R_3+R_4}
+  i_{L}(T_0)'' = I_{S2} \frac{R_3}{R_1+R_3+R_4}
 .\] 
 Our disired current $i_{L}(T_0)$ is equal to $i_{L}(T_0)' + i_{L}(T_0)''$
 \[
-  i_{L}(T_0) = \frac{U_{S1}}{R_1+R_3+R_4} + I_{S3}\frac{R_3}{R_1+R_3+R_4} =
-  \frac{U_{S1}+I_{S3}R_3}{R_1+R_3+R_4} 
+  i_{L}(T_0) = \frac{U_{S1}}{R_1+R_3+R_4} + I_{S2}\frac{R_3}{R_1+R_3+R_4} =
+  \frac{U_{S1}+I_{S2}R_3}{R_1+R_3+R_4} 
 .\] 
-
-\clearpage
+\newpage
 \subsubsection{Response, after switching to $(b)$}
-When the switch is at $(b)$, the circuit effectively looks like drawn in \ref{fig:circuit_b}  
+When the switch is at $(b)$, the circuit effectively looks like drawn in figure (\ref{fig:circuit_b})
 
 \begin{figure}[h!] \centering    
 \begin{circuitikz}
       %Us_2
-      \draw (5,5) to[V, v=$U_{S2}$, color=blue]        (5,0);
+      \draw (5,5) to[V, v=$U_{S3}$, color=blue]        (5,0);
       %R_4
-      \draw (0,5) to[R, l=$R_4$, i=$i_{l}$]           (0,2.5);
+      \draw (0,5) to[R, l=$R_4$, i=$i_{l}$, v=$u_{R_4}$](0,2.5);
       %R_5
-      \draw (0,5) to[R, -*, l=$R_5$]               (3,5);
+      \draw (0,5) to[R, -*, l=$R_5$, v<=$u_{R5}$]        (3,5);
       %R_6
       \draw (3,5) to[R, *-*, l=$R_6$]                   (3,0);
       %L
@@ -227,14 +249,87 @@ When the switch is at $(b)$, the circuit effectively looks like drawn in \ref{fi
       %connections
       \draw (0,0) to[short] (5,0);
       \draw (3,5) to[short] (5,5);
+      %cross out R_6
+      \draw[thick] (2.5, 1.5) -- (3.5, 3.5);
 \end{circuitikz} 
 \caption{circuit state after $T_0$}
 \label{fig:circuit_b}
 \end{figure}
-To simplify things, we substitute the timevalue $t$ with  $t' = t - T_0$. 
+Note, that the component $R_6$ does not influence our citrcuit at all. To simplify things, we substitute the timevalue $t$ with  $(t-T_0) = t - T_0$. 
 
+\subsubsection*{Derive DGL with a mesh equation (KVL)}
+Mesh equation for the circuit with switch at $(b)$:
+\[
+   u_{R4}(t) + u_{R5}(t) + u_{L}(t) = U_{S3}
+.\] 
+Use componet specific law's, to rewrite those voltages as currents.
+\[
+   (R_4+R_5)i_{L} + L \frac{\diff i_{L}}{\diff t} = U_{S3}
+.\] 
+dividing by L and define $R_4+R_5$ as $R_{45}$, we get
+\[
+   \frac{\diff i_{L}}{\diff t} + \frac{R_{45}}{L} i_{L} = \frac{U_{S3}}{L}
+.\] 
+\subsubsection*{Homogeneous solution}
+we use the following approach 
+\[
+   i_{L,h}(t) = Ke^{-\lambda(t-T_0)} = Ke^{-\lambda (t-T_0)}, \quad \frac{\diff i_{L,h}(t)}{\diff t} =
+   -\lambda K e^{-\lambda (t-T_0)}
+,\] 
+to calculate the homogeneous solution of our DGL. For that, we Plug $i_{L,h}$ and $\frac{\diff
+i_{L,h}}{\diff t}$ into the homogeneous version of the DGL.
+\[
+   \frac{R_{45}}{L}Ke^{-\lambda (t-T_0)} - \lambda Ke^{-\lambda (t-T_0)} = 0\, \rightarrow \, Ke^{-\lambda (t-T_0)}
+   \left( -\lambda + \frac{R_{45}}{L} \right) = 0
+.\] 
+Knowing, that the exponential function can not be 0, we can calculate $\lambda$ with the
+characteristic polynom of our DGL, which is $-\lambda + \frac{R_{45}}{L} \overset{!}{=} 0$.
+$\lambda$ is equal to  $\frac{R_{45}}{L}$ and the time constant $\tau$ is equal to the inverse of
+$\lambda$, which is $\frac{L}{R_{45}}$. Our homogeneous solution
+\[
+   i_{L,h}(t) = Ke^{-\frac{R_{45}}{L}(t-T_0)}
+\] 
+still has an unknown constant $K$, which we will calculate later.
+\subsubsection*{Particular solution}
+we use the following approach 
+\[
+   i_{L,p}(t) = B, \quad \frac{\diff i_{L,p}}{\diff t} = 0
+,\]
+to calculate the particular solution of our DGL. 
+\[
+   \frac{R_{45}}{L} B + 0 = \frac{U_{S3}}{L} \, \rightarrow \, B = i_{L,p} = \frac{U_{S3}}{R_{45}}
+.\] 
+This yields us the general Solution of our differential equation.
+\[
+   i_{L}(t) = i_{L,h}(t) + i_{L,p}(t) = Ke^{-\frac{R_{45}}{L} (t-T_0)} + \frac{U_{S3}}{R_{45}}
+.\]
 \newpage
-\clearpage
+\subsubsection*{Initial value problem (IVP)}
+We calculated the value for $i_{L}$ at the time of $t=T_0$. We now use that to get the
+constant value $K$.
+ \[
+    i_{L}((t-T_0) = 0) \overset{!}{=} \frac{U_{s1} + I_{S2}R_3}{R_1+R_3+R_4}
+.\] 
+\[
+   Ke^{0} + \frac{U_{S3}}{R_{45}} = \frac{U_{s1} + I_{S2}R_3}{R_1+R_3+R_4}\,\rightarrow\, 
+   K = \frac{U_{s1} + I_{S2}R_3}{R_1+R_3+R_4} - \frac{U_{S3}}{R_{45}}
+.\] 
+\subsubsection{Solution and comparison to the general solution of transient responses}
+\[
+   i_{L}(t) = \left[ \frac{U_{s1} + I_{S2}R_3}{R_1+R_3+R_4} - \frac{U_{S3}}{R_{45}}
+ \right] e^{-\frac{R_{45}}{L} (t-T_0)} + \frac{U_{S3}}{R_{45}}
+.\] 
+The first part of that equation is called the transient part of the response and has a form of \\
+$\left[x_0 - x_f\right] e^{-\frac{t-t_0}{\tau}}$, where $x_0$ is the initial state and $x_f$ the
+stationary part. After a time of $\approx5\tau$, the coil will come close to having no resistance, so the
+voltage divded by the resistors $R_4+R_5$ represents our current $i_{L}$ and the stationary part
+$x_f$. This effect can be seen in our solution and in the general solution of transient responses
+via the $x_f$, that gets added to the transient part.   
+
+
+
+
+%\clearpage
 \subsection{Matlab}
 \subsubsection{Source code}
 %\lstinputlisting[language=matlab]{./../matlab/calculations_ass2.m}  
@@ -243,5 +338,4 @@ To simplify things, we substitute the timevalue $t$ with  $t' = t - T_0$.
 \vspace{2mm}
 \subsection{Numerical results}
 \subsection{Ltspice simulation}
-\clearpage
 \end{document}
