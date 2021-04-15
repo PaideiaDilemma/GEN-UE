@@ -195,7 +195,7 @@ simplify the circuit to be to following. \\
       %Us_1
       \draw (0,0) to[V, v_=$U_{S1}$, color=blue]        (0,2.5);
       %Is_2
-      \draw (0,5) to[I, i=$I_{S2}$, color =red]         (5,5);
+      \draw (0,5) to[I, i<=$I_{S2}$, color =red]         (5,5);
       %R_1
       \draw (0,0) to[R, l=$R_1$]                        (5,0);
       %R_2
@@ -220,17 +220,17 @@ The powersupply $I_{S2}$ acts as a open circuit, so there is also no current flo
 $R_2$. The current $i_{L}$ is now the same across every resistor in the circuit. We will calculate
 its value with $i_{L}(T_0)' = \frac{U_{S1}}{R_{ges}}$.
  \[
-   R_{ges} = R_1 + R_3 + R_4, \quad i_{L}(t_0)' = \frac{U_{S1}}{R_1+R_3+R_4}
+   R_{ges} = R_1 + R_3 + R_4, \quad i_{L}(t_0)' = -\frac{U_{S1}}{R_1+R_3+R_4}
 .\] 
 \subsubsection*{$U_{S1}$ is off, $I_{S2}$ is on.} 
 Replacing $U_{S1}$ with a short, we can calculate $i_{L}(T_{0})''$ with a current divider.
 \[
-  i_{L}(T_0)'' = I_{S2} \frac{R_3}{R_1+R_3+R_4}
+  i_{L}(T_0)'' = -I_{S2} \frac{R_3}{R_1+R_3+R_4}
 .\] 
 Our disired current $i_{L}(T_0)$ is equal to $i_{L}(T_0)' + i_{L}(T_0)''$
 \[
-  i_{L}(T_0) = \frac{U_{S1}}{R_1+R_3+R_4} + I_{S2}\frac{R_3}{R_1+R_3+R_4} =
-  \frac{U_{S1}+I_{S2}R_3}{R_1+R_3+R_4} 
+  i_{L}(T_0) = -\frac{U_{S1}}{R_1+R_3+R_4} - I_{S2}\frac{R_3}{R_1+R_3+R_4} =
+  \frac{-U_{S1}-I_{S2}R_3}{R_1+R_3+R_4} 
 .\] 
 \newpage
 \subsubsection{Response, after switching to $(b)$}
@@ -312,15 +312,15 @@ This gives us the general solution of our differential equation.
 We calculated the value for $i_{L}$ at the time of $t=T_0$. We now use that to get the
 constant value $K$.
  \[
-    i_{L}((t-T_0) = 0) \overset{!}{=} \frac{U_{s1} + I_{S2}R_3}{R_1+R_3+R_4}
+    i_{L}((t-T_0) = 0) \overset{!}{=} \frac{-U_{s1} - I_{S2}R_3}{R_1+R_3+R_4}
 .\] 
 \[
-   Ke^{0} + \frac{U_{S3}}{R_{45}} = \frac{U_{s1} + I_{S2}R_3}{R_1+R_3+R_4}\,\rightarrow\, 
-   K = \frac{U_{s1} + I_{S2}R_3}{R_1+R_3+R_4} - \frac{U_{S3}}{R_{45}}
+   Ke^{0} + \frac{U_{S3}}{R_{45}} = \frac{-U_{s1} - I_{S2}R_3}{R_1+R_3+R_4}\,\rightarrow\, 
+   K = \frac{-U_{s1} - I_{S2}R_3}{R_1+R_3+R_4} - \frac{U_{S3}}{R_{45}}
 .\] 
 \subsubsection{Solution and comparison to the general solution of transient responses}
 \[
-   i_{L}(t) = \left[ \frac{U_{s1} + I_{S2}R_3}{R_1+R_3+R_4} - \frac{U_{S3}}{R_{45}}
+   i_{L}(t) = \left[ \frac{-U_{s1} - I_{S2}R_3}{R_1+R_3+R_4} - \frac{U_{S3}}{R_{45}}
  \right] e^{-\frac{R_{45}}{L} (t-T_0)} + \frac{U_{S3}}{R_{45}}
 .\] 
 The first part of that equation is called the transient part of the response and has a form of \\
@@ -341,10 +341,22 @@ via the $x_f$, that gets added to the transient part.
 \vspace{2mm}
 
 \subsection{Numerical results}
+The initial value at $t = T_0$ is -700mA\\
 The solution of the differential equation is:
 \begin{equation*}
-   i_L(t) = 0.5 * e^(-t + 1) + 0.2
+   i_L(t) = -0.9 * e^{-t + 1} + 0.2
 \end{equation*}
 It expresses the current through the inductance $L$ in relation to time.
+\clearpage
 \subsection{Ltspice simulation}
+\begin{figure}[h!]\centering
+   \includegraphics[scale = 0.5]{Figures/LTspice_simulation.PNG}
+   \caption{LTspice simulation}
+\end{figure}
+\begin{figure}[h!]\centering
+   \includegraphics[scale = 0.5]{Figures/Plot.PNG}
+   \caption{Plot of current and voltage across the coil}
+\end{figure}
+At the time $t=1$ the current is $-700mA$ which is the initial value for $i_L$. After 5 $\tau$ $i_L$ has more or less reached its end
+value of $200mA$ and all transient processes are finished. The plot proves, that the current across an inductor is continuous and the voltage is not.
 \end{document}

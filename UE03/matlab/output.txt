@@ -1,6 +1,8 @@
-K = 0.5A
+initial value: -0.7
+
+K = -0.9A
 tau = 1ms
 particular part: 0.2A
 
 Solution of the differential equation:
-i_L(t) = 0.5 * exp(-t + 1) + 0.2
+i_L(t) = -0.9 * exp(-t + 1) + 0.2
