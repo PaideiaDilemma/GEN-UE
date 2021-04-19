@@ -1,3 +1,16 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%        mmm  mmmmmm mm   m        m    m mmmmmm m             %%
+%%      m"   " #      #"m  #        #    # #      #  #          %%
+%%      #   mm #mmmmm # #m #        #    # #mmmmm "mm#mm        %%
+%%      #    # #      #  # #  """   #    # #         #          %%
+%%       "mmm" #mmmmm #   ##        "mmmm" #mmmmm    #          %%
+%%                                                              %%
+%%                                                              %%
+%%                                                              %%
+%%      Grundlagen der Elektrischen Netzwerke, UE               %%
+%%      Gruppe 5, Team F                                        %%
+%%      Authors: Severin Wolf, Maximilian Seidler.              %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \documentclass[a4paper]{article}
 
 \usepackage{pstricks}
@@ -11,6 +24,7 @@
 \geometry{a4paper,left=3cm,right=2cm, top=2cm, bottom=2cm} 
 \usepackage{graphicx}
 \usepackage{bm}
+\usepackage[EFvoltages, european, straightvoltages]{circuitikz}
 
 \newpsobject{showgrid}{psgrid}{subgriddiv=1,griddots=10,gridlabels=0pt}
 \psset{unit=1.0cm}
@@ -100,5 +114,38 @@ Graz University of Technology\\
 \vspace*{2cm} \subsection*{Values:}
 $R_1 = 50\Omega$ \qquad $R_2 = 200\Omega$ \qquad $R_3 = 50\Omega$ \qquad $C = 10\mu F$ \qquad $L = 100mH$ \qquad $U_0 = 10V$ \newline 
 $i_L(t=0ms)=I_{L,0}=50mA$ \qquad $u_C(t=0ms) = U_{C,0} = 15V$\\
+
+\newpage
+\section{Solution}
+\subsection{Analytical calculations}
+Circuit for $0 \leq t \leq 2\tau_1$:
+
+\begin{figure}[h!]\centering
+	\begin{circuitikz}[scale=0.75, transform shape]
+		\draw(0,0)
+		to[short](0,1)
+		to[L, l=$L$, v<=$U_{L}$](0,4)
+		to[short, i<=$i_L(t)$, color=red](0,5)
+		to[short](1,5)
+		to[R, l=$R_{13}$, v<=$U_{R_{13}}$](4,5)
+		to[short](5,5)
+		to[short](5,4)
+		to[V, v=$U_0$, color=blue](5,1)
+		to[short](5,0)
+		to[short](0,0);
+	\end{circuitikz}
+\end{figure}
+$R_{13} = R_1 + R_3$\\
+\\
+\begin{align*}
+	i_L(t) =& x_f + [x_0 - x_f ] \cdot e^{-\frac{t-t_0}{\tau}}\\
+	i_L(t) =& \mathrm{final \; currenrt + [initial \; currenrt - final \; current] \cdot e^{-\frac{t-starttime}{\tau}}}\\
+	x_0 =& i_{L_0} = 50mA\\
+	x_f =& i_{L_f} = \frac{U_0}{R_{13}}, \;\;\;\; \text{L becomes a short after a very long time} (>5\tau)\\
+	t_0 =& 0\\
+	\tau =& \frac{L}{R_{13}}\\
+	i_L(t) =& \frac{U_0}{R_{13}} + \left[50mA - \frac{U_0}{R_{13}} \right] \cdot e^{-\frac{t}{\frac{L}{R_{13}}}}\\
+\end{align*}
+
 
 \end{document}
