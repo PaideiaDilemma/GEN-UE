@@ -1,0 +1,104 @@
+\documentclass[a4paper]{article}
+
+\usepackage{pstricks}
+\usepackage{pst-circ}
+\usepackage{pst-plot}
+\usepackage{pstricks-add}
+\usepackage[ngerman, english]{babel} 
+\usepackage{amsmath}
+\usepackage[latin1]{inputenc}
+\usepackage{geometry}
+\geometry{a4paper,left=3cm,right=2cm, top=2cm, bottom=2cm} 
+\usepackage{graphicx}
+\usepackage{bm}
+
+\newpsobject{showgrid}{psgrid}{subgriddiv=1,griddots=10,gridlabels=0pt}
+\psset{unit=1.0cm}
+\psset{tensioncolor=blue}
+\psset{tensionlabelcolor=blue}
+\psset{intensitycolor=red}
+\psset{intensitylabelcolor=red}
+
+\setlength{\parindent}{0pt}
+\usepackage{lipsum}
+
+\newcommand\blfootnote[1]{%
+	\begingroup
+	\renewcommand\thefootnote{}\footnote{#1}%
+	\addtocounter{footnote}{-1}%
+	\endgroup
+}
+
+\begin{document}
+\pagestyle{empty} \enlargethispage*{25cm}\samepage{
+
+\vspace*{-3cm}
+\begin{center}
+\begin{minipage}[!h]{18cm}
+\hspace*{-0.9cm}
+\includegraphics[width=3.3cm]{./Figures/igte_logo}
+\begin{tabular}{p{10cm}}
+\vspace{0.5cm}
+\centering{
+\Large Institute of Fundamentals and Theory in
+ Electrical Engineering\\
+Graz University of Technology\\
+~\\}
+\end{tabular}
+\includegraphics[width=3.3cm]{./Figures/TUG_logo}
+\end{minipage}
+		\Large
+		\textbf{Fundamentals of Electrical Circuits} \vspace*{0.5cm}\\
+		\textbf{4. Homework}\\Transient response
+		\vspace*{0.5cm}
+		
+		\large
+		15 April 2021
+	\end{center}}
+	
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	\section*{Assignment 1}
+	\begin{enumerate}
+		\item The  expression for the current $i_L(t)$ for $t\geq0$ should be found:
+		\begin{itemize}
+			\item Apply the general solution for transient response $\mathbf{x(t) = x_f + [x_0 - x_f ] \cdot e^{-\frac{t-t_0}{\tau}}}$ in order to calculate the expression for $i_L(t)$ for $0 \leq t \leq 2 \tau_1$. The value of $i_L(2 \tau_1)$ should be used as initial condition for the coil for $t \geq 2 \tau_1$. (0.5P)
+						
+			\item At $t = 2 \tau_1$ both switches $S_1$ and $S_2$ close instantaneously. Apply KCL and KVL for the remaining circuit to derive the necessary mesh and node equations. Use the $\textbf{\textit{i}}-\textbf{\textit{u}}$ relationships at the resistors, the capacitor and the coil in order to derive the homogeneous second order differential equation describing the current $i_L(t)$. \\\textbf{Hint:} $i_L'' + 2 \delta i_L' + \omega_0^2 i_L = 0$ (1P)
+	
+			\item Calculate the value of the parameters $\delta,\omega_0$ and $\Omega_d$. Is this specific circuit overdamped, underdamped or critically damped? (0.5P)
+			
+			\item  Solve the second order differential equation describing $i_L(t)$ by using the correct \textit{Ansatz} for this case. (1P)
+			\begin{itemize}
+				\item Use the appropriate \textit{Ansatz} depending on the case
+				\item Solve the initial value problem for the corresponding initial conditions. Explain your thoughts.
+			\end{itemize}				
+		\end{itemize}
+	
+		\item Plot the current through the inductor in Matlab for $0s\leq t<10ms$. (1P)
+		
+		\item Do a simulation of the circuit in LTspice and compare the results. Plot the current $i_L(t)$ and the voltage $u_L(t)$ at the coil between $0s\leq t<10ms$. (1P)
+		\\\textbf{Hint:} To set the initial conditions in LTspice use the spice-directive \textbf{.ic} for example \textbf{.ic I(L1)=50m} \\
+		for voltages at capacitors it works best to define the initial voltages of the specific nodes around the capacitor \textbf{.ic V(n003)=-5} therefor you have to calculate the voltages at this nodes at the beginning first.(a little bit annoying in LTspice)
+		
+		
+	\end{enumerate}
+	
+	\vspace*{8cm}
+	
+\blfootnote{Deadline: 22 April 2021; \qquad presentation: Group 4}
+
+\newpage	
+\vspace*{4cm}
+\begin{figure}[h!]
+		\centering
+			\includegraphics[width = 350pt]{./Figures/homework04_circuit.png}
+			\caption{Given circuit}
+			\label{fig:circuit_hw04}
+\end{figure}
+
+\vspace*{2cm} \subsection*{Values:}
+$R_1 = 50\Omega$ \qquad $R_2 = 200\Omega$ \qquad $R_3 = 50\Omega$ \qquad $C = 10\mu F$ \qquad $L = 100mH$ \qquad $U_0 = 10V$ \newline 
+$i_L(t=0ms)=I_{L,0}=50mA$ \qquad $u_C(t=0ms) = U_{C,0} = 15V$\\
+
+\end{document}
