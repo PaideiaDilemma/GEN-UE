@@ -12,29 +12,27 @@
 %%      Authors: Severin Wolf, Maximilian Seidler.              %%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \documentclass[a4paper]{article}
-
-\usepackage{pstricks}
-\usepackage{pst-circ}
-\usepackage{pst-plot}
-\usepackage{pstricks-add}
-\usepackage[ngerman, english]{babel} 
 \usepackage{amsmath}
-\usepackage[latin1]{inputenc}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[english]{babel}
 \usepackage{geometry}
-\geometry{a4paper,left=3cm,right=2cm, top=2cm, bottom=2cm} 
 \usepackage{graphicx}
-\usepackage{bm}
+\usepackage{tikz}
+\usepackage{listings}
+\geometry{a4paper,left=3cm,right=2cm, top=2cm, bottom=2cm} 
 \usepackage[EFvoltages, european, straightvoltages]{circuitikz}
 
-\newpsobject{showgrid}{psgrid}{subgriddiv=1,griddots=10,gridlabels=0pt}
-\psset{unit=1.0cm}
-\psset{tensioncolor=blue}
-\psset{tensionlabelcolor=blue}
-\psset{intensitycolor=red}
-\psset{intensitylabelcolor=red}
+%tikz
+\ctikzset{resistor = european}
+\usetikzlibrary{decorations.pathreplacing}
 
+%no paragraph indent
 \setlength{\parindent}{0pt}
-\usepackage{lipsum}
+
+%for math, that does not fit
+\renewcommand*{\arraystretch}{1.3}
+\newcommand\scalemath[2]{\scalebox{#1}{\mbox{\ensuremath{\displaystyle #2}}}}
 
 \newcommand\blfootnote[1]{%
 	\begingroup
@@ -43,16 +41,37 @@
 	\endgroup
 }
 
+% upright differenzial symbol with good spacing included!!!
+\makeatletter
+\providecommand*{\diff}%
+	{\@ifnextchar^{\DIfF}{\DIfF^{}}}
+\def\DIfF^#1{%
+	\mathop{\mathrm{\mathstrut d}}%
+		\nolimits^{#1}\gobblespace
+}
+\def\gobblespace{%
+	\futurelet\diffarg\opspace}
+\def\opspace{%
+	\let\DiffSpace\!%
+	\ifx\diffarg(%
+		\let\DiffSpace\relax
+	\else
+		\ifx\diffarg\{%
+			\let\DiffSpace\relax
+		\else
+			\ifx\diffarg\{%
+				\let\DiffSpace\relax
+			\fi\fi\fi\DiffSpace}
+
 \begin{document}
 \pagestyle{empty} \enlargethispage*{25cm}\samepage{
-
 \vspace*{-3cm}
 \begin{center}
-\begin{minipage}[!h]{18cm}
-\hspace*{-0.9cm}
+\begin{minipage}[!h]{16cm}
+\hspace*{0.2cm}
 \includegraphics[width=3.3cm]{./Figures/igte_logo}
-\begin{tabular}{p{10cm}}
-\vspace{0.5cm}
+\begin{tabular}{p{8cm}}
+\vspace{0.2cm}
 \centering{
 \Large Institute of Fundamentals and Theory in
  Electrical Engineering\\
@@ -113,7 +132,7 @@ Graz University of Technology\\
 
 \vspace*{2cm} \subsection*{Values:}
 $R_1 = 50\Omega$ \qquad $R_2 = 200\Omega$ \qquad $R_3 = 50\Omega$ \qquad $C = 10\mu F$ \qquad $L = 100mH$ \qquad $U_0 = 10V$ \newline 
-$i_L(t=0ms)=I_{L,0}=50mA$ \qquad $u_C(t=0ms) = U_{C,0} = 15V$\\
+$i_L(t=0ms)=I_{L,0}=50mA$ \qquad $u_C(t=0ms) = U_{C,0} = 15V$
 
 \newpage
 \section{Solution}
@@ -135,8 +154,7 @@ Circuit for $0 \leq t \leq 2\tau_1$:
 		to[short](0,0);
 	\end{circuitikz}
 \end{figure}
-$R_{13} = R_1 + R_3$\\
-\\
+$R_{13} = R_1 + R_3$
 \begin{align*}
 	i_L(t) =& x_f + [x_0 - x_f ] \cdot e^{-\frac{t-t_0}{\tau}}\\
 	i_L(t) =& \mathrm{final \; currenrt + [initial \; currenrt - final \; current] \cdot e^{-\frac{t-starttime}{\tau}}}\\
