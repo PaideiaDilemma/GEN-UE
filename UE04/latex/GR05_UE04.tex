@@ -188,15 +188,15 @@ Circuit for $t \geq 2\tau_1$:
 	\end{circuitikz}
 \end{figure}
 
-$t^{~} = t - 2\tau_1$
+$\overset{\sim }{t} = t - 2\tau_1$
 
 \begin{align*}
-	m_1&: u_C(t) = u_{R_2}(t)\\
-	m_2&: u_{R_3}(t) + u_L(t) = u_{R_2}(t)\\
-	n&: i_L(t) + i_{R_2}(t) + i_C(t) = 0\\
+	m_1&: u_C(\overset{\sim }{t}) = u_{R_2}(\overset{\sim }{t})\\
+	m_2&: u_{R_3}(\overset{\sim }{t}) + u_L(\overset{\sim }{t}) = u_{R_2}(\overset{\sim }{t})\\
+	n&: i_L(\overset{\sim }{t}) + i_{R_2}(\overset{\sim }{t}) + i_C(\overset{\sim }{t}) = 0\\
 \end{align*}
 \begin{align*}
-	i_L + i_{R_2} + i_C(t) = 0\\
+	i_L + i_{R_2} + i_C = 0\\
 	i_L + \frac{u_{R_2}}{R_2} + Cu_C' = 0\\
 	i_L + \frac{u_{R_3} + u_L}{R_2} + C(u_{R_3} + u_L)' = 0\\
 	i_L + \frac{u_{R_3}}{R_2} + \frac{Li_L'}{R_2} + C(u_{R_3} + Li_L')' = 0\\
@@ -211,13 +211,13 @@ $t^{~} = t - 2\tau_1$
 \end{align*}
 educated guess:
 \begin{align*}
-	i_L &= e^{\lambda t},&
-	i_L' &= \lambda e^{\lambda t},&
-	i_L'' &= \lambda^2 e^{\lambda t}\\
+	i_L &= e^{\lambda \overset{\sim }{t}},&
+	i_L' &= \lambda e^{\lambda \overset{\sim }{t}},&
+	i_L'' &= \lambda^2 e^{\lambda \overset{\sim }{t}}\\
 \end{align*}
 \begin{align*}
-	\lambda^2 e^{\lambda t} + 2\delta\lambda e^{\lambda t} + \omega_0^2 e^{\lambda t} 
-	= e^{\lambda t}(\lambda^2 + 2\delta\lambda + \omega_0^2) = 0\\
+	\lambda^2 e^{\lambda \overset{\sim }{t}} + 2\delta\lambda e^{\lambda \overset{\sim }{t}} + \omega_0^2 e^{\lambda \overset{\sim }{t}} 
+	= e^{\lambda \overset{\sim }{t}}(\lambda^2 + 2\delta\lambda + \omega_0^2) = 0\\
 \end{align*}
 characteristic equation:
 \begin{align*}
@@ -231,22 +231,39 @@ The characteristic equation has a complex solution, which means response is unde
 \end{align*}
 Plug the solutions for $\lambda$ into the DGL:
 \begin{equation*}
-	i_L(t) = e^{-\delta t}[K_1\cos(\Omega_dt) + K_2\sin(\Omega_dt)]\\
+	i_L(\overset{\sim }{t}) = e^{-\delta \overset{\sim }{t}}[K_1\cos(\Omega_d\overset{\sim }{t}) + K_2\sin(\Omega_d\overset{\sim }{t})]\\
 \end{equation*}
 Now we still have to solve the initial value problem in order to determine $K_1$ and $K_2$.
 Therefore we need to find the initial conditions for $i_L(t = 0)$ and $i_L'(t = 0)$.
 \begin{equation*}
-	i_L(t = 0) = i_{L0} = \frac{U_0}{R_{13}} + \left[50mA - \frac{U_0}{R_{13}} \right] \cdot e^{-\frac{2\tau_1}{\frac{L}{R_{13}}}} = 93.2mA\\
+	i_L(\overset{\sim }{t} = 0) = i_{L0} = \frac{U_0}{R_{13}} + \left[50mA - \frac{U_0}{R_{13}} \right] \cdot e^{-\frac{2\tau_1}{\frac{L}{R_{13}}}} = 93.2mA\\
 \end{equation*}
 We can use this condition because the current across an inductor is continuos. This means $i_L(t^-) = i_L(t) = i_L(t^+)$.\\
 \pagebreak
 The second thing we know is, that the voltage drop across a capacitor is continuos. So we use this information to create the second initial condition:
 \begin{align*}
-	u_C(t = 0) = 0\\
-	u_C(t = 0) = u_{R_3}(t = 0) + u_L(t = 0) = 0\\
-	i_{L0}R_3 + Li_L'(t = 0) = 0\\
-	i_L'(t = 0) = -\frac{i_{L0}R_3}{L}
+	u_C(\overset{\sim }{t} = 0) = 0\\
+	u_C(\overset{\sim }{t} = 0) = u_{R_3}(\overset{\sim }{t} = 0) + u_L(\overset{\sim }{t} = 0) = 0\\
+	i_{L0}R_3 + Li_L'(\overset{\sim }{t} = 0) = 0\\
+	i_L'(\overset{\sim }{t} = 0) = -\frac{i_{L0}R_3}{L}
 \end{align*}
-
+first initial condition:
+\begin{align*}
+	i_L(\overset{\sim }{t} = 0) = 1[K_1 \cdot 1 + K_2\cdot 0]\\
+	K_1 = i_{L0}
+\end{align*}
+second initial condition:
+\begin{align*}
+	i_L'(\overset{\sim }{t}) = -\delta e^{-\delta \overset{\sim }{t}}[K_1\cos(\Omega_d\overset{\sim }{t}) + K_2\sin(\Omega_d\overset{\sim }{t})] +
+	 e^{-\delta \overset{\sim }{t}}[-\Omega_dK_1\sin(\Omega_d\overset{\sim }{t}) + \Omega_dK_2\cos(\Omega_d\overset{\sim }{t})]\\
+	i_L'(\overset{\sim }{t}=0) = -\delta [K_1 \cdot 1 + K_2 \cdot 0] + 1[-\Omega_dK_1\cdot 0 + \Omega_dK_2\cdot 1]\\
+	i_L'(\overset{\sim }{t}=0) = -\delta K_1 + \Omega_dK_2\\
+	-\frac{i_{L0}R_3}{L} = -\delta K_1 + \Omega_dK_2\\
+	K_2 = \frac{-\frac{i_{L0}R_3}{L} + \delta i_{L0}}{\Omega_d}
+\end{align*}
+solution of the differential equation:
+\begin{equation*}
+	i_L(\overset{\sim }{t}) = e^{-\delta \overset{\sim }{t}} \left[i_{L0} \cdot \cos(\Omega_d\overset{\sim }{t}) + \frac{i_{L0} \left(\delta - \frac{R_3}{L} \right)}{\Omega_d} \cdot \sin(\Omega_d\overset{\sim }{t}) \right]\\
+\end{equation*}
 
 \end{document}
