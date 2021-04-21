@@ -81,13 +81,15 @@ Graz University of Technology\\
 \includegraphics[width=3.3cm]{./Figures/TUG_logo}
 \end{minipage}
 		\Large
-		\textbf{Fundamentals of Electrical Circuits} \vspace*{0.5cm}\\
-		\textbf{4. Homework}\\Transient response
+		\textbf{Fundamentals of electrical circuits} \vspace*{0.5cm}\\
+		\textbf{2. Homework}\\Th$\acute{\text{e}}$venin Equivalent Circuit and Linearity
 		\vspace*{0.5cm}
 		
 		\large
-		15 April 2021
+		18 March 2021
 	\end{center}}
+	
+	\vspace*{1cm}
 	
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -123,9 +125,8 @@ Graz University of Technology\\
 
 \newpage	
 \vspace*{4cm}
-\begin{figure}[h!]
-		\centering
-			\includegraphics[width = 350pt]{./Figures/homework04_circuit.png}
+\begin{figure}[h!] \centering
+		\includegraphics{./Figures/homework04_circuit.png}
 			\caption{Given circuit}
 			\label{fig:circuit_hw04}
 \end{figure}
@@ -159,9 +160,9 @@ $R_{13} = R_1 + R_3$
 	i_L(t) =& x_f + [x_0 - x_f ] \cdot e^{-\frac{t-t_0}{\tau}}\\
 	i_L(t) =& \mathrm{final \; currenrt + [initial \; currenrt - final \; current] \cdot e^{-\frac{t-starttime}{\tau}}}\\
 	x_0 =& i_{L_0} = 50mA\\
-	x_f =& i_{L_f} = \frac{U_0}{R_{13}}, \;\;\;\; \text{L becomes a short after a very long time} (>5\tau)\\
+	x_f =& i_{L_f} = \frac{U_0}{R_{13}}, \quad \text{L becomes a short after a very long time} (>5\tau)\\
 	t_0 =& 0\\
-	\tau =& \frac{L}{R_{13}}\\
+	\tau =& \frac{L}{R_{13}}\quad \text{in } [s]\\
 	i_L(t) =& \frac{U_0}{R_{13}} + \left[50mA - \frac{U_0}{R_{13}} \right] \cdot e^{-\frac{t}{\frac{L}{R_{13}}}}\\
 \end{align*}
 
@@ -236,7 +237,8 @@ Plug the solutions for $\lambda$ into the DGL:
 Now we still have to solve the initial value problem in order to determine $K_1$ and $K_2$.
 Therefore we need to find the initial conditions for $i_L(t = 0)$ and $i_L'(t = 0)$.
 \begin{equation*}
-	i_L(\overset{\sim }{t} = 0) = i_{L0} = \frac{U_0}{R_{13}} + \left[50mA - \frac{U_0}{R_{13}} \right] \cdot e^{-\frac{2\tau_1}{\frac{L}{R_{13}}}} = 93.2mA\\
+	i_L(\overset{\sim }{t} = 0) = i_{L0} = \frac{U_0}{R_{13}} + \left[50mA - \frac{U_0}{R_{13}}
+	\right] \cdot e^{-2} = 93.2mA\\
 \end{equation*}
 We can use this condition because the current across an inductor is continuos. This means $i_L(t^-) = i_L(t) = i_L(t^+)$.\\
 \pagebreak
@@ -265,5 +267,22 @@ solution of the differential equation:
 \begin{equation*}
 	i_L(\overset{\sim }{t}) = e^{-\delta \overset{\sim }{t}} \left[i_{L0} \cdot \cos(\Omega_d\overset{\sim }{t}) + \frac{i_{L0} \left(\delta - \frac{R_3}{L} \right)}{\Omega_d} \cdot \sin(\Omega_d\overset{\sim }{t}) \right]\\
 \end{equation*}
+\clearpage
+\subsection{Matlab}
+\subsubsection{Source code}
+\lstinputlisting[language=matlab]{./../matlab/assignment4.m}
+\subsubsection{Output}
+\begin{figure}[h!]\centering
+  \includegraphics[scale = 0.55]{./Figures/assignment4_plot.eps}
+   \caption{Matlab plot}
+   \label{fig:matlab}
+\end{figure}
+\clearpage
+\subsection{Ltspice simulation}
+\begin{figure}[h!]\centering
+   \includegraphics[scale = 0.4]{Figures/assignment4_sim.png}
+   \caption{LTspice simulation}
+   \label{fig:ltspice}
+\end{figure}
 
 \end{document}
