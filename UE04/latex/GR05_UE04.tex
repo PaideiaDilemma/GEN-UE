@@ -222,7 +222,30 @@ educated guess:
 characteristic equation:
 \begin{align*}
 	\lambda^2 + 2\delta\lambda + \omega_0^2 = 0\\
-	\lambda_{1,2} = -\delta \pm \sqrt{\delta^2 - \omega_0^2}
+	\lambda_{1,2} = -\delta \pm \sqrt{\delta^2 - \omega_0^2}\\
+\end{align*}
+The characteristic equation has a complex solution, which means response is underdamped.
+\begin{align*}
+	\Omega_d = \sqrt{\omega_0^2 - \delta^2}\\
+	\lambda_{1,2} = -\delta \pm j\Omega_d\\
+\end{align*}
+Plug the solutions for $\lambda$ into the DGL:
+\begin{equation*}
+	i_L(t) = e^{-\delta t}[K_1\cos(\Omega_dt) + K_2\sin(\Omega_dt)]\\
+\end{equation*}
+Now we still have to solve the initial value problem in order to determine $K_1$ and $K_2$.
+Therefore we need to find the initial conditions for $i_L(t = 0)$ and $i_L'(t = 0)$.
+\begin{equation*}
+	i_L(t = 0) = i_{L0} = \frac{U_0}{R_{13}} + \left[50mA - \frac{U_0}{R_{13}} \right] \cdot e^{-\frac{2\tau_1}{\frac{L}{R_{13}}}} = 93.2mA\\
+\end{equation*}
+We can use this condition because the current across an inductor is continuos. This means $i_L(t^-) = i_L(t) = i_L(t^+)$.\\
+\pagebreak
+The second thing we know is, that the voltage drop across a capacitor is continuos. So we use this information to create the second initial condition:
+\begin{align*}
+	u_C(t = 0) = 0\\
+	u_C(t = 0) = u_{R_3}(t = 0) + u_L(t = 0) = 0\\
+	i_{L0}R_3 + Li_L'(t = 0) = 0\\
+	i_L'(t = 0) = -\frac{i_{L0}R_3}{L}
 \end{align*}
 
 
