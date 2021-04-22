@@ -31,15 +31,15 @@ ula = L*diff(ila)./(diff(ta));
 tb = linspace(t_switch,10e-3,10000);
 tbh = tb-t_switch;
 %attenuation (Daempfung)
-delta = (1/(R2*C) + R3/L)/2;
+delta = (1/(R2*C) + R3/L)/2
 %resonanzfrequenz
 omega_sqr = 1/(C*L) + R3/(R2*C*L);
 omega = sqrt(omega_sqr);
 %eigenfrequency
 omega_d = sqrt(omega_sqr - delta^2); 
-K2 = il_2tau*(delta-R3/L)/omega_d;
+K2 = ((uc0-il_2tau*R3)/L+(delta*il_2tau))/omega_d
 ilb = exp(-delta*tbh).*(il_2tau*cos(omega_d*tbh)+K2*sin(omega_d*tbh));
-ulb = L*diff(ilb)./diff(tbh);
+ulb = L*diff(ilb)./(diff(tbh));
 
 %% Plot Current iL
 figure(2) 

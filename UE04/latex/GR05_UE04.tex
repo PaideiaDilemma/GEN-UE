@@ -177,12 +177,12 @@ Circuit for $t \geq 2\tau_1$:
 		to[R, l=$R_{3}$, v<=$u_{R_{3}}(t)$](0,9)
 		to[short, -*](0,10);
 		\draw(5,0)
-		to[short, i<=$i_{R_2}(t)$, color=red](5,2)
-		to[R, l=$R_{2}$, v<=$u_{R_{2}}(t)$](5,8)
+		to[short, i=$i_{R_2}(t)$, color=red](5,2)
+		to[R, l=$R_{2}$, v=$u_{R_{2}}(t)$](5,8)
 		to[short, -*](5,10);
 		\draw(10,0)
-		to[short, i<=$i_{C}(t)$, color=red](10,2)
-		to[C, l=$C$, v<=$u_{C}(t)$](10,8)
+		to[short, i=$i_{C}(t)$, color=red](10,2)
+		to[C, l=$C$, v=$u_{C}(t)$](10,8)
 		to[short, -*](10,10);
 		\draw(0,10) to[short](10,10);
 		\draw(0,0) to[short, -*](5,0) to[short, -*](10,0);
@@ -194,20 +194,20 @@ $\overset{\sim }{t} = t - 2\tau_1$
 \begin{align*}
 	m_1&: u_C(\overset{\sim }{t}) = u_{R_2}(\overset{\sim }{t})\\
 	m_2&: u_{R_3}(\overset{\sim }{t}) + u_L(\overset{\sim }{t}) = u_{R_2}(\overset{\sim }{t})\\
-	n&: i_L(\overset{\sim }{t}) + i_{R_2}(\overset{\sim }{t}) + i_C(\overset{\sim }{t}) = 0\\
+	n&: -i_L(\overset{\sim }{t}) + i_{R_2}(\overset{\sim }{t}) + i_C(\overset{\sim }{t}) = 0\\
 \end{align*}
 \begin{align*}
-	i_L + i_{R_2} + i_C = 0\\
-	i_L + \frac{u_{R_2}}{R_2} + Cu_C' = 0\\
-	i_L + \frac{u_{R_3} + u_L}{R_2} + C(u_{R_3} + u_L)' = 0\\
-	i_L + \frac{u_{R_3}}{R_2} + \frac{Li_L'}{R_2} + C(u_{R_3} + Li_L')' = 0\\
-	i_L + \frac{i_LR_3}{R_2} + \frac{Li_L'}{R_2} + C(i_LR_3 + Li_L')' = 0\\
-	i_L \left(1 + \frac{R_3}{R_2} \right) + \frac{Li_L'}{R_2} + CR_3i_L' + CLi_L'' = 0\\
-	CLi_L'' + i_L'\left( \frac{L}{R_2} + CR_3 \right) + i_L \left(1 + \frac{R_3}{R_2} \right) = 0\\
-	i_L'' + i_L'\left( \frac{1}{R_2C} + \frac{R_3}{L} \right) + i_L \left(\frac{1}{CL} + \frac{R_3}{R_2CL} \right) = 0\\
+	-i_L + i_{R_2} + i_C = 0\\
+	-i_L + \frac{u_{R_2}}{R_2} + Cu_C' = 0\\
+	-i_L + \frac{u_{R_3} + u_L}{R_2} + C(u_{R_3} + u_L)' = 0\\
+	-i_L + \frac{u_{R_3}}{R_2} + \frac{Li_L'}{R_2} + C(u_{R_3} + Li_L')' = 0\\
+	-i_L + \frac{i_LR_3}{R_2} + \frac{Li_L'}{R_2} + C(i_LR_3 + Li_L')' = 0\\
+	-i_L \left(1 + \frac{R_3}{R_2} \right) + \frac{Li_L'}{R_2} + CR_3i_L' + CLi_L'' = 0\\
+	CLi_L'' + i_L'\left( \frac{L}{R_2} + CR_3 \right) - i_L \left(1 + \frac{R_3}{R_2} \right) = 0\\
+	i_L'' + i_L'\left( \frac{1}{R_2C} + \frac{R_3}{L} \right) - i_L \left(\frac{1}{CL} + \frac{R_3}{R_2CL} \right) = 0\\
 \end{align*}
 \begin{align*}
-	2\delta = \left( \frac{1}{R_2C} + \frac{R_3}{L} \right)\\
+	2\delta = -\left( \frac{1}{R_2C} + \frac{R_3}{L} \right)\\
 	\omega_0^2 = \left(\frac{1}{CL} + \frac{R_3}{R_2CL} \right)\\
 \end{align*}
 educated guess:
@@ -242,12 +242,14 @@ Therefore we need to find the initial conditions for $i_L(t = 0)$ and $i_L'(t = 
 \end{equation*}
 We can use this condition because the current across an inductor is continuos. This means $i_L(t^-) = i_L(t) = i_L(t^+)$.\\
 \pagebreak
-The second thing we know is, that the voltage drop across a capacitor is continuos. So we use this information to create the second initial condition:
+The second thing we know is, that the voltage drop across a capacitor is continuos. So we use this
+information to create the second initial condition. $u_{C0}=15V$
 \begin{align*}
-	u_C(\overset{\sim }{t} = 0) = 0\\
-	u_C(\overset{\sim }{t} = 0) = u_{R_3}(\overset{\sim }{t} = 0) + u_L(\overset{\sim }{t} = 0) = 0\\
-	i_{L0}R_3 + Li_L'(\overset{\sim }{t} = 0) = 0\\
-	i_L'(\overset{\sim }{t} = 0) = -\frac{i_{L0}R_3}{L}
+	u_C(\overset{\sim }{t} = 0) = u_{C0}\\
+	u_C(\overset{\sim }{t} = 0) = u_{R_3}(\overset{\sim }{t} = 0) + u_L(\overset{\sim }{t} = 0)
+	= u_{C0}\\
+	i_{L0}R_3 + Li_L'(\overset{\sim }{t} = 0) = u_{C0}\\
+	i_L'(\overset{\sim }{t} = 0) = \frac{u_{C0}- i_{L0}R_3}{L}
 \end{align*}
 first initial condition:
 \begin{align*}
@@ -260,12 +262,14 @@ second initial condition:
 	 e^{-\delta \overset{\sim }{t}}[-\Omega_dK_1\sin(\Omega_d\overset{\sim }{t}) + \Omega_dK_2\cos(\Omega_d\overset{\sim }{t})]\\
 	i_L'(\overset{\sim }{t}=0) = -\delta [K_1 \cdot 1 + K_2 \cdot 0] + 1[-\Omega_dK_1\cdot 0 + \Omega_dK_2\cdot 1]\\
 	i_L'(\overset{\sim }{t}=0) = -\delta K_1 + \Omega_dK_2\\
-	-\frac{i_{L0}R_3}{L} = -\delta K_1 + \Omega_dK_2\\
-	K_2 = \frac{-\frac{i_{L0}R_3}{L} + \delta i_{L0}}{\Omega_d}
+	\frac{u_{C0} - i_{L0}R_3}{L} = -\delta K_1 + \Omega_dK_2\\
+	K_2 = \frac{\frac{u_{C0} - i_{L0}R_3}{L} + \delta i_{L0}}{\Omega_d}
 \end{align*}
 solution of the differential equation:
 \begin{equation*}
-	i_L(\overset{\sim }{t}) = e^{-\delta \overset{\sim }{t}} \left[i_{L0} \cdot \cos(\Omega_d\overset{\sim }{t}) + \frac{i_{L0} \left(\delta - \frac{R_3}{L} \right)}{\Omega_d} \cdot \sin(\Omega_d\overset{\sim }{t}) \right]\\
+	i_L(\overset{\sim }{t}) = e^{-\delta \overset{\sim }{t}} \left[i_{L0} \cdot
+	\cos(\Omega_d\overset{\sim }{t}) + \frac{i_{L0}\delta + \frac{U_{C0} -
+      i_{L0}R_3}{L}}{\Omega_d} \cdot \sin(\Omega_d\overset{\sim }{t}) \right]\\
 \end{equation*}
 \clearpage
 \subsection{Matlab}
