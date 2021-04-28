@@ -145,4 +145,27 @@ has to be an inductor.
 	\caption{Phasor Diagramm with $\varphi_{I_{R}} = 0$}
 \end{figure}
 
+\newpage
+
+Now we calculate the value of the unknown element. We know from above it has to be a coil.
+
+\begin{align*}
+	\underline{U_1} = \underline{F} \cdot \underline{I_x}\\
+	\underline{F} = \frac{R \cdot jX_C}{R + jX_C} + jX_L =
+	\frac{R \cdot jX_C}{R + jX_C} + \frac{jX_L(R+jX_C)}{R + jX_C} = \frac{-X_LX_C + jRX_C + jRX_L}{R + jX_C}\\
+	\underline{F} = \frac{a+jb}{c+jd} = \frac{(a+jb)(c-jd)}{c^2+d^2} = \frac{ac+bd}{c^2+d^2} + j\cdot\frac{bc-ad}{c^2+d^2}\\
+	\varphi_{\underline{U_1}} = \varphi_{\underline{F}} + \varphi_{\underline{I_x}}\\
+	\varphi_{\underline{F}} \overset{!}{=} -30\\
+	\varphi_{\underline{F}} = \arctan \left(\frac{Im\{\underline{F}\}}{Re\{\underline{F}\}} \right) =
+	\arctan \left(\frac{\frac{bc-ad}{c^2+d^2}}{\frac{ac+bd}{c^2+d^2}} \right) =
+	\arctan \left(\frac{bc-ad}{ac+bd} \right) \overset{!}{=} -30\\
+	\frac{bc-ad}{ac+bd} = \tan(-30) = -\frac{\sqrt{3}}{3}\\
+	\frac{(RX_C+RX_L)R + X_CX_LX_C}{-X_CX_LR + (RX_C + RX_L)X_C} = 
+	\frac{R^2X_C + R^2X_L + X_C^2X_L}{RX_C^2 + 0} = -\frac{\sqrt{3}}{3}\\
+	3R^2X_C + 3R^2X_L + 3X_C^2X_L = -\sqrt{3}RX_C^2\\
+	3R^2X_L + 3X_C^2X_L = -3R^2X_C -\sqrt{3}RX_C^2\\
+	X_L(3R^2 + 3X_C^2) = -3R^2X_C -\sqrt{3}RX_C^2\\
+	X_L = \frac{-3R^2X_C -\sqrt{3}RX_C^2}{3R^2 + 3X_C^2}
+\end{align*}
+
 \end{document}
