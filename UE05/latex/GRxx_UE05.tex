@@ -148,7 +148,7 @@ has to be an inductor.
 \newpage
 
 Now we calculate the value of the unknown element. We know from above it has to be a coil.
-
+Note, that $X_C = \frac{-1}{\omega C}$
 \begin{align*}
 	\underline{U_1} = \underline{F} \cdot \underline{I_x}\\
 	\underline{F} = \frac{R \cdot jX_C}{R + jX_C} + jX_L =
@@ -165,7 +165,12 @@ Now we calculate the value of the unknown element. We know from above it has to 
 	3R^2X_C + 3R^2X_L + 3X_C^2X_L = -\sqrt{3}RX_C^2\\
 	3R^2X_L + 3X_C^2X_L = -3R^2X_C -\sqrt{3}RX_C^2\\
 	X_L(3R^2 + 3X_C^2) = -3R^2X_C -\sqrt{3}RX_C^2\\
-	X_L = \frac{-3R^2X_C -\sqrt{3}RX_C^2}{3R^2 + 3X_C^2}
+	X_L = \frac{-3R^2X_C -\sqrt{3}RX_C^2}{3R^2 + 3X_C^2}\\
+\end{align*}
+Now we can insert $R, C$ and $\omega$ in order to calculate $X_L$
+\begin{align*}
+	X_L = \frac{-3 \cdot 100^2 \cdot \frac{-1}{0.01} -\sqrt{3} \cdot 100 \cdot \left(\frac{-1}{0.01}\right)^2}
+	{3\cdot 100^2 + 3\left(\frac{-1}{0.01}\right)^2} = 21.1325
 \end{align*}
 
 \end{document}
