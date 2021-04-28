@@ -172,9 +172,28 @@ Now we can insert $R, C$ and $\omega$ in order to calculate $X_L$
 	X_L = \frac{-3 \cdot 100^2 \cdot \frac{-1}{0.01} -\sqrt{3} \cdot 100 \cdot \left(\frac{-1}{0.01}\right)^2}
 	{3\cdot 100^2 + 3\left(\frac{-1}{0.01}\right)^2} = 21.1325
 \end{align*}
+We divide by $\omega$ in order to get L, because $X_L = \omega L$
+\begin{align*}
+	L_x = \frac{X_L}{\omega} = \frac{21.1325}{1000} = 21.1325mH
+\end{align*}
+\newpage
 
-
-
+Now we can calculate every current and volatge in the circuit.
+\begin{align*}
+	\underline{Z_{ges}} = \underline{Z_L} + \frac{\underline{Z_R} \cdot \underline{Z_C}}{\underline{Z_R} + \underline{Z_C}} + \underline{Z_{L_x}}
+	= X_L + \frac{R \cdot X_C}{R + X_C} + X_{L_x}\\
+	i_L = i_x = \frac{u_s}{\underline{Z_{ges}}}\\
+	u_L = i_L \cdot \underline{Z_L}\\
+	u_1 = u_s - u_L\\
+	i_R = i_L \cdot \frac{\underline{Z_C}}{\underline{Z_C} + \underline{Z_R}}\\
+	i_C = i_L - i_R\\
+	u_{RC} = i_R \cdot \underline{Z_R}\\
+	u_x = u_1 - u_{RC}\\
+\end{align*}
+We use Matlab to calculate the currents and voltages from above:
+\lstinputlisting[language=matlab]{./../matlab/assignment5.m}
+We get the following results:
+\lstinputlisting[language=matlab]{./../matlab/Assignment5.txt}
 
 \clearpage
 \section{Ltspice simulation}
