@@ -169,12 +169,12 @@ Note, that $X_C = \frac{-1}{\omega C}$
 \end{align*}
 Now we can insert $R, C$ and $\omega$ in order to calculate $X_L$
 \begin{align*}
-	X_L = \frac{-3 \cdot 100^2 \cdot \frac{-1}{0.01} -\sqrt{3} \cdot 100 \cdot \left(\frac{-1}{0.01}\right)^2}
-	{3\cdot 100^2 + 3\left(\frac{-1}{0.01}\right)^2} = 21.1325
+	X_L = \frac{-3 \cdot 100\Omega^2 \cdot \frac{-1}{0.01s^{-1}F} -\sqrt{3} \cdot 100\Omega \cdot \left(\frac{-1}{0.01s^{-1}F}\right)^2}
+	{3\cdot 100\Omega^2 + 3\left(\frac{-1}{0.01s^{-1}F}\right)^2} = 21.1325s^{-1}H
 \end{align*}
 We divide by $\omega$ in order to get L, because $X_L = \omega L$
 \begin{align*}
-	L_x = \frac{X_L}{\omega} = \frac{21.1325}{1000} = 21.1325mH
+	L_x = \frac{X_L}{\omega} = \frac{21.1325H}{1000s^{-1}} = 21.1325mH
 \end{align*}
 \newpage
 \clearpage
@@ -189,7 +189,7 @@ Let it be $0$, to find out which values make the reactance be inductive and whic
 capacitive. 
 
 \clearpage
-Now we can calculate every current and volatge in the circuit.
+We calculate every current and volatge in the circuit.
 \begin{align*}
 	\underline{Z_{ges}} = \underline{Z_L} + \frac{\underline{Z_R} \cdot \underline{Z_C}}{\underline{Z_R} + \underline{Z_C}} + \underline{Z_{L_x}}
 	= X_L + \frac{R \cdot X_C}{R + X_C} + X_{L_x}\\
@@ -205,6 +205,18 @@ We use Matlab to calculate the currents and voltages from above:
 \lstinputlisting[language=matlab]{./../matlab/assignment5.m}
 We get the following results:
 \lstinputlisting[language=matlab]{./../matlab/Assignment5.txt}
+
+Now we can plot a true-to-scale phasor diagram:
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics{./Figures/true_to_scale_phasor_diagram.png}
+	\label{phasor_dia_2}
+	\caption{true-to-scale phasor diagram}
+\end{figure}
+
+We can see, that the relation of the phasors to themselves are the same as in figure 2, only the coordinate system
+"changed".
 
 \clearpage
 \section{Ltspice simulation}
