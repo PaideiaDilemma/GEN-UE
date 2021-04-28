@@ -177,7 +177,18 @@ We divide by $\omega$ in order to get L, because $X_L = \omega L$
 	L_x = \frac{X_L}{\omega} = \frac{21.1325}{1000} = 21.1325mH
 \end{align*}
 \newpage
+\clearpage
+We have to set up an equation $f(R, X_{L}, X_{C}) = X_x$, that always meets the condition
+$\varphi_{U_{1}} = \varphi_{I_{x}} - 30^{\circ}$. $X_L$ now has to be named  $X_{x}$, since it is
+variable and could go negative, which would meen $X_{x}$ represents a capacitor. First thing, that
+comes apparent is, that $X_{x}$ is not dependent on $X_{L}$.
+\[
+  f(R, X_{C}) =  \frac{-3R^2X_C -\sqrt{3}RX_C^2}{3R^2 + 3X_C^2} 
+.\] 
+Let it be $0$, to find out which values make the reactance be inductive and which make it
+capacitive. 
 
+\clearpage
 Now we can calculate every current and volatge in the circuit.
 \begin{align*}
 	\underline{Z_{ges}} = \underline{Z_L} + \frac{\underline{Z_R} \cdot \underline{Z_C}}{\underline{Z_R} + \underline{Z_C}} + \underline{Z_{L_x}}
@@ -201,7 +212,7 @@ In ltspice we can verify, that the phase shift between $\varphi_{I_{x}}$ and $\v
 really is $-30$ degrees. \\
 \begin{figure}[h!]
 	\centering
-	\includegraphics[scale=0.6]{./Figures/assignment5_sim_aclist.png}
+	\includegraphics[scale=0.55]{./Figures/assignment5_sim_aclist.png}
 	\label{sim_1}
 	\caption{Phasor Diagramm with $\varphi_{I_{R}} = 0$}
 \end{figure}
