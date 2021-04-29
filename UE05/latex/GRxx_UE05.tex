@@ -125,27 +125,31 @@ Graz University of Technology\\
 	$R = 100~\Omega$ \qquad $C=10~\mu\text{F}$ \qquad $L = 70~\text{mH}$ \qquad $U_0 = 30~\text{V}$ \qquad $\omega = 1000~\text{s}^{-1}$
 	\blfootnote{Deadline: 29.04.2021 - 9:00; presentation: team 5}
 	
-\begin{figure}[h!]
+\begin{figure}[!h]
 	\centering
 	\includegraphics[scale=0.8]{./Figures/homework5_circuit.eps}
 	\label{part1}
 	\caption{Given circuit}
 \end{figure}
+\clearpage
 \section{Solution}
 \subsection{Analytical calculations}
+\subsubsection{Derive the value of ? with a phasor diagramm}
 Assuming a Testvoltage $R_{RC, test} = 10V$ and letting $\varphi_{I_{R}}$ be $0$ degrees, we
 constructed a true to scale phasor diagram. Voltages are scaled by  $\frac{1}{5}$ and Currents by
-$15$. By constucting the diagram, it became clear, that the unknown element in Figure \ref{part1}
+$15$. By constucting the diagram, it became clear, that the unknown element in Figure \ref{part1}1
 has to be an inductor.
 
-\begin{figure}[h!]
+\begin{figure}[ht!]
 	\centering
 	\includegraphics[scale=0.8]{./Figures/phasors_1.png}
 	\label{phasor_dia_1}
 	\caption{Phasor Diagramm with $\varphi_{I_{R}} = 0$}
 \end{figure}
 
-\newpage
+\clearpage
+\subsubsection{Derive the value of ? analytically}
+
 
 Now we calculate the value of the unknown element. We know from above it has to be a coil.
 Note, that $X_C = \frac{-1}{\omega C}$
@@ -178,7 +182,8 @@ We divide by $\omega$ in order to get L, because $X_L = \omega L$
 \end{align*}
 \newpage
 \clearpage
-We have to set up an equation $f(R, X_{L}, X_{C}) = X_x$, that always meets the condition
+\subsubsection{Conditions for ? to be a capacitor}
+We have to set up a function $f(R, X_{L}, X_{C}) = X_x$, that always meets the condition
 $\varphi_{U_{1}} = \varphi_{I_{x}} - 30^{\circ}$. $X_L$ now has to be named  $X_{x}$, since it is
 variable and could go negative, which would meen $X_{x}$ represents a capacitor. First thing, that
 comes apparent is, that $X_{x}$ is not dependent on $X_{L}$.
@@ -187,9 +192,35 @@ comes apparent is, that $X_{x}$ is not dependent on $X_{L}$.
 .\] 
 Let it be $0$, to find out which values make the reactance be inductive and which make it
 capacitive. 
-
+\[
+  f(R,X_{C}) \overset{!}{=} 0
+.\] 
+We specifiy $R$, to always be positiv an $X_{C}$ to always be negativ, in order to keep those values
+stand for a resistor and a real capacitor. Since the denominator $3R^2 + 3X_{C}^2$ cannot be
+negtive, we get this equation.
+\[
+  0 = -3R^2X_{C} - \sqrt{3}RX_{C}^2
+.\]
+After rearranging, we get
+\[
+  R = -\frac{\sqrt{3}}{3} X_{C},\, \text{or} \quad X_{C} = -\frac{3}{\sqrt{3}} R
+.\] 
+If those conditions are met, we do not need an aditional element , for $U_{1}$ to be in the right
+phase with $I_{x}$. If we set $R$ to be $100 \Omega$,
+then $X_{C} = -173,205\Omega$, which correlates to a capacitance of around $5.77 F$. Now if $X_{C}$ gets
+even smaller (That means the capacitance gets smaller), then $X_{x}$, our unknown element, will be a
+capacitor, in order to meet the $-30$ degree phase condition. \\
+That means $X_{x}$ is a capacitive, if
+\[
+  X_{C} < -\frac{3}{\sqrt{3}} R,\, \text{or} \quad R < -\frac{\sqrt{3}}{3}X_{C}
+\] 
+and inductive, if
+\[
+  X_{C} > -\frac{3}{\sqrt{3}} R,\, \text{or} \quad R > -\frac{\sqrt{3}}{3}X_{C}
+.\] 
 \clearpage
-We calculate every current and volatge in the circuit.
+\subsubsection{Calculate everything else}
+We calculate every current and voltage in the circuit.
 \begin{align*}
 	\underline{Z_{ges}} = \underline{Z_L} + \frac{\underline{Z_R} \cdot \underline{Z_C}}{\underline{Z_R} + \underline{Z_C}} + \underline{Z_{L_x}}
 	= X_L + \frac{R \cdot X_C}{R + X_C} + X_{L_x}\\
@@ -201,9 +232,13 @@ We calculate every current and volatge in the circuit.
 	u_{RC} = i_R \cdot \underline{Z_R}\\
 	u_x = u_1 - u_{RC}\\
 \end{align*}
+\subsection{Matlab}
+\subsubsection{Source code}
 We use Matlab to calculate the currents and voltages from above:
 \lstinputlisting[language=matlab]{./../matlab/assignment5.m}
 We get the following results:
+\clearpage
+\subsubsection{Output}
 \lstinputlisting[language=matlab]{./../matlab/Assignment5.txt}
 
 Now we can plot a true-to-scale phasor diagram:
@@ -215,11 +250,12 @@ Now we can plot a true-to-scale phasor diagram:
 	\caption{true-to-scale phasor diagram}
 \end{figure}
 
-We can see, that the relation of the phasors to themselves are the same as in figure 2, only the coordinate system
-"changed".
+We can see, that the relation of the phasors to themselves are the same as in figure 2, only the
+coordinate system rotated. We used the Matlab script provided in lecture 5, to plot the phasor
+diagramms.
 
 \clearpage
-\section{Ltspice simulation}
+\subsection{Ltspice simulation}
 In ltspice we can verify, that the phase shift between $\varphi_{I_{x}}$ and $\varphi_{U_{1}}$
 really is $-30$ degrees. \\
 \begin{figure}[h!]

@@ -1,0 +1,9 @@
+* Z:\home\max\TU\rollin\GEN\UE05\ltspice\assignment4_sim.asc
+C1 N002 N003 5.77µ
+R1 N002 N003 100
+V1 N001 0 SINE(0 10 159.15) AC 10 0
+L1 N002 N001 70m
+L2 N003 0 0L
+.ac list 159.15
+.backanno
+.end
