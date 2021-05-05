@@ -134,7 +134,7 @@ The input signal, as seen in Figure \ref{fig:input}, fulfilles all dirichlet con
 therefore,
 it can be written as
 \[
-  f(t) = a_{0} + \sum_{k=1}^{\infty} (a_{k}\sin k\omega t + b_{k}\cos k\omega t)
+  f(t) = a_{0} + \sum_{k=1}^{\infty} (a_{k}\cos k\omega t + b_{k}\sin k\omega t)
 .\] 
 $a_{0}$ and all $a_{n}$ are going to be zero, because $f(t) = -f(-t)$. The cosine coefficients
 need to be calculated, which will be done numerically, using an appromation of the integral
@@ -145,36 +145,35 @@ For that, we are going to use the trapezoidal rule. Matlab has a standard functi
 'trapz'. The following coefficients for the first four harmonics have been calculated with the
 script in the matlab section.
 \[
-  b_{1} = -2.1729, \quad b_{2} = 0.63562, \quad b_{3} = -0.1236, \quad b_{4} = 0
+  b_{1} = -2.1729, \quad b_{2} = 0.6356, \quad b_{3} = -0.1236, \quad b_{4} = 0, \quad b_{5} =
+  -0.0752,\quad b_{6} = 0.2132
 .\] 
-Their corresponding frequencies can be calculated via $f_{k} = k \frac{1}{T}$. That yields:
+The first four nonzero harmonics are, where $k$ is $2, 3, 5$ and $6$. The fundamental wave
+correlates to $k=1$. Their corresponding frequencies can be calculated via $f_{k} = k \frac{1}{T}$. That yields:
 \[
-  f_{1} = \frac{1}{40}Hz, \quad f_{2} = \frac{1}{20}Hz, \quad f_{3} = \frac{3}{40}Hz, \quad
-  f_{4} = \frac{1}{10}Hz
+  f_{1} = 25Hz, \quad f_{2} = 50Hz, \quad f_{3} = 75Hz, \quad f_{5} = 125Hz, \quad f_{6} = 150Hz
 .\] 
 The plot for those five harmonics looks like the following
 \begin{figure}[h!]
   \includegraphics{"./Figures/fourier_n5.png"} \centering
   \label{fig:fourier5}
-  \caption{first 5 harmonics}
+  \caption{first 4 harmonics}
 \end{figure}
 \clearpage
 As one can see, the fourier series for $f(t)$ with $n=5$ is not yet an acurate approximation of
-the input Signal. Let's increase $n$ to  $250$ and plot it again.
+the input Signal. Let's increase $n$ to  $250$ and plot it again. 
 \begin{figure}[h!] \centering
   \includegraphics{"./Figures/fourier_n250.png"}
   \label{fig:fourier250}
   \caption{first 250 harmonics}
 \end{figure}
-\\
-We get a quite satisfying result. Should we increase n even more, our result will get even better.
+\\ We get a quite satisfying result. Should we increase n even more, our result will get even better.
 But does it converge to $f(t)$? The answer is sort of. At points $t$, where  $f(t)$ is continous,
 yes the fourier series for converges to $f(t)$. But at points, where $f(t)$ is discontinous, meaning
-that there is a conditional jump, the fourier series converges to  $\frac{f(x+) + f(x-)}{2}$.
-\\
+that there is a conditional jump, the fourier series converges to  $\frac{f(t+) + f(t-)}{2}$.
 \\
 Now we want to determine the needed capacity $C$ in order to filter out the frequencies higher than the fourth nonzero harmonic.
-Therefore the cut off frequency $\Omega$ has to be $\omega_4$.\\
+Therefore the cut off frequency $\Omega$ has to be $\omega_4$.
 \begin{align*}
 	\omega_0 = \frac{2\pi}{T} = \frac{2\pi}{0.04s} = 50\pi
 \end{align*}
