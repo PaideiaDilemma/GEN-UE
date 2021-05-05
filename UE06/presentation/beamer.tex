@@ -113,9 +113,9 @@ is the function trapz(), which uses that formular.
 \end{frame}
 \begin{frame}
 \frametitle{Input Signal matlab}
-To get enough points for a good approximation:
-\begin{figure}
-  \includegraphics[scale=0.6]{../latex/Figures/funcsig_matlab.png}
+  To get enough points for a good approximation:
+  \begin{figure}
+    \includegraphics[scale=0.6]{../latex/Figures/funcsig_matlab.png}
 \end{figure}
 \end{frame}
 
@@ -125,20 +125,20 @@ To get enough points for a good approximation:
   \begin{figure}
     \includegraphics[scale=0.4]{../latex/Figures/funcfour_matlab.png}
   \end{figure}
-  Let td and td be the return of our fsig function, and we get:
+  Let td and td be the return of our fsig function, to get:
   \begin{figure}
     \includegraphics[scale=0.4]{../latex/Figures/matlab_out.png}
   \end{figure}
 \end{frame}
 
 \begin{frame}
+  The first four \textbf{nonzero} harmonic are where $k$ is  $2, 3, 5$ and  $6$.
   \[
     b_{1} = -2.1729, \, b_{2} = 0.6356, \, b_{3} = -0.1236 
   \]
   \[
     b_{4} = 0, \, b_{5} = -0.0752, \, b_{6} = 0.2132
   .\]   
-  The first four \textbf{nonzero} harmonic are where $k$ is  $2, 3, 5$ and  $6$.
 \end{frame}
 
 \begin{frame}
@@ -170,8 +170,8 @@ To get enough points for a good approximation:
 \begin{frame}
 \frametitle{Convergence}
 \begin{itemize}
-  \item Yes, for all points $t$, where $f(t)$ is continous.
-  \item $\frac{f(t+) + f(t-)}{2}$ for points $t$, where there is a conditional jump.
+  \item converges to $f(t)$, for all points $t$, where $f(t)$ is continous.
+  \item $\frac{f(t+) + f(t-)}{2}$ for points $t$, where does a conditional jump.
     
 \end{itemize}
 \end{frame}
