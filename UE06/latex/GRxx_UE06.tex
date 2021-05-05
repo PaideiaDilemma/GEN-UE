@@ -160,14 +160,58 @@ The plot for those five harmonics looks like the following
 \end{figure}
 \clearpage
 As one can see, the fourier series for $f(t)$ with $n=5$ is not yet an acurate approximation of
-the input Signal. Let's increase $n$ to  $250$ and plot it again. 
+the input Signal. Let's increase $n$ to  $250$ and plot it again.
 \begin{figure}[h!] \centering
   \includegraphics{"./Figures/fourier_n250.png"}
   \label{fig:fourier250}
   \caption{first 250 harmonics}
 \end{figure}
-\end{document}
+\\
 We get a quite satisfying result. Should we increase n even more, our result will get even better.
 But does it converge to $f(t)$? The answer is sort of. At points $t$, where  $f(t)$ is continous,
 yes the fourier series for converges to $f(t)$. But at points, where $f(t)$ is discontinous, meaning
 that there is a conditional jump, the fourier series converges to  $\frac{f(x+) + f(x-)}{2}$.
+\\
+\\
+Now we want to determine the needed capacity $C$ in order to filter out the frequencies higher than the fourth nonzero harmonic.
+Therefore the cut off frequency $\Omega$ has to be $\omega_4$.\\
+\begin{align*}
+	\omega_0 = \frac{2\pi}{T} = \frac{2\pi}{0.04s} = 50\pi
+\end{align*}
+We have to take $\omega_0$ 5 times in order to get $\omega_4$ because the fourth harmonic is 0.
+\begin{align*}
+	\omega_4 = 5 \cdot \omega_0 = 5 \cdot 50\pi = 250\pi
+\end{align*}
+\begin{align*}
+	\Omega &\overset{!}{=} \omega_4,& \Omega &= \frac{1}{RC}& =&>& \omega_4 &= \frac{1}{RC}& =&>& 
+	C = \frac{1}{\omega_4R} &= \frac{1}{250\pi \cdot \frac{5000}{\pi}} = 0.8\mu F \\
+\end{align*}
+\newpage
+Now we want to find the function $\underline{H}(j\omega) = \frac{\underline{U}_{out}}{\underline{U}_{in}}.$
+Therefore we have to transform the filter network into the frequency domain:
+\begin{figure}[!h]\centering
+	\begin{circuitikz}[scale=0.75, transform shape]
+		\draw (0,0) to[short, o-o](6,0);
+		\draw (0,5) to[R, l=$R$, o-](4,5) to[short, *-o](6,5);
+		\draw (4,5) to[short](4,4) to[C, l=$C$](4,1) to[short, -*](4,0);
+		\draw[-{Latex[length=2mm]}, color=blue] (0, 4.75) -- (0, 0.75)
+    		node[pos=0.5, right] {$u_{in}(t)$};
+		\draw[-{Latex[length=2mm]}, color=blue] (6, 4.75) -- (6, 0.75)
+    		node[pos=0.5, right] {$u_{uot}(t)$};
+		
+		\draw (10,0) to[short, o-o](16,0);
+		\draw (10,5) to[R, l=$R$, o-](14,5) to[short, *-o](16,5);
+		\draw (14,5) to[short](14,4) to[C, l=$\frac{1}{j\omega C}$](14,1) to[short, -*](14,0);
+		\draw[-{Latex[length=2mm]}, color=blue] (10, 4.75) -- (10, 0.75)
+			node[pos=0.5, right] {$\underline{U}_{in}$};
+		\draw[-{Latex[length=2mm]}, color=blue] (16, 4.75) -- (16, 0.75)
+			node[pos=0.5, right] {$\underline{U}_{uot}$};
+		\draw[-{Latex[length=2mm]}, color=red] (7, 2.5) -- (9, 2.5);
+	\end{circuitikz}
+\end{figure}
+\begin{align*}
+	\underline{H}(j\omega) = \frac{\underline{U}_{out}}{\underline{U}_{in}} = \frac{\frac{1}{j\omega C}}{R + \frac{1}{j\omega C}} =
+	 \frac{1}{Rj\omega C + 1} = \frac{1}{1 + j\frac{\omega}{\frac{1}{RC}}} = \frac{1}{1 + j\frac{\omega}{\Omega}}\\
+	 \Omega = \frac{1}{RC}
+\end{align*}
+\end{document}
