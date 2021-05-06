@@ -1,0 +1,6 @@
+>> UE6
+coefficient b_k with k=1 is appox. -2.1729
+coefficient b_k with k=2 is appox. 0.63562
+coefficient b_k with k=3 is appox. -0.1236
+coefficient b_k with k=4 is appox. 1.574e-06
+coefficient b_k with k=5 is appox. -0.075297

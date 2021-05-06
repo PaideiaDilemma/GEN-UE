@@ -153,26 +153,27 @@ correlates to $k=1$. Their corresponding frequencies can be calculated via $f_{k
 \[
   f_{1} = 25Hz, \quad f_{2} = 50Hz, \quad f_{3} = 75Hz, \quad f_{5} = 125Hz, \quad f_{6} = 150Hz
 .\] 
-The plot for those five harmonics looks like the following
+The plot for the fundamental wave and the first four nonzero harmonics is shown in
+Figure \ref{fig:fourier5}. 
 \begin{figure}[h!]
   \includegraphics{"./Figures/fourier_n5.png"} \centering
+  \caption{fundamental wave + first 4 harmonics}
   \label{fig:fourier5}
-  \caption{first 4 harmonics}
 \end{figure}
 \clearpage
-As one can see, the fourier series for $f(t)$ with $n=5$ is not yet an acurate approximation of
+As one can see, the fourier series for $f(t)$ with $n=6$ is not yet an acurate approximation of
 the input Signal. Let's increase $n$ to  $250$ and plot it again. 
 \begin{figure}[h!] \centering
   \includegraphics{"./Figures/fourier_n250.png"}
+  \caption{250 interations}
   \label{fig:fourier250}
-  \caption{first 250 harmonics}
 \end{figure}
 \\ We get a quite satisfying result. Should we increase n even more, our result will get even better.
 But does it converge to $f(t)$? The answer is sort of. At points $t$, where  $f(t)$ is continous,
 yes the fourier series for converges to $f(t)$. But at points, where $f(t)$ is discontinous, meaning
 that there is a conditional jump, the fourier series converges to  $\frac{f(t+) + f(t-)}{2}$.
-\\
-Now we want to determine the needed capacity $C$ in order to filter out the frequencies higher than the fourth nonzero harmonic.
+\subsection{Filter circuit}
+We want to determine the needed capacity $C$ in order to filter out the frequencies, higher than the fourth nonzero harmonic.
 Therefore the cut off frequency $\Omega$ has to be $\omega_4$.
 \begin{align*}
 	\omega_0 = \frac{2\pi}{T} = \frac{2\pi}{0.04s} = 50\pi
@@ -223,4 +224,15 @@ The plot shows the unfiltered signal (orange) and the filtered signal (blue):
 	\label{fig:filterSig}
 	\caption{filtered signal}
   \end{figure}
+\subsection{Matlab}
+
+\subsection{Matlab}
+\subsubsection{Source code}
+We use Matlab to calculate the currents and voltages from above:
+\lstinputlisting[language=matlab]{./../matlab/UE6.m}
+We get the following results:
+\clearpage
+\subsubsection{Output}
+\lstinputlisting[language=matlab]{./../matlab/UE6_out.txt}
+
 \end{document}
