@@ -8,13 +8,15 @@ td = td * 1e-3;
 T = tp(end);
 R = 5000/pi;
 C = 0.8e-6;
-
 %% Numerical calc of the fourier-series
 
 n = 250;
 
 [ffour_num, tx] = ffour(ud, td, T, length(td), n);
 ffour_num_sum = sum(ffour_num, 1);
+
+[hfour_num, tx_] = hfour(ud, td, T, length(td), n);
+hfour_num_sum = sum(hfour_num, 1);
 
 fig1 = figure(1);
 tiledlayout(2,1)
@@ -29,13 +31,11 @@ grid on
 
 ax2 = nexttile;
 hold on
-for k = 1:6
-    plot(tx, ffour_num(k, :));
-end
+plot(tx_, sum(hfour_num(1:6, :), 1), 'LineWidth',2);
 plot(tx, sum(ffour_num(1:6, :), 1), 'LineWidth',2);
 hold off
-title('Fourier series, n=5')
-xlabel('t in ms')
+title('Output signal, n=5')
+xlabel('t in s')
 ylabel('u(t) in V')
 grid on
 saveas(fig1, 'fourier_n5.png');
@@ -47,18 +47,16 @@ tiledlayout(2,1)
 ax1 = nexttile;
 plot(td, ud); 
 title('Input  signal')
-xlabel('t in ms')
+xlabel('t in s')
 ylabel('u(t) in V')
 grid on
 
 ax2 = nexttile;
 hold on
-for k = 1:n
-    plot(tx, ffour_num(k, :));
-end
+plot(tx_, hfour_num_sum, 'LineWidth',2);
 plot(tx, ffour_num_sum, 'LineWidth',2);
 hold off
-title('Fourier series, n=250')
+title('Output signal')
 xlabel('t in ms')
 ylabel('u(t) in V')
 grid on
@@ -80,8 +78,6 @@ end
 
 %figure(3)
 %plot(tx, ffour_ana)
-
-
 %%
 function [f, t] = fsig(n)
     T = 40;
@@ -99,18 +95,31 @@ function [f, t] = fsig(n)
 end
 
 
-function [f, t] = ffour(ud, td, T, tn, n)
+function [f, t] = hfour(ud, td, T, tn, n)
     R = 5000/pi;
     C = 0.8e-6;
     t = linspace(0, T, tn);
     w = 2*pi/T;
     f = zeros(n, numel(t));
     for k = 1:n
-        H = 1/(1+1i*k*w*R*C)
+        H = 1/(1+1i*k*w*R*C);
         arg_H = atan(imag(H)/ real(H)); %<---
         bk = 2/T * trapz(td, ud.*sin(k*w*td)); %<---
         %bk = 2/T * trapz(td, abs(H) * ud.*sin(k*w*td + arg_H)); %<---
         f(k,:) = abs(H) * bk*sin(k*w*t + arg_H);
+        if k < 5
+            disp(['coefficient b_k with k=',num2str(k), ' is appox. '...
+                num2str(bk)]);
+        end
+    end
+end
+function [f, t] = ffour(ud, td, T, tn, n)
+    t = linspace(0, T, tn);
+    w = 2*pi/T;
+    f = zeros(n, numel(t));
+    for k = 1:n
+        bk = 2/T * trapz(td, ud.*sin(k*w*td)); %<---
+        f(k,:) = bk*sin(k*w*t);
         if k < 5
             disp(['coefficient b_k with k=',num2str(k), ' is appox. '...
                 num2str(bk)]);

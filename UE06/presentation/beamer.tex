@@ -1,4 +1,4 @@
-%--Präambel
+%--Prï¿½ambel
 \documentclass{beamer}
 \usepackage{graphicx}
 
@@ -174,5 +174,44 @@ is the function trapz(), which uses that formular.
   \item $\frac{f(t+) + f(t-)}{2}$ for points $t$, where does a conditional jump.
     
 \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Lowpass-Filter}
+  \begin{figure}
+    \includegraphics[scale=0.6]{../latex/Figures/filter.eps}
+  \end{figure}
+  \begin{itemize}
+    \item Frequencies higher than fourth nonzereo harmonic should be cut off
+    \item determination of the capacity $C$
+  \end{itemize}
+\end{frame}
+\begin{frame}
+  \frametitle{determination of $C$}
+  \begin{itemize}
+    \item $\Omega$ is the cut off frequency ($|H(j\Omega)|_{dB} = -3dB$)
+    \item $\Omega \overset{!}{=} \omega_4$
+    \item $C = 0.8\mu F$
+  \end{itemize}
+\end{frame}
+\begin{frame}
+  \frametitle{Transfer function $\underline{H}(j\omega)$}
+  \begin{itemize}
+    \item transformation of filter network into frequency domain
+    \item $\underline{H}(j\omega) = \frac{\underline{U}_{out}}{\underline{U}_{in}}.$
+    \item $\underline{H}(j\omega) = \frac{1}{1 + j\frac{\omega}{\Omega}}$
+    \item add that to the fourier series
+    \item $u_{out} = b_k \cdot |H(jk\omega)| \cdot \sin(k\omega t + arg\{H(jk\omega)\})$
+  \end{itemize}
+\end{frame}
+\begin{frame}
+  \frametitle{Plot of the output signal}
+  The plot shows the unfiltered signal (orange) and the filtered signal (blue):
+  \begin{figure}
+    \includegraphics[scale=0.6]{../latex/Figures/output_signal.png}
+  \end{figure}
+  \begin{itemize}
+    \item transformation of filter network into frequency domain
+  \end{itemize}
 \end{frame}
 \end{document}
