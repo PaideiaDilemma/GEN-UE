@@ -218,12 +218,15 @@ Now we include this into our fourier series:
 \begin{equation*}
 	u_{out} = b_k \cdot |H(jk\omega)| \cdot \sin(k\omega t + arg\{H(jk\omega)\})\\
 \end{equation*}
-The plot shows the unfiltered signal (orange) and the filtered signal (blue):
+The plot shows the unfiltered signal (blue) and the filtered signal (orange):
 \begin{figure}[h!]
 	\includegraphics{"./Figures/output_signal.png"} \centering
 	\label{fig:filterSig}
 	\caption{filtered signal}
-  \end{figure}
+\end{figure}
+
+It can be seen, that on one hand the edges are cut off but on the other, the signal starts much rounder and therefore leaves out the 
+the upper edges.
 
 \subsection{Matlab}
 \subsubsection{Source code}
