@@ -1,8 +1,9 @@
 %% The Signal 
 
-tp = [0 15 15 20 20 25 25 40];
+tp = [0 15 15 20 20 25 25 40]*1e-3;
 up = [0 3 1 2 -2 -1 -3 0] * (-1);
 [ud, td] = fsig(1000);
+td = td *1e-3;
 T = tp(end);
 
 
@@ -12,29 +13,38 @@ n = 250;
 
 [ffour_num, tx] = ffour(ud, td, T, length(td), n);
 ffour_num_sum = sum(ffour_num, 1);
+
+
+%% Plots
+
 fig1 = figure(1);
 tiledlayout(2,1)
 
-% n = 5
+% n = 6
 ax1 = nexttile;
 plot(td, ud); 
 title('Input  signal')
 xlabel('t in ms')
 ylabel('u(t) in V')
+xt=arrayfun(@num2str,get(gca,'xtick')*1e+3,'un',0);
+set(gca,'xticklabel',xt)
 grid on
 
 ax2 = nexttile;
 hold on
-for k = 1:5
+for k = 1:6
     plot(tx, ffour_num(k, :));
 end
-plot(tx, sum(ffour_num(1:5, :), 1), 'LineWidth',2);
+s = plot(tx, sum(ffour_num(1:6, :), 1), 'LineWidth',2);
 hold off
-title('Fourier series, n=5')
+title('Fourier series, n=6')
 xlabel('t in ms')
 ylabel('u(t) in V')
-grid on
+legend(s, 'sum')
 linkaxes([ax1 ax2],'xy')
+xt=arrayfun(@num2str,get(gca,'xtick')*1e+3,'un',0);
+set(gca,'xticklabel',xt)
+grid on
 saveas(fig1, 'fourier_n5.png');
 
 %n=250
@@ -46,6 +56,8 @@ plot(td, ud);
 title('Input  signal')
 xlabel('t in ms')
 ylabel('u(t) in V')
+xt=arrayfun(@num2str,get(gca,'xtick')*1e+3,'un',0);
+set(gca,'xticklabel',xt)
 grid on
 
 ax2 = nexttile;
@@ -53,17 +65,22 @@ hold on
 for k = 1:n
     plot(tx, ffour_num(k, :));
 end
-plot(tx, ffour_num_sum, 'LineWidth',2);
+s = plot(tx, ffour_num_sum, 'LineWidth',2);
 hold off
 title('Fourier series, n=250')
 xlabel('t in ms')
 ylabel('u(t) in V')
+legend(s, 'sum')
+linkaxes([ax1 ax2],'xy')
+xt=arrayfun(@num2str,get(gca,'xtick')*1e+3,'un',0);
+set(gca,'xticklabel',xt)
 grid on
 saveas(fig2, 'fourier_n250.png')
-linkaxes([ax1 ax2],'xy')
+
 
 
 %% Analytical
+
 ffour_ana = zeros(1, numel(tx));
 w = 2*pi/T;
 for k = 1:n
@@ -80,6 +97,7 @@ end
 %figure(3)
 %plot(tx, ffour_ana)
 
+%% Functions
 
 function [f, t] = fsig(n)
     T = 40;
@@ -103,7 +121,7 @@ function [f, t] = ffour(ud, td, T, tn, n)
     for k = 1:n
         bk = 2/T * trapz(td, ud.*sin(k*w*td));
         f(k,:) = bk*sin(k*w*t);
-        if k < 5
+        if k < 6
             disp(['coefficient b_k with k=',num2str(k), ' is appox. '...
                 num2str(bk)]);
         end
