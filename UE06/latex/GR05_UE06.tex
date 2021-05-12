@@ -1,10 +1,10 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%	    mmm  mmmmmm mm   m        m    m mmmmmm   mmm	%%
-%%	  m"   " #      #"m  #        #    # #      m"   "	%%
-%%	  #   mm #mmmmm # #m #        #    # #mmmmm #m""#m	%%
-%%	  #    # #      #  # #  """   #    # #      #    #	%%
-%%	   "mmm" #mmmmm #   ##        "mmmm" #mmmmm  #mm#"	%%
-%%								%%
+%%	    mmm  mmmmmm mm   m        m    m mmmmmm   mmm	        %%
+%%	  m"   " #      #"m  #        #    # #      m"   "      	%%
+%%	  #   mm #mmmmm # #m #        #    # #mmmmm #m""#m        	%%
+%%	  #    # #      #  # #  """   #    # #      #    #	        %%
+%%	   "mmm" #mmmmm #   ##        "mmmm" #mmmmm  #mm#"        	%%
+%%								                                %%
 %%                                                              %%
 %%                                                              %%
 %%      Grundlagen der Elektrischen Netzwerke, UE               %%
@@ -228,6 +228,14 @@ The plot shows the unfiltered signal (blue) and the filtered signal (orange):
 It can be seen, that on one hand the edges are cut off but on the other, the signal starts much rounder and therefore leaves out the 
 the upper edges.
 
+\begin{figure}[h!]
+	\includegraphics{"./Figures/output_signaln5.png"} \centering
+	\caption{filtered signal}
+\end{figure}
+
+Here we can see, these two signals are not the same, because $H(j\omega)$ konvergs to zero but never reaches zero.
+
+\newpage
 \subsection{Matlab}
 \subsubsection{Source code}
 Here is the matlab code, which was used to calculate the coefficients and create the plots.
