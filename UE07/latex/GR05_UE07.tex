@@ -121,11 +121,11 @@ As $u(t)$ is given as a diagram, we first have to determine the function $u(t)$.
 \begin{align*}
 	u_1(t) = U_0 \cdot \sigma(t) \;\;\; &\laplace \;\;\; U_1(s) = U_0 \cdot \frac{1}{s}\\
 	u_2(t) = -\frac{U_0}{T}t \cdot \sigma(t) \;\;\; &\laplace \;\;\; U_2(s) = -\frac{U_0}{T} \cdot \frac{1}{s^2}\\
-	u_3(t) = \left(\frac{U_0}{T}t-U_0 \right) \cdot \sigma\left(\frac{U_0}{T}t-U_0 \right) \;\;\; &\laplace \;\;\; 
-	U_3(s) = \frac{U_0}{T} \cdot \frac{1}{s^2} \cdot e^{-U_0s}\\
-	u(t) = U_0 \cdot \sigma(t) - \frac{U_0}{T}t \cdot \sigma(t) + \left(\frac{U_0}{T}t-U_0 \right) \cdot \sigma\left(\frac{U_0}{T}t-U_0 \right) \;\;\; &\laplace \;\;\;
-	U(s) = U_0 \cdot \frac{1}{s} - \frac{U_0}{T} \cdot \frac{1}{s^2} + \frac{U_0}{T} \cdot \frac{1}{s^2} \cdot e^{-U_0s}\\
-	U(s) = 2.5 \cdot \frac{1}{s} - 625 \cdot \frac{1}{s^2} + 625 \cdot \frac{1}{s^2} \cdot e^{-2.5s}\\
+	u_3(t) = \left(\frac{U_0}{T}t-U_0 \right) \cdot \sigma\left(t-T\right) \;\;\; &\laplace \;\;\; 
+	U_3(s) = \frac{U_0}{T} \cdot \frac{1}{s^2} \cdot e^{-Ts}\\
+	u(t) = U_0 \cdot \sigma(t) - \frac{U_0}{T}t \cdot \sigma(t) + \left(\frac{U_0}{T}t-U_0 \right) \cdot \sigma\left(t-T \right) \;\;\; &\laplace \;\;\;
+	U(s) = U_0 \cdot \frac{1}{s} - \frac{U_0}{T} \cdot \frac{1}{s^2} + \frac{U_0}{T} \cdot \frac{1}{s^2} \cdot e^{-Ts}\\
+	U(s) = 2.5 \cdot \frac{1}{s} - 625 \cdot \frac{1}{s^2} + 625 \cdot \frac{1}{s^2} \cdot e^{-0.004s}\\
 \end{align*}
 
 \subsection{Transformation of the Network}
@@ -158,7 +158,7 @@ In order to find $U_C(s)$ we have to transform the Network into the s-domain.
 \subsection{Determination of $U_C(s)$}
 \begin{align*}
 	U_C(s) = U(s) \cdot \frac{\frac{\frac{1}{sc}\cdot (R_2+R_3)}{\frac{1}{sc} + (R_2+R_3)}}{R_1 + \frac{\frac{1}{sc}\cdot (R_2+R_3)}{\frac{1}{sc} + (R_2+R_3)}}\\
-	U_C(s) = \left(2.5 \cdot \frac{1}{s} - 625 \cdot \frac{1}{s^2} + 625 \cdot \frac{1}{s^2} \cdot e^{-2.5} \right) \cdot \frac{\frac{\frac{1}{25\cdot10^{-6}\cdot s}\cdot (100+300)}{\frac{1}{25\cdot10^{-6}\cdot s} + (100+300)}}
+	U_C(s) = \left(2.5 \cdot \frac{1}{s} - 625 \cdot \frac{1}{s^2} + 625 \cdot \frac{1}{s^2} \cdot e^{-0.004s} \right) \cdot \frac{\frac{\frac{1}{25\cdot10^{-6}\cdot s}\cdot (100+300)}{\frac{1}{25\cdot10^{-6}\cdot s} + (100+300)}}
 	{100 + \frac{\frac{1}{25\cdot10^{-6}\cdot s}\cdot (100+300)}{\frac{1}{25\cdot10^{-6}\cdot s} + (100+300)}} =
 	U(s) \cdot \frac{400}{s+500}\\
 \end{align*}
