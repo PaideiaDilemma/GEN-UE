@@ -158,11 +158,20 @@ In order to find $U_C(s)$ we have to transform the Network into the s-domain.
 		to[short](0,5) to[short](1,5)
 		to[R, l=$R_1$](4,5)
 		to[short, -*](5,5)
-		to[short, -*](5,4.5)
-		to[short](7,4.5) to[short](7,4)
-		to[C, l=$C$, v=$U_c(s)$](7,1)
-		to[short](7,0.5) to[short](5,0.5) to[short, -*](5,0)
+		to[short, -*, i=$I_C(s)$, color=red](5,4.5)
+		to[short](7,4.5) to[short, i=$sCU_C(s)$, color=red](7,3)
+		to[C, l=$C$, v=$U_c(s)$](7,2)
+		to[short](7,0.5) to[short](5,0.5) to[short](5,0)
 		to[short](0,0);
+		\draw(5,4.5)
+		to[short, *-](3,4.5) to[short, i<=$CU_C(0)$, color=red](3,3)
+		to[I](3,2)
+		to[short](3,0.5) to[short, -*](5,0.5);
+		\draw(5,5)
+		to[short](9,5) to[short](9,4.5)
+		to[R, l=$R_2$](9,2.5)
+		to[R, l=$R_3$](9,0.5)
+		to[short](9,0) to[short](5,0);
 	\end{circuitikz}	
 \end{figure}
 
