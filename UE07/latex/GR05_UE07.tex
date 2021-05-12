@@ -163,6 +163,22 @@ In order to find $U_C(s)$ we have to transform the Network into the s-domain.
 	U(s) \cdot \frac{400}{s+500}\\
 \end{align*}
 
+\subsection{Transformation back into time domain}
+\begin{align*}
+	U_C(s) = \frac{1000}{s^2+500s} - \frac{250000}{s^3+500s^2} + \frac{250000}{s^3+500s^2} \cdot e^{-0,004s}\\
+\end{align*}
+Now we need to apply partial fraction extension in order to transform back into time domain.
+\begin{align*}
+	U_C(s) &= \frac{2}{s} - \frac{2}{s+500} - \frac{500}{s^2} - \frac{1}{s+500} + \frac{1}{s} + \frac{500}{s^2} \cdot e^{-0.004s} + \frac{1}{s+500} \cdot e^{-0.004s} - \frac{1}{s} \cdot e^{-0.004s}\\
+	&= \frac{3}{s} - \frac{3}{s+500} - \frac{500}{s^2} + \frac{500}{s^2} \cdot e^{-0.004s} + \frac{1}{s+500} \cdot e^{-0.004s} - \frac{1}{s} \cdot e^{-0.004s}\\
+	&\Laplace\\
+	u_C(t) &= 3\sigma(t) -3e^{-500t} - 500t\sigma(t) + 500(t-0.004)\sigma(t-0.004) + \sigma(t-0.004)e^{-500(t-0.004)} - \sigma(t-0.004)
+\end{align*}
+Calculation of $\tau$:
+\begin{align*}
+	R_\tau = \frac{R_1 \cdot (R_2 + R_3)}{R_1 + R_2 + R_3} = \frac{100 \cdot (100 + 300)}{100 + 100 + 300} = 80\Omega\\
+	\tau = R_\tau \cdot C = 80\Omega \cdot 25\mu F = 2ms\\
+\end{align*}
 
 
 \end{document}
