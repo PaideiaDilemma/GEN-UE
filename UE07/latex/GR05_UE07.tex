@@ -24,6 +24,7 @@
 \geometry{a4paper,left=3cm,right=2cm, top=2cm, bottom=2cm} 
 \usepackage{graphicx}
 \usepackage[EFvoltages, european, straightvoltages]{circuitikz}
+\usepackage{trfsigns}
 
 \newpsobject{showgrid}{psgrid}{subgriddiv=1,griddots=10,gridlabels=0pt}
 \psset{unit=1.0cm}
@@ -112,5 +113,19 @@
 	\blfootnote{Deadline: 13 May 2021; Presentation: Team 7 \\
 		presentation: 14 May 2021 at 9o'Clock (attendence is voluntary!) \\
 	Link to the presentation-meeting: https://tugraz.webex.com/tugraz/j.php?MTID=ma0812eff6637ffbf004e8bab03ee5f70}
+
+\newpage
+\section{Solution}
+\subsection{Lapalce-Transformation of $u(t)$}
+As $u(t)$ is given as a diagram, we first have to determine the function $u(t)$. Therefore we devide $u(t)$ into three parts, which we will add up.
+\begin{align*}
+	u_1(t) = U_0 \cdot \sigma(t) \;\;\; &\laplace \;\;\; U_1(s) = U_0 \cdot \frac{1}{s}\\
+	u_2(t) = -\frac{U_0}{T}t \cdot \sigma(t) \;\;\; &\laplace \;\;\; U_2(s) = -\frac{U_0}{T} \cdot \frac{1}{s^2}\\
+	u_3(t) = \left(\frac{U_0}{T}t-U_0 \right) \cdot \sigma\left(\frac{U_0}{T}t-U_0 \right) \;\;\; &\laplace \;\;\; 
+	U_3(s) = \frac{U_0}{T} \cdot \frac{1}{s^2} \cdot e^{-U_0}\\
+	u(t) = U_0 \cdot \sigma(t) - \frac{U_0}{T}t \cdot \sigma(t) + \left(\frac{U_0}{T}t-U_0 \right) \cdot \sigma\left(\frac{U_0}{T}t-U_0 \right) \;\;\; &\laplace \;\;\;
+	U(s) = U_0 \cdot \frac{1}{s} - \frac{U_0}{T} \cdot \frac{1}{s^2} + \frac{U_0}{T} \cdot \frac{1}{s^2} \cdot e^{-U_0}\\
+\end{align*}
+
 
 \end{document}
