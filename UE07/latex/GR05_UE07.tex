@@ -186,11 +186,11 @@ In order to find $U_C(s)$ we have to transform the Network into the s-domain.
 \subsection{Inverse Laplace, back to time domain}
 
 \begin{align*}
-	2,5\cdot\frac{1}{s^2} &\Laplace \;\;\; 2,5\cdot t\\
-	625\cdot \frac{1}{s^3} \;\;\; &\Laplace \;\;\; 625\cdot \frac{t^2}{2}\\
-	625\cdot \frac{1}{s^3} \cdot e^{-2,5s}\;\;\; &\Laplace \;\;\; 
-	(t-2.5)\\
-	u(t) = U_0 \cdot \sigma(t) - \frac{U_0}{T}t \cdot \sigma(t) + \left(\frac{U_0}{T}t-U_0 \right) \cdot \sigma\left(\frac{U_0}{T}t-U_0 \right) \;\;\; &\laplace \;\;\;
+	\frac{1}{s+500} \cdot U_{0}\cdot\frac{1}{s} &\Laplace \;\;\; \frac{U_0}{500}\\
+	\frac{1}{s+500} \cdot \frac{U_0}{T}\cdot \frac{1}{s^2} \;\;\; &\Laplace \;\;\; \frac{U_0}{T}\cdot \frac{t^2}{2}\\
+	\frac{1}{s+500}\frac{U_0}{T}\cdot \frac{1}{s^2} \cdot e^{-Ts}\;\;\; &\Laplace \;\;\; 
+	\frac{i_1}{2}\cdot(t-2.5) \cdot \sigma(t - T)\\
+	U(s) = \left(U_0 \;\;\; &\laplace \;\;\;
 	U(s) = U_0 \cdot \frac{1}{s} - \frac{U_0}{T} \cdot \frac{1}{s^2} + \frac{U_0}{T} \cdot \frac{1}{s^2} \cdot e^{-U_0s}\\
 	U(s) = 2.5 \cdot \frac{1}{s} - 625 \cdot \frac{1}{s^2} + 625 \cdot \frac{1}{s^2} \cdot e^{-2.5s}\\
 \end{align*}
