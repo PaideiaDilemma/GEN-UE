@@ -1,9 +1,9 @@
 * Z:\home\max\TU\rollin\GEN\UE07\ltspice\assignment7.asc
-V1 N001 0 PULSE(0 2.5 0 0 4m 0 4m 1)
-R1 N002 N001 100
-R2 N002 N003 100
-R3 N003 0 300
-C1 N002 0 25µ
+V1 u_in 0 PULSE(0 2.5 0 0 4m 0 4m 1)
+R1 u_cap u_in 100
+R2 u_cap N001 100
+R3 N001 0 300
+C1 u_cap 0 25µ
 .tran .016
 .backanno
 .end

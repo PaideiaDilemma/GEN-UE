@@ -154,14 +154,14 @@ In order to find $U_C(s)$ we have to transform the Network into the s-domain.
 	\begin{circuitikz}[scale=0.75, transform shape]
 		\draw(0,0)
 		to[short](0,1)
-		to[V, v=$U(s)$,](0,4)
+		to[V, v<=$U(s)$](0,4)
 		to[short](0,5) to[short](1,5)
 		to[R, l=$R_1$](4,5)
 		to[short, -*](5,5)
 		to[short, -*, i=$I_C(s)$, color=red](5,4.5)
 		to[short](7,4.5) to[short, i=$sCU_C(s)$, color=red](7,3)
 		to[C, l=$\frac{1}{sC}$, v=$U_c(s)$](7,2)
-		to[short](7,0.5) to[short](5,0.5) to[short](5,0)
+		to[short](7,0.5) to[short](5,0.5) to[short, -*](5,0)
 		to[short](0,0);
 		\draw(5,4.5)
 		to[short, *-](3,4.5) to[short, i<=$CU_C(0)$, color=red](3,3)
@@ -200,18 +200,31 @@ Calculation of $\tau$:
 	R_\tau = \frac{R_1 \cdot (R_2 + R_3)}{R_1 + R_2 + R_3} = \frac{100 \cdot (100 + 300)}{100 + 100 + 300} = 80\Omega\\
 	\tau = R_\tau \cdot C = 80\Omega \cdot 25\mu F = 2ms\\
 \end{align*}
-	
-\subsection{Inverse Laplace, back to time domain}
+\subsection{Matlab}
+\subsubsection{Plot}
+Here is how input signal and the calculated voltage at the capacitor look like, when plotted in
+matlab.
+\begin{figure}[h!] \centering
+  \includegraphics[scale=0.50]{"./Figures/output_signal.png"} 
+  \caption{Transient response at the capacitor}
+  \label{mplot}
+\end{figure}
+\subsubsection{Source code}
+This was accomplished with the following script.
+\lstinputlisting[language=matlab]{./../matlab/UE7.m}
 
-\begin{align*}
-	\frac{1}{s+500} \cdot U_{0}\cdot\frac{1}{s} &\Laplace \;\;\; \frac{U_0}{500}\\
-	\frac{1}{s+500} \cdot \frac{U_0}{T}\cdot \frac{1}{s^2} \;\;\; &\Laplace \;\;\; \frac{U_0}{T}\cdot \frac{t^2}{2}\\
-	\frac{1}{s+500}\frac{U_0}{T}\cdot \frac{1}{s^2} \cdot e^{-Ts}\;\;\; &\Laplace \;\;\; 
-	\frac{i_1}{2}\cdot(t-2.5) \cdot \sigma(t - T)\\
-	U(s) = \left(U_0 \;\;\; &\laplace \;\;\;
-	U(s) = U_0 \cdot \frac{1}{s} - \frac{U_0}{T} \cdot \frac{1}{s^2} + \frac{U_0}{T} \cdot \frac{1}{s^2} \cdot e^{-U_0s}\\
-	U(s) = 2.5 \cdot \frac{1}{s} - 625 \cdot \frac{1}{s^2} + 625 \cdot \frac{1}{s^2} \cdot e^{-2.5s}\\
-\end{align*}
+\clearpage
+\subsection{Ltspice}
+We can check, that in both the matlab plot (Figure \ref{mplot}) and the simulated result (Figure 
+\ref{ltplot}), after $5\tau = 10ms$, the signal is within $99\%$ of its final state. Both results
+have their peak at around $900mV$.  The simulation correlates with our calculations.
+
+\begin{figure}[h!] \centering
+  \includegraphics[scale=0.39]{"./Figures/ltspice_plot.png"} 
+  \caption{Simulated transient response at the capacitor}
+  \label{ltplot}
+\end{figure}
+
 
 
 \end{document}
