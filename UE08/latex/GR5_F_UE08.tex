@@ -1,10 +1,10 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%	  mmm  mmmmmm mm   m        m    m mmmmmm  mmmm		%%
-%%	m"   " #      #"m  #        #    # #      #    #	%%
-%%	#   mm #mmmmm # #m #        #    # #mmmmm "mmmm"	%%
-%%	#    # #      #  # #  """   #    # #      #   "#	%%
-%%	 "mmm" #mmmmm #   ##        "mmmm" #mmmmm "#mmm"	%%
-%%							        %%
+%%	  mmm  mmmmmm mm   m        m    m mmmmmm  mmmm				%%
+%%	m"   " #      #"m  #        #    # #      #    #			%%
+%%	#   mm #mmmmm # #m #        #    # #mmmmm "mmmm"			%%
+%%	#    # #      #  # #  """   #    # #      #   "#			%%
+%%	 "mmm" #mmmmm #   ##        "mmmm" #mmmmm "#mmm"			%%
+%%							      								%%
 %%                                                              %%
 %%                                                              %%
 %%      Grundlagen der Elektrischen Netzwerke, UE               %%
@@ -224,4 +224,119 @@ the initial conditions,
 	  ;
   \end{circuitikz}
 \end{figure}
+
+\pagebreak
+
+\section{Solution assignment 2}
+\subsection{Transformation of $u_s(t)$}
+
+\begin{align*}
+	U_0 \;\;\; \laplace \;\;\; \frac{15}{s}
+\end{align*}
+
+\subsection{Transformation of the Network}
+As all initial conditions are zero, we do not need to take them into consideration and can simply transform the network into the s-domain.
+
+\begin{figure}[!h] \centering
+	\begin{circuitikz}
+		\draw (0,1)
+		to[V, v<=$U_0$](0,5)
+		to[short, *-](0,7)
+		to[R, l=$R_1$](5,7)
+		to[short, -*](5,5)
+		to[short, i=$I_L(s)$, color=red](5,4)
+		to[L, l=$sL$, v=$U_L(s)$](5,1)
+		to[short, -*](0,1);
+		\draw(0,5)
+		to[short, i=$I_C(s)$, color=red](1,5)
+		to[C, l=$\frac{1}{sC}$, v=$U_C(s)$](4,5)
+		to[short, -*](5,5);
+		\draw (0,1) node[ground]{};
+	\end{circuitikz}
+\end{figure}
+
+\subsection{Determination of $U_L(s)$}
+In order to find $U_L(s)$ we use a volatge divider:
+\begin{equation*}
+	\frac{U_L(s)}{U(s)} = \frac{sL}{\frac{R_1 \cdot \frac{1}{sC}}{R_1 + \frac{1}{sC}} + sL}\\
+\end{equation*}
+\\
+\begin{align*}
+	U_L(s) = U(s) \cdot \frac{sL}{\frac{R_1 \cdot \frac{1}{sC}}{R_1 + \frac{1}{sC}} + sL} = 
+	U(s) \cdot \frac{sL}{\frac{R_1 \cdot \frac{1}{sC} + sL(R_1 + \frac{1}{sC})}{R_1 + \frac{1}{sC}}} = 
+	U(s) \cdot \frac{sL(R_1 + \frac{1}{sC})}{R_1 \cdot \frac{1}{sC} + sL(R_1 + \frac{1}{sC})} =
+	U(s) \cdot \frac{sLR_1 + \frac{L}{C}}{\frac{R_1}{sC} + sLR_1 + \frac{L}{C})} =\\
+	U(s) \cdot \frac{sLR_1 + \frac{L}{C}}{\frac{R_1 + s^2LCR_1 + sL}{sC}} =
+	\frac{U_0}{s} \cdot \frac{s^2LCR_1 + sL}{R_1 + s^2LCR_1 + sL} =
+	U_0 \cdot \frac{sLCR_1 + L}{s^2LCR_1 + sL + R_1} =
+	U_0 \cdot \frac{s + \frac{1}{CR_1}}{s^2 + s \cdot \frac{1}{CR_1} + \frac{1}{LC}}
+\end{align*}
+We substitute to the form
+\begin{equation*}
+	U_L(s) = K\cdot \frac{s+d}{s^2+s\cdot 2a+b}
+\end{equation*}
+with $K = U_0$, $a = \frac{1}{2CR_1}$, $b = \frac{1}{LC}$ and  $d = \frac{1}{CR_1}$.
+\begin{align*}
+	K &= 15,& a &= 1041.6,& b &= 1.111 \cdot 10^{6},& d &= 2083,3
+\end{align*}
+
+\pagebreak
+
+\subsection{Retransformation into time domain}
+$s^2 + 2as + b$ has complex zeros, so we use the transformations of sin and cos:
+\begin{align*}
+	e^{-at}\cos(\omega t)\;\;\; &\laplace \;\;\; \frac{s+a}{(s+a)^2 + \omega^2},&
+	e^{-at}\sin(\omega t)\;\;\; &\laplace \;\;\; \frac{\omega}{(s+a)^2 + \omega^2}
+\end{align*}
+
+In order to do that we nee to bring the upper equation into the correct form.
+\begin{align*}
+	U_L(s) = K\cdot \frac{s+d}{s^2+s\cdot 2a+b} = K\cdot \frac{s+d}{(s+a)^2-a^2+b} = 
+	K\cdot \frac{s+a-a+d}{(s+a)^2-a^2+b} =\\
+	K\cdot \frac{s+a}{(s+a)^2-a^2+b} + K\cdot \frac{d-a}{(s+a)^2-a^2+b} = 
+	K\cdot \frac{s+a}{(s+a)^2-a^2+b} + K\cdot \frac{d-a}{\sqrt{b-a^2}} \cdot \frac{\sqrt{b-a^2}}{(s+a)^2-a^2+b} = 
+\end{align*}
+Because the laplace-transformation is a linear operation we now can simply transform these two parts.
+\begin{align*}
+	K\cdot \frac{s+a}{(s+a)^2-a^2+b} \;\;\; &\laplace \;\;\; K\cdot e^{-at}\cos \left(\sqrt{b-a^2}t \right)\\
+	K\cdot \frac{d-a}{\sqrt{b-a^2}} \cdot \frac{\sqrt{b-a^2}}{(s+a)^2-a^2+b} \;\;\; &\laplace \;\;\;
+	K\cdot \frac{d-a}{\sqrt{b-a^2}} \cdot e^{-at}\sin \left(\sqrt{b-a^2}t \right)\\
+	U_L(s) \;\;\; &\laplace \;\;\; K\cdot e^{-at} \left(\cos \left(\sqrt{b-a^2}t \right) + 
+	\frac{d-a}{\sqrt{b-a^2}} \cdot \sin\left(\sqrt{b-a^2}t\right) \right)\\
+\end{align*}
+Now we can plug in the values:
+\begin{align*}
+	u_L(t) =& 15\cdot e^{-1041.6t} \left(\cos \left(\sqrt{1.111\cdot 10^{6}-1041.6^2}t \right) + 
+	\frac{2083,3-1041.6}{\sqrt{1.111\cdot 10^{6}-1041.6^2}} \cdot \sin\left(\sqrt{1.111\cdot 10^{6}-1041.6^2}t\right) \right)\\
+\end{align*}
+and we get:
+\begin{align*}
+	u_L(t) =& 15\cdot e^{-1041.6t} \left(\cos(161.4t) + 
+	6.455 \cdot \sin\left(161.4t\right) \right)\\
+\end{align*}
+
+\subsection{Simulations and plots}
+\subsubsection{Matlab}
+\lstinputlisting[language=matlab]{./../matlab/assignment8_2.m}
+
+\begin{figure}[h!]\centering
+	\includegraphics[scale=0.7]{./../matlab/graph.png}
+	\caption{Matlab simulation result}
+\end{figure}
+\pagebreak
+
+\subsubsection{LTspice}
+
+\begin{figure}[h!]\centering
+	\includegraphics[scale=0.5]{./../LTspice/Assignment2.PNG}
+	\caption{LTspice simulation}
+\end{figure}
+
+\begin{figure}[h!]\centering
+	\includegraphics[scale=0.4]{./../LTspice/Assignment2_plot.png}
+	\caption{LTspice simulation result}
+\end{figure}
+
+
+
 \end{document}
