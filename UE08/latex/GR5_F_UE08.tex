@@ -131,12 +131,12 @@ The Laplace-Transform should be used for the following circuit analysis:
 	\item Transform the input voltage $u_S(t)$ (DC source) to the $s$-domain: (\textbf{0.25 Points})
 	\begin{align*}
 	u_S(t)&= U_0\\
-	U(s) &= \mathcal{L}\{u(t)\}
+	U_s(s) &= \mathcal{L}\{u(t)\}
 	\end{align*}
 	\item Derive the $s$-domain equivalent circuit. \textbf{Therefore all initial conditions are 0}.(\textbf{0.5 Points}) 
 	\item Determine the expression for $U_L(s) = \mathcal{L}\{u_L(t)\}$ in the s-domain. 
 	\begin{itemize}
-	\item Use a voltage divider in order to obtain the expression for $\frac{U_L(s)}{U(s)}$. (\textbf{0.75 Points})
+	\item Use a voltage divider in order to obtain the expression for $\frac{U_L(s)}{U_s(s)}$. (\textbf{0.75 Points})
 	\item Derive an expression for $U_L(s)$ of the following form: (\textbf{0.5 Points})
 	\begin{align*}
 		U_L(s) = K\cdot \frac{s+d}{s^2+s\cdot 2a+b}
@@ -194,34 +194,119 @@ $R_1 = 10~\Omega$ \qquad $R_2 = 4~\Omega$ \qquad $R_3 = 50~\Omega$ \qquad $C=500
 \end{figure}
 
 \blfootnote{Submission deadline: 27 May 2021; \qquad Presentation: Team 8}
+\clearpage
 \section{Solution assignment 1}
 \subsection{Analytical solution}
 Transform the input voltage to the s-domain, like such:
 \[
-  u_s(t) = U_{0} \cdot \sin(\omega t) \quad\laplace\quad F(s) = U_0 \cdot \frac{\omega}{s^2 +\omega^2}
+  u_s(t) = U_{0} \cdot \sin(\omega t) \quad\laplace\quad U_{s}(s) = U_0 \cdot \frac{\omega}{s^2 +\omega^2}
 .\] 
-The laplace domain equivalen for the circuit in figure \ref{fig:ass_1}. Under the consideration of
-the initial conditions, 
+The laplace domain equivalen for the circuit in figure \ref{fig:ass_1}. We use paralell current
+sources, that represent our initial conditions in the laplace domain, because they will become a
+constant term on the right side of our node voltage equation $A\vec{x} = \vec{b}$. Because the
+initial Condition at $L_1$ is equal to $0A$, the laplace domain equivalent of $L_1$ does not need a
+additional source.
 \begin{figure}[!ht] \centering 
-  \begin{circuitikz}
-    \draw (0,0) to[sV=$U(s)$] (0,5)
-          (0,5) to[L=$sL_1$, *-*] (5,5)
-	  (5,5) to[C=$\frac{1}{sC}$, -*] (5,0)
-	  (5,5) to[short] (4,4) 
-	  (4,1) to[isource=$CU_{C0}$] (4,4)
-	  (4,1) to[short] (5,0)
-	  (5,5) to[R=$R_2$] (8,5)
-	  (8,5) to[L=$sL_2$, -*] (8,0)
-	  (8,5) to[short, *-] (7,4)
-	  (7,4) to[isource=$\frac{I_{L0,2}}{s}$] (7,1)
-	  (7,1) to[short] (8,0)
-	  (0,0) to[short] (10,0)
-	  (10,0) to[R=$R_3$] (10,7)
-	  (10,7) to[short] (5,7)
+  \begin{circuitikz}[scale=0.85, transform shape]
+    \draw (0,0) to[sV=$U_s(s)$, i>=$I_{U}^{?}(s)$] (0,5)
+    (0,5) to[L=$sL_1$, *-*, i=$I_{L1}(s)$, v=$sL_1 I_{L1}(s)$] (5,5)
+    (5,5) to[C=$\frac{1}{sC}$, -*, i=$I_{C}(s)$, v=$\frac{I_{C}(s)}{sC}$] (5,0)
+	  (5,5) to[short] (7,4) 
+	  (7,1) to[isource=$CU_{C0}$] (7,4)
+	  (7,1) to[short] (5,0)
+	  (5,5) to[R=$R_2$, i=$I_{R2}(s)$, v=$R_2 I_{R2}(s)$] (10,5)
+	  (10,5) to[L, l=$sL_2$, -*, i=$I_{L2}(s)$, v=$sL_2 I_{L2}(s)$] (10,0)
+	  (10,5) to[short, *-] (12,4)
+	  (12,4) to[isource=$\frac{i_{L0,2}}{s}$] (12,1)
+	  (12,1) to[short] (10,0)
+	  (0,0) to[short] (15,0)
+	  (15,0) to[R=$R_3$, i<=$I_{R3}(s)$, v<=$R_3 I_{R3}(s)$] (15,7)
+	  (15,7) to[short] (5,7)
 	  (5,7) to[short] (5,5)
-	  (5,7) to[R=$R_1$] (0,7)
-	  (0,7) to[short] (0,5)
-	  ;
+	  (5,7) to[R=$R_1$, i<=$I_{R1}(s)$, v<=$R_1 I_{C}(s)$] (0,7)
+	  (0,7) to[short] (0,5);
+	  \node[above, xshift=-3mm, color=blue]	    (n_1) at (0, 5) {$n_1$};
+	  \node[above, xshift=3mm, color=blue]	    (n_2) at (5, 5) {$n_2$};
+	  \node[above, xshift=3mm, color=blue]	    (n_3) at (10, 5) {$n_3$};
+	  \draw[-{Latex[length=2mm]}, color=blue] (0.5, 4.5) -- (2, 0.5)
+	  node[pos=0.25, left] {$U_{n_1}$};
+	  \draw[-{Latex[length=2mm]}, color=blue] (4.5, 4.5) -- (2.5, 0.5)
+	  node[pos=0.25, left] {$U_{n_2}$};
+	  \draw[-{Latex[length=2mm]}, color=blue] (8.6, 2.25) -- (7.9, 0.5);
+	  \draw[color=blue] (9.5, 4.5) -- (8.8, 2.8)
+	  node[pos=0.25, left] {$U_{n_3}$};
+	  \draw (0,0) to (0,0) node[ground]{};
   \end{circuitikz}
+  \caption{laplace domain circuitikz assignment 1}
+  \label{fig:lap_circ}
 \end{figure}
+\\ Kirchhoff's current law gets us $3$ nodal equations.
+\begin{align*}
+  (n_1):&\quad -I_{U}^{?}(s) + I_{R_1}(s) + I_{L1}(s) = 0 \\
+  (n_2):&\quad-I_{R1}(s) - I_{L1}(s) +I_{R2}(s) + I_{C}(s) = CU_{C0} \\
+  (n_3):&\quad -I_{R2}(s) + I_{L2}(s) = - \frac{i_{L0, 2}}{s}
+\end{align*}
+From those equations, we could derive the our node voltage equation $A\vec{x} = \vec{b}$, by 
+rewriting the currents as nodal voltages divided by laplace domain impedances.
+However, since we know how that works, the standard admittance matrix $A$ is determined by
+inspection. 
+\[
+  \begin{pmatrix}
+    \frac{1}{R_1} + \frac{1}{sL_1} & -\frac{1}{R_1} - \frac{1}{sL_1} & 0 \\
+    -\frac{1}{R_1} - \frac{1}{sL_1} & \frac{1}{R_1} + \frac{1}{R_2} + \frac{1}{R_3} + 
+    \frac{1}{sL_1} + sC & -\frac{1}{R_2} \\ 
+    0 & -\frac{1}{R_2} & \frac{1}{R_2} + \frac{1}{sL_2}
+  \end{pmatrix}
+.\] 
+The vector $\vec{x}$ contains the unkown values of our circuit. Since there is a voltage source in
+our circuit, we need the current  $I_{U}^{?}(s)$ to be in that vector as well.
+\[
+  \vec{x} =
+  \begin{pmatrix}
+    U_{n1} \\ U_{n2} \\ U_{n3} \\ I_{U}^{?}(s) 
+  \end{pmatrix}
+.\] 
+The get a solvable system of linear equations, we need an additional equation, which brings the
+voltage source $U_s(s)$ (Figure \ref{fig:lap_circ}) into context. This context is given via 
+$U_s(s) = -U_{n1}$. With the vector $\vec{b}$, which contains the values of all sources in Figure
+\ref{fig:lap_circ}, we get:
+\[
+  \begin{pmatrix}
+    \frac{1}{R_1} + \frac{1}{sL_1} & -\frac{1}{R_1} - \frac{1}{sL_1} & 0 & -1\\
+    -\frac{1}{R_1} - \frac{1}{sL_1} & \frac{1}{R_1} + \frac{1}{R_2} + \frac{1}{R_3} + 
+    \frac{1}{sL_1} + sC & -\frac{1}{R_2} & 0\\ 
+    0 & -\frac{1}{R_2} & \frac{1}{R_2} + \frac{1}{sL_2} & 0 \\
+    -1 & 0 & 0 & 0
+  \end{pmatrix} \cdot
+  \begin{pmatrix}
+    U_{n1} \\ U_{n2} \\ U_{n3} \\ I_{U}^{?}(s)  
+  \end{pmatrix} =
+  \begin{pmatrix}
+    0 \\ CU_{C0} \\ - \frac{I_{L0,2}}{s} \\ U_s(s)
+  \end{pmatrix}
+.\] \clearpage
+Bevor we will solve that system in matlab and plot the results (section \ref{sec:matlab}), 
+let's quickly assess some differences between the frequency domain and the laplace domain.
+\bigskip
+\\The most important thing, that the laplace domain gives us, is a transformed space, where
+derivations become multiplications and integrations divisions. That enables us, to treat passiv
+elements like capacitors and inductors as if they had a linear relation between their voltages and
+currents. That's why we can apply the node voltage method, to calculate a transient response with a 
+sinusoidal input, only using a linear system of equations.
+\subsection{Matlab} \label{sec:matlab}
+\subsubsection{Output}
+With the source code shown in section \ref{sec:source}, we generated the following plot (Figure
+\ref{fig:matl_ass1}),
+that shows $u_{s}(t)$ and $u_{C}(t)$, witch correspond to the nodevoltages like such: $u_{s}(t) = -u_{n1}(t)$
+and $u_{C}(t) = u_{n2}$.
+\begin{figure}[ht]
+  \includegraphics{./Figures/ue8_ass_1_plot.png}
+  \caption{matlab plot assignment 1}
+  \label{fig:matl_ass1}
+\end{figure}
+
+\subsubsection{Source code} \label{sec:source}
+\lstinputlisting[language=matlab]{./../matlab/UE8_1.m}  
+
+
 \end{document}
