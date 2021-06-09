@@ -1,0 +1,11 @@
+* Z:\home\max\TU\rollin\GEN\UE09\UE9_circuit.asc
+R1 N001 V_in 50
+L1 N001 0 20m
+R2 N001 0 2k
+R3 V_out 0 600
+C1 V_out N001 400µ
+V1 V_in 0 AC 1 0
+.ac list {w/(2*pi)}
+.step dec param w 1 1Meg 100
+.backanno
+.end
