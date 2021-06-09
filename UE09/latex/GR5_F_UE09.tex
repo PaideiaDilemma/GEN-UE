@@ -302,7 +302,7 @@ Two-port 1:
 	\end{bmatrix}
 \end{equation*}
 We check this result with the conversion table\\\\
-\begin{tabular}{c|c|c|c|c|c|c|c}
+\begin{tabular}{c|c|c|c|c|c|c}
 	$\underline{Z}$ & 1 & $\underline{Z_{11}}$ & $\underline{Z_{12}}$ & $\underline{Z_{21}}$ & $\underline{Z_{22}}$ & $det[\underline{Z}]$\\[1ex]
 	\hline 
 	$\underline{Y}$ & $det[\underline{Y}]$ & $\underline{Y_{22}}$ & $-\underline{Y_{12}}$ & $-\underline{Y_{21}}$ & $\underline{Y_{11}}$ & 1\\[1ex]
@@ -311,7 +311,7 @@ We check this result with the conversion table\\\\
 \begin{equation*}
 	det[\underline{Z}] = (R_1 + j\omega L) \cdot j\omega L - (j\omega L)^2 = R_1 \cdot j\omega L
 \end{equation*}
-amd we see, our calculations are correct.\\
+and we see, our calculations are correct.\\
 \\
 Two-port 2:\\
 For this two-port the Y-matrix does not exist.
@@ -333,7 +333,7 @@ Two-port 3:
 \end{equation*}
 
 We check this result with the conversion table\\\\
-\begin{tabular}{c|c|c|c|c|c|c|c}
+\begin{tabular}{c|c|c|c|c|c|c}
 	$\underline{Z}$ & 1 & $\underline{Z_{11}}$ & $\underline{Z_{12}}$ & $\underline{Z_{21}}$ & $\underline{Z_{22}}$ & $det[\underline{Z}]$\\[1ex]
 	\hline 
 	$\underline{Y}$ & $det[\underline{Y}]$ & $\underline{Y_{22}}$ & $-\underline{Y_{12}}$ & $-\underline{Y_{21}}$ & $\underline{Y_{11}}$ & 1\\[1ex]
@@ -343,6 +343,67 @@ We check this result with the conversion table\\\\
 	det[\underline{Z}] = (\frac{1}{j\omega C} + R_3) \cdot R_3 - R_3^2 = \frac{1}{j\omega C} \cdot R_3
 \end{equation*}
 \\
-amd we see, our calculations are correct.\\
+and we see, our calculations are correct.\\
+
+\subsection*{Determination of the A-Matrix}
+In order to calculate the transfer function we need to determine the A-matrix. We do this with the following parameter
+conversion table:\\\\
+\begin{tabular}{|c|c|c|c|c|c|c|}
+	\hline
+	$\underline{Z}$ & 1 & $\underline{Z_{11}}$ & $\underline{Z_{12}}$ & $\underline{Z_{21}}$ & $\underline{Z_{22}}$ & $det[\underline{Z}]$\\[1ex]
+	\hline 
+	$\underline{Y}$ & $det[\underline{Y}]$ & $\underline{Y_{22}}$ & $-\underline{Y_{12}}$ & $-\underline{Y_{21}}$ & $\underline{Y_{11}}$ & 1\\[1ex]
+	\hline
+	$\underline{A}$ & $\underline{A_{21}}$ & $\underline{A_{11}}$ & $det[\underline{A}]$ & 1 & $\underline{A_{22}}$ &$\underline{A_{12}}$\\[1ex]
+	\hline
+\end{tabular}\\\\
+Two-port 1:\\
+\begin{equation*}
+	\begin{bmatrix}
+		\underline{A}
+	\end{bmatrix}=
+	\frac{1}{j\omega L} \cdot
+	\begin{bmatrix}
+		R_1 + j\omega L & R_1 \cdot j\omega L\\
+		1 & j\omega L\\
+	\end{bmatrix} =
+	\begin{bmatrix}
+		\frac{R_1}{j\omega L} + 1 & R_1\\
+		\frac{1}{j\omega L} & 1\\
+	\end{bmatrix}
+\end{equation*}
+
+Two-port 2:\\
+\begin{equation*}
+	\begin{bmatrix}
+		\underline{A}
+	\end{bmatrix}=
+	\frac{1}{R_2} \cdot
+	\begin{bmatrix}
+		R_2 & 0\\
+		1 & R_2\\
+	\end{bmatrix} =
+	\begin{bmatrix}
+		1 & 0\\
+		\frac{1}{R_2} & 1\\
+	\end{bmatrix}
+\end{equation*}
+
+Two-port 3:\\
+\begin{equation*}
+	\begin{bmatrix}
+		\underline{A}
+	\end{bmatrix}=
+	\frac{1}{R_3} \cdot
+	\begin{bmatrix}
+		\frac{1}{j\omega C} + R_3 & \frac{1}{j\omega C} \cdot R_3\\
+		1 & R_3\\
+	\end{bmatrix} =
+	\begin{bmatrix}
+		\frac{1}{j\omega C \cdot R_3} + 1 & \frac{1}{j\omega C}\\
+		\frac{1}{R_3} & 1\\
+	\end{bmatrix}
+\end{equation*}
+
 
 \end{document}
