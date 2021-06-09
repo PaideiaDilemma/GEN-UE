@@ -464,5 +464,45 @@ cascade. We do this by multiplicating the three A-matrices.
 	\end{bmatrix}
 \end{equation*}
 
+\pagebreak
 
+\subsection{Calculating the Transfer Function}
+In order to make calculations easier we substitue $j\omega$ with $s$
+\begin{equation*}
+	\underline{H(s)} = \frac{\underline{U_{out}(s)}}{\underline{U_{in}(s)}} = \frac{1}{\underline{A_{11}}}
+\end{equation*}
+\begin{align*}
+	\underline{A_{11}} &= \left(\frac{R_1}{sL} + \frac{R_1}{R_2} + 1\right)\left(\frac{1}{sC \cdot R_3} + 1\right) + \frac{R_1}{R_3}\\
+	\underline{A_{11}} &= \frac{R_1}{s^2LCR_3} + \frac{R_1}{sL} + \frac{R_1}{sCR_2R_3} + \frac{R_1}{R_2} + \frac{1}{sCR_3} + 1 + \frac{R_1}{R_3}\\
+	\underline{A_{11}} &= \frac{R_1R_2 + R_1sCR_3R_2 + R_1sL + R_1s^2LCR_3 + sLR_2 + s^2LCR_3R_2}{s^2LCR_3R_2}\\
+	\underline{A_{11}} &= \frac{s^2(R_1LCR_3 + LCR_3R_2 + R_1LCR_2) + s(R_1CR_3R_2 + R_1L + LR_2) + R_1R_2}{s^2LCR_3R_2}\\
+	\underline{H(s)} &= \frac{1}{\underline{A_{11}}} = \frac{s^2LCR_3R_2}{s^2(R_1LCR_3 + LCR_3R_2 + R_1LCR_2) + s(R_1CR_3R_2 + R_1L + LR_2) + R_1R_2}\\
+	\underline{H(s)} &= \frac{s^2}{s^2\left( \frac{R_1}{R_2} + \frac{R_1}{R_3} + 1 \right) + s\left( \frac{R_1}{L} + \frac{R_1}{CR_3R_2} + \frac{1}{CR_3} \right) + \frac{R_1}{LCR_3}}\\
+\end{align*}
+For the next step we need to factorise the denominator. In order to do that we use the following substitutions:
+\begin{align*}
+	a &= \frac{R_1}{R_2} + \frac{R_1}{R_3} + 1\\
+	b &= \frac{R_1}{L} + \frac{R_1}{CR_3R_2} + \frac{1}{CR_3}\\
+	c &= \frac{R_1}{LCR_3}\\
+\end{align*}
+Now we can calculate the zeropoints:
+\begin{align*}
+	s_1 & = \frac{-b + \sqrt{b^2 - 4ac}}{2a}\\
+	s_2 & = \frac{-b - \sqrt{b^2 - 4ac}}{2a}\\
+\end{align*}
+Finally we can factorise the denominator:
+\begin{align*}
+	\underline{H(s)} &= \frac{s^2}{(s-s_1)(s-s_2)} = \frac{s^2}{-s_1\left(1 + \frac{s}{-s_1}\right) \cdot -s_2\left(1 + \frac{s}{-s_2}\right)} =
+	\frac{1}{s_1s_2} \cdot \frac{s^2}{\left(1 + \frac{s}{-s_1}\right) \left(1 + \frac{s}{-s_2}\right)}
+\end{align*}
+With that we have reached the form:
+\begin{equation*}
+	\underline{H(s)} = K\cdot \frac{s^2}{\left(1+\frac{s}{\omega_1}\right)\left(1+\frac{s}{\omega_2}\right)}
+\end{equation*}
+with
+\begin{align*}
+	\omega_1 &= -s_1 = -\frac{-b + \sqrt{b^2 - 4ac}}{2a}\\
+	\omega_2 &= -s_2 = -\frac{-b - \sqrt{b^2 - 4ac}}{2a}\\
+	K &= \frac{1}{s_1s_2} = \frac{1}{\frac{-b + \sqrt{b^2 - 4ac}}{2a} \cdot \frac{-b - \sqrt{b^2 - 4ac}}{2a}}\\
+\end{align*}
 \end{document}
