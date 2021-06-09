@@ -505,4 +505,17 @@ with
 	\omega_2 &= -s_2 = -\frac{-b - \sqrt{b^2 - 4ac}}{2a}\\
 	K &= \frac{1}{s_1s_2} = \frac{1}{\frac{-b + \sqrt{b^2 - 4ac}}{2a} \cdot \frac{-b - \sqrt{b^2 - 4ac}}{2a}}\\
 \end{align*}
+
+\pagebreak
+
+Now we can plug in the values:
+\begin{align*}
+	a &= \frac{50}{2000} + \frac{50}{600} + 1 = 1.108\\
+	b &= \frac{50}{0.02} + \frac{50}{400\cdot 10^{-6} \cdot 50 \cdot 2000} + \frac{1}{400\cdot 10^{-6} \cdot 600} = 2505.42\\
+	c &= \frac{50}{0.02 \cdot  400\cdot 10^{-6} \cdot 600} = 10416.67\\
+	\omega_1 &= 2256.36\\
+	\omega_2 &= 4.165\\
+	K &= 10.63 \cdot 10^{-3}\\
+	\underline{H(s)} &= 10.63 \cdot 10^{-3} \cdot \frac{s^2}{\left(1+\frac{s}{2256.36}\right)\left(1+\frac{s}{4.165}\right)}
+\end{align*}
 \end{document}
