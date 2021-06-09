@@ -405,5 +405,64 @@ Two-port 3:\\
 	\end{bmatrix}
 \end{equation*}
 
+Now that we have the A-matrices of the three parts, we can calculate the A-matrix for the whole
+cascade. We do this by multiplicating the three A-matrices.
+
+\begin{equation*}
+	\begin{bmatrix}
+		\underline{A}
+	\end{bmatrix}=
+	\begin{bmatrix}
+		\underline{A_1}
+	\end{bmatrix}\cdot
+	\begin{bmatrix}
+		\underline{A_2}
+	\end{bmatrix}\cdot
+	\begin{bmatrix}
+		\underline{A_3}
+	\end{bmatrix}
+\end{equation*}
+\begin{equation*}
+	\begin{bmatrix}
+		\underline{A}
+	\end{bmatrix}=
+	\begin{bmatrix}
+		\frac{R_1}{j\omega L} + 1 & R_1\\
+		\frac{1}{j\omega L} & 1\\
+	\end{bmatrix}\cdot
+	\begin{bmatrix}
+		1 & 0\\
+		\frac{1}{R_2} & 1\\
+	\end{bmatrix}\cdot
+	\begin{bmatrix}
+		\frac{1}{j\omega C \cdot R_3} + 1 & \frac{1}{j\omega C}\\
+		\frac{1}{R_3} & 1\\
+	\end{bmatrix}
+\end{equation*}
+\begin{equation*}
+	\begin{bmatrix}
+		\underline{A}
+	\end{bmatrix}=
+	\begin{bmatrix}
+		\frac{R_1}{j\omega L} + \frac{R_1}{R_2} + 1 & R_1\\
+		\frac{1}{j\omega L} + \frac{1}{R_2} & 1\\
+	\end{bmatrix}\cdot
+	\begin{bmatrix}
+		\frac{1}{j\omega C \cdot R_3} + 1 & \frac{1}{j\omega C}\\
+		\frac{1}{R_3} & 1\\
+	\end{bmatrix}
+\end{equation*}
+\begin{equation*}
+	\begin{bmatrix}
+		\underline{A}
+	\end{bmatrix}=
+	\begin{bmatrix}
+		\left(\frac{R_1}{j\omega L} + \frac{R_1}{R_2} + 1\right)\left(\frac{1}{j\omega C \cdot R_3} + 1\right) + \frac{R_1}{R_3} &
+		\left(\frac{R_1}{j\omega L} + \frac{R_1}{R_2} + 1\right)\frac{1}{j\omega C} + R_1\\
+		\left(\frac{1}{j\omega L} + \frac{1}{R_2}\right)\left(\frac{1}{j\omega C \cdot R_3} + 1\right) + \frac{1}{R_3} &
+		\left(\frac{1}{j\omega L} + \frac{1}{R_2}\right)\frac{1}{j\omega L} + 1
+	\end{bmatrix}
+\end{equation*}
+
 
 \end{document}
