@@ -24,6 +24,7 @@
 \usepackage{geometry}
 \geometry{a4paper,left=3cm,right=2cm, top=2cm, bottom=2cm} 
 \usepackage{graphicx}
+\usepackage[EFvoltages, european, straightvoltages]{circuitikz}
 
 \newpsobject{showgrid}{psgrid}{subgriddiv=1,griddots=10,gridlabels=0pt}
 \psset{unit=1.0cm}
@@ -106,4 +107,242 @@ useful Matlab commands: \textbf{zpk, minreal, bode, zpkdata}.
  	\end{figure}
 \vspace{3.5cm}
  	\blfootnote{Deadline: 10 June 2021; \qquad Team I}
+
+\pagebreak
+
+\section{Solution}
+\subsection{Determination of the Z-Matrix}
+Two-port 1:
+\begin{figure}[!h] \centering
+	\begin{circuitikz}
+		\draw(0,0)
+		to[short, o-*](4,0)
+		to[short, -o](5,0);
+		\draw(0,5)
+		to[short, o-](0.5,5)
+		to[short, i=$\underline{I_1}$, color=red](1,5)
+		to[R,l=$R_1$](3,5)
+		to[short,-*](4,5)
+		to[short, i<=$\underline{I_2}$, color=red](5,5)
+		to[short,-o](5,5);
+		\draw(4,0)
+		to[short](4,1)
+		to[L, l=$L$](4,4)
+		to[short, i<=$\underline{I_1} + \underline{I_2}$, color=red](4,5);
+		\draw[-{Latex[length=2mm]}, color=blue] (0, 4.5) -- (0, 0.5)
+	  	node[pos=0.5, left] {$\underline{U_{in}}$};
+		\draw[-{Latex[length=2mm]}, color=blue] (5, 4.5) -- (5, 0.5)
+	  	node[pos=0.5, right] {$\underline{U_{out}}$};
+	\end{circuitikz}	
+\end{figure}
+\\
+\begin{equation*}
+	\begin{bmatrix}
+		\underline{U_{in}}\\ \underline{U_{out}}\\
+	\end{bmatrix} =
+	\begin{bmatrix}
+		\underline{Z_{11}} & \underline{Z_{12}}\\
+		\underline{Z_{21}} & \underline{Z_{22}}\\
+	\end{bmatrix} \cdot
+	\begin{bmatrix}
+		\underline{I_{1}}\\ \underline{I_{2}}\\
+	\end{bmatrix}\\
+\end{equation*}
+\begin{align*}
+	M1&: \underline{U_{in}} = R_1 \cdot \underline{I_1} + j\omega L \cdot(\underline{I_1} + \underline{I_2}) =
+	\underline{I_1} \cdot (R_1 + j\omega L) + \underline{I_2} \cdot j\omega L
+	\\
+	M2&: \underline{U_{out}} = j\omega L \cdot(\underline{I_1} + \underline{I_2}) =
+	\underline{I_1} \cdot j\omega L + \underline{I_2} \cdot j\omega L
+\end{align*}
+With these two mesh equations we could determine our impedances and set up the Z-Matrix.
+\begin{equation*}
+	\begin{bmatrix}
+		\underline{Z}
+	\end{bmatrix}=
+	\begin{bmatrix}
+		R_1 + j\omega L & j\omega L\\
+		j\omega L & j\omega L\\
+	\end{bmatrix}
+\end{equation*}
+
+Two-port 2:
+\begin{figure}[!h] \centering
+	\begin{circuitikz}
+		\draw(0,0)
+		to[short, o-*](2.5,0)
+		to[short, -o](5,0);
+		\draw(0,5)
+		to[short, o-](0.5,5)
+		to[short, i=$\underline{I_1}$, color=red](1,5)
+		to[short,-*](2.5,5)
+		to[short, i<=$\underline{I_2}$, color=red](5,5)
+		to[short,-o](5,5);
+		\draw(2.5,0)
+		to[short](2.5,1)
+		to[R, l=$R_2
+		$](2.5,4)
+		to[short, i<=$\underline{I_1} + \underline{I_2}$, color=red](2.5,5);
+		\draw[-{Latex[length=2mm]}, color=blue] (0, 4.5) -- (0, 0.5)
+	  	node[pos=0.5, left] {$\underline{U_{in}}$};
+		\draw[-{Latex[length=2mm]}, color=blue] (5, 4.5) -- (5, 0.5)
+	  	node[pos=0.5, right] {$\underline{U_{out}}$};
+	\end{circuitikz}	
+\end{figure}
+\\
+\begin{equation*}
+	\begin{bmatrix}
+		\underline{U_{in}}\\ \underline{U_{out}}\\
+	\end{bmatrix} =
+	\begin{bmatrix}
+		\underline{Z_{11}} & \underline{Z_{12}}\\
+		\underline{Z_{21}} & \underline{Z_{22}}\\
+	\end{bmatrix} \cdot
+	\begin{bmatrix}
+		\underline{I_{1}}\\ \underline{I_{2}}\\
+	\end{bmatrix}\\
+\end{equation*}
+\begin{align*}
+	M1&: \underline{U_{in}} = R_2 \cdot(\underline{I_1} + \underline{I_2}) =
+	\underline{I_1} \cdot R_2 + \underline{I_2} \cdot R_2
+	\\
+	M2&: \underline{U_{out}} = R_2 \cdot(\underline{I_1} + \underline{I_2}) =
+	\underline{I_1} \cdot R_2 + \underline{I_2} \cdot R_2
+\end{align*}
+With these two mesh equations we could determine our impedances and set up the Z-Matrix.
+\begin{equation*}
+	\begin{bmatrix}
+		\underline{Z}
+	\end{bmatrix}=
+	\begin{bmatrix}
+		R_2 & R_2\\
+		R_2 & R_2\\
+	\end{bmatrix}
+\end{equation*}
+
+\pagebreak
+
+Two-port 3:
+\begin{figure}[!h] \centering
+	\begin{circuitikz}
+		\draw(0,0)
+		to[short, o-*](4,0)
+		to[short, -o](5,0);
+		\draw(0,5)
+		to[short, o-](0.5,5)
+		to[short, i=$\underline{I_1}$, color=red](1,5)
+		to[C,l=$C$](3,5)
+		to[short,-*](4,5)
+		to[short, i<=$\underline{I_2}$, color=red](5,5)
+		to[short,-o](5,5);
+		\draw(4,0)
+		to[short](4,1)
+		to[R, l=$R_3$](4,4)
+		to[short, i<=$\underline{I_1} + \underline{I_2}$, color=red](4,5);
+		\draw[-{Latex[length=2mm]}, color=blue] (0, 4.5) -- (0, 0.5)
+	  	node[pos=0.5, left] {$\underline{U_{in}}$};
+		\draw[-{Latex[length=2mm]}, color=blue] (5, 4.5) -- (5, 0.5)
+	  	node[pos=0.5, right] {$\underline{U_{out}}$};
+	\end{circuitikz}	
+\end{figure}
+\\
+\begin{equation*}
+	\begin{bmatrix}
+		\underline{U_{in}}\\ \underline{U_{out}}\\
+	\end{bmatrix} =
+	\begin{bmatrix}
+		\underline{Z_{11}} & \underline{Z_{12}}\\
+		\underline{Z_{21}} & \underline{Z_{22}}\\
+	\end{bmatrix} \cdot
+	\begin{bmatrix}
+		\underline{I_{1}}\\ \underline{I_{2}}\\
+	\end{bmatrix}\\
+\end{equation*}
+\begin{align*}
+	M1&: \underline{U_{in}} = \frac{1}{j\omega C} \cdot \underline{I_1} + R_3 \cdot(\underline{I_1} + \underline{I_2}) =
+	\underline{I_1} \cdot \left(\frac{1}{j\omega C} + R_3 \right) + \underline{I_2} \cdot R_3
+	\\
+	M2&: \underline{U_{out}} = R_3 \cdot(\underline{I_1} + \underline{I_2}) =
+	\underline{I_1} \cdot R_3 + \underline{I_2} \cdot R_3
+\end{align*}
+With these two mesh equations we could determine our impedances and set up the Z-Matrix.
+\begin{equation*}
+	\begin{bmatrix}
+		\underline{Z}
+	\end{bmatrix}=
+	\begin{bmatrix}
+		\frac{1}{j\omega C} + R_3 & R_3\\
+		R_3 & R_3\\
+	\end{bmatrix}
+\end{equation*}
+
+\subsection{Determination of the Y-Matrix}
+
+\begin{equation*}
+	\begin{bmatrix}
+		\underline{I_1}\\ \underline{I_2}\\
+	\end{bmatrix} =
+	\begin{bmatrix}
+		\underline{Y_{11}} & \underline{Y_{12}}\\
+		\underline{Y_{21}} & \underline{Y_{22}}\\
+	\end{bmatrix} \cdot
+	\begin{bmatrix}
+		\underline{U_{in}}\\ \underline{U_{out}}\\
+	\end{bmatrix}\\
+\end{equation*}
+We determine the Y-matrix using the node-voltage-method:\\
+Two-port 1:
+\begin{equation*}
+	\begin{bmatrix}
+		\underline{Y}
+	\end{bmatrix}=
+	\begin{bmatrix}
+		\frac{1}{R_1} & -\frac{1}{R_1}\\
+		-\frac{1}{R_1} & \frac{1}{R_1} + \frac{1}{j\omega L}\\
+	\end{bmatrix}
+\end{equation*}
+We check this result with the conversion table\\\\
+\begin{tabular}{c|c|c|c|c|c|c|c}
+	$\underline{Z}$ & 1 & $\underline{Z_{11}}$ & $\underline{Z_{12}}$ & $\underline{Z_{21}}$ & $\underline{Z_{22}}$ & $det[\underline{Z}]$\\[1ex]
+	\hline 
+	$\underline{Y}$ & $det[\underline{Y}]$ & $\underline{Y_{22}}$ & $-\underline{Y_{12}}$ & $-\underline{Y_{21}}$ & $\underline{Y_{11}}$ & 1\\[1ex]
+\end{tabular}\\\\
+
+\begin{equation*}
+	det[\underline{Z}] = (R_1 + j\omega L) \cdot j\omega L - (j\omega L)^2 = R_1 \cdot j\omega L
+\end{equation*}
+amd we see, our calculations are correct.\\
+\\
+Two-port 2:\\
+For this two-port the Y-matrix does not exist.
+\begin{equation*}
+	det[\underline{Z}] = R_2^2 - R_2^2 = 0
+\end{equation*}
+This is, because the determinant of it's Z-matrix is zero.
+Because of this, we would have to divide by zero in order to calculate X, which is not possible.
+
+Two-port 3:
+\begin{equation*}
+	\begin{bmatrix}
+		\underline{Y}
+	\end{bmatrix}=
+	\begin{bmatrix}
+		j\omega C & -j\omega C\\
+		-j\omega C & j\omega C + \frac{1}{R_3}\\
+	\end{bmatrix}
+\end{equation*}
+
+We check this result with the conversion table\\\\
+\begin{tabular}{c|c|c|c|c|c|c|c}
+	$\underline{Z}$ & 1 & $\underline{Z_{11}}$ & $\underline{Z_{12}}$ & $\underline{Z_{21}}$ & $\underline{Z_{22}}$ & $det[\underline{Z}]$\\[1ex]
+	\hline 
+	$\underline{Y}$ & $det[\underline{Y}]$ & $\underline{Y_{22}}$ & $-\underline{Y_{12}}$ & $-\underline{Y_{21}}$ & $\underline{Y_{11}}$ & 1\\[1ex]
+\end{tabular}\\\\
+
+\begin{equation*}
+	det[\underline{Z}] = (\frac{1}{j\omega C} + R_3) \cdot R_3 - R_3^2 = \frac{1}{j\omega C} \cdot R_3
+\end{equation*}
+\\
+amd we see, our calculations are correct.\\
+
 \end{document}
