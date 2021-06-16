@@ -98,7 +98,7 @@ Z_{22} &= \frac{42s^3+16s^2+47s+10}{6s^3+5s^2+6s+5}
 \textbf{1. Analytical calculations:}
 
 \begin{itemize}
-	\item Determine the three impedances of a T-Network by using the given impedance parameters. Can one say anything about the multiport's symmetry by looking at the given set of impedance parameters? (\textit{1.5~P})
+	\item Determine the three impedances of a network by using the given impedance parameters. Can one say anything about the multiport's symmetry by looking at the given set of impedance parameters? (\textit{1.5~P})
 	\item Find the realization of the multiport which corresponds to the given set of parameters by combining the elements R, L and C. Draw the resulting circuit with all values. (\textit{1.5~P})
 	\item Determine the transfer function of the circuit $H(s) = \frac{U_2(s)}{U_1(s)}\Big|_{I_2 = 0}$. (\textit{0.5~P})
 \end{itemize}
@@ -136,7 +136,7 @@ Z_{22} &= \frac{42s^3+16s^2+47s+10}{6s^3+5s^2+6s+5}
 
 \clearpage
 \section{Analytical calculations}
-\subsection{Impedances of a T-Network}
+\subsection{Impedances of a T-network}
 
 \begin{figure}[!h] \centering
   \begin{circuitikz}
@@ -158,13 +158,13 @@ Z_{22} &= \frac{42s^3+16s^2+47s+10}{6s^3+5s^2+6s+5}
     \draw[-{Latex[length=2mm]}, color=blue] (3.5, 4.5) -- (3.5, 0.5)
     node[pos=0.5, right] {$\underline{U_{2}}$};
   \end{circuitikz}	
-  \caption{A typical T-Network}
+  \caption{A typical T-network}
   \label{fig:tnet}
 \end{figure}
 Using the given elements of the impedance matrix $\begin{bmatrix} \underline{Z} \end{bmatrix}$, we
 want to calculate the elements $\underline{Z}_{a}, \underline{Z}_{b}, \underline{Z}_{c}$ of a 
-t-network like the one in Figure \ref{fig:tnet}. This can be done by using the scheme to calculate 
-the impedance matrix of a t-network in the first place. 
+T-network like the one in Figure \ref{fig:tnet}. This can be done by using the scheme to calculate 
+the impedance matrix of a T-network in the first place. 
 \[
   \begin{bmatrix}
     \underline{Z}
@@ -228,7 +228,7 @@ Now extend the fraction of $\underline{Z}_{b}$ with $s^2 + 1$ and subtract.
 \clearpage
 \subsubsection*{Symmetry of the multiport}
 This network is not symetrical, since its input and output impedances are not the same $
-\underline{Z}_{22} \ne \underline{Z}_{22}$. However, like every t-network, it is reciprocal, since $\underline{Z}_{12} =
+\underline{Z}_{22} \ne \underline{Z}_{22}$. However, like every T-network, it is reciprocal, since $\underline{Z}_{12} =
 \underline{Z}_{21}$.
 \subsection{Find the realization of the multiport}
 Now, that we have the impedances of our network, we want to convert them into real values.
@@ -394,6 +394,45 @@ Invert the fraction to a admittance:
   \caption{Derived Circuit}
   \label{fig:all}
 \end{figure}
+\subsection{The transfer function of the multiport}
+To calculate the transfer function $H(s)$, with $I_{2} = 0$ we can use a simple voltage divider.
+Redrawing the T-network with $I_{2} = 0$, makes that clear.
+\begin{figure}[!h] \centering
+  \begin{circuitikz} [scale=0.6, transform shape]
+    \draw(0,0)
+    to[short, *-o](-3.5, 0)
+    to[short, -o](3.5,0);
+    \draw(-3.5,5)
+    to[short, o-](-3.4,5)
+    to[short, i=$\underline{I_1}$, color=red](-3.2,5)
+    to[R, l=\raisebox{1mm}{$\underline{Z_a}$}, -*] (0,5)
+    to[short] (3.2,5)
+    to[short] (3.4,5)
+    to[short,-o](3.5,5);
+    \draw(0,0)
+    to[short](0,1)
+    to[R, l=$\underline{Z_b}$](0,5);
+    \draw[-{Latex[length=2mm]}, color=blue] (-3.5, 4.5) -- (-3.5, 0.5)
+    node[pos=0.5, left] {$\underline{U_{1}}$};
+    \draw[-{Latex[length=2mm]}, color=blue] (3.5, 4.5) -- (3.5, 0.5)
+    node[pos=0.5, right] {$\underline{U_{2}}$};
+  \end{circuitikz}	
+  \caption{T-network with zero output current}
+  \label{fig:tnet_transfer}
+\end{figure}
+\[
+  \underline{U}_2 = \underline{U}_1 \frac{\underline{Z}_{b}}{\underline{Z}_{a}+ \underline{Z}_{b}}
+  \quad H(s)\Big|_{I_2=0} = \frac{\underline{U}_{2}}{\underline{U}_{1}} =
+  \frac{\underline{Z}_{b}}{\underline{Z}_{a} + \underline{Z}_{b}}
+.\] 
+\[
+  H(s)\Big|_{I_2=0} = \frac{\frac{30s}{6s+5}}{\frac{48s^3+232s^2+120s}{2(2s+1)(6s+5)}} =
+  \frac{60s(2s+1)(6s+5)}{(6s+5)(48s^3+232s^2+120s)} = \frac{120s + 60}{48s^2+232s+120}
+.\] 
+\[
+  H(s)\Big|_{I_2=0} = \frac{60s+30}{24s^2+116s+60}
+.\] 
+
 
 
 
