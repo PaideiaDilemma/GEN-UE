@@ -433,10 +433,38 @@ Redrawing the T-network with $I_{2} = 0$, makes that clear.
   H(s)\Big|_{I_2=0} = \frac{60s+30}{24s^2+116s+60}
 .\] 
 
+\pagebreak
 
+\section{Matlab}
+In order to check the determined two-port we calculated it's Z-matrix using matlab. 
+The Z-matrix has to have the same values as the ones given.
+\lstinputlisting[language=matlab]{./../matlab/UE_10_Z.m}
+We get the following output for Z
+\lstinputlisting[language=matlab]{./../matlab/output_Z.txt}
+which matches with the given values.
+\\
+Now we can convert the Z-matrix into the A-matrix. Therefore we defined the function $ZtoA$ which is based on the Parameter Conversion Table.
+With the A-matrix we can detremine the transfer function $H(s)$.
+\lstinputlisting[language=matlab]{./../matlab/UE_10_A.m}
+If we look at the transfer function calculated by matlab
+\lstinputlisting[language=matlab]{./../matlab/output_H.txt}
+we can see, it too matches with the analyticaly calculated one.\\
+\\
+The Bode-plot of $H(s)$ looks like following:
+\begin{figure}[ht] \centering
+  \includegraphics[scale=0.9]{./../matlab/ue_10.png}
+  \caption{matlab plot of $H(s)$}
+\end{figure}
 
+\pagebreak
 
-
+\section{LTspice}
+Finally we simulated the Network in LTspice:\\
+\begin{figure}[ht] \centering
+  \includegraphics[scale=0.5]{./../LTspice/Circuit.PNG}
+  \caption{LTspice simulation}
+\end{figure}\\
+One can see, that the bode-plot of matlab and the bode plot of LTspice match.
 
 
 

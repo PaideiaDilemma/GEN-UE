@@ -1,0 +1,7 @@
+H =
+ 
+     2.5 s + 1.25
+  -------------------
+  s^2 + 4.833 s + 2.5
+ 
+Continuous-time transfer function.
